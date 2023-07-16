@@ -1,7 +1,7 @@
-pub mod operations;
+pub mod error;
 pub mod macros;
-mod utils;
-
+pub mod operations;
+pub mod utils;
 
 use actix_web::{
     web::{post, resource, Json, ServiceConfig},
@@ -9,6 +9,8 @@ use actix_web::{
 };
 use serde::{Deserialize, Serialize};
 
+use operations::A1Z26CipherDecode::A1Z26CipherDecoder;
+use operations::Operation;
 
 #[derive(Serialize, Deserialize)]
 pub struct Request {
@@ -17,7 +19,20 @@ pub struct Request {
 }
 
 pub async fn root(req: Json<Request>) -> HttpResponse {
-    HttpResponse::Ok().json(req.0)
+
+    let mut answer =
+
+    if req.method == "A1Z26CipherDecoder" {
+        answer = A1Z26CipherDecoder(
+            Operation {
+                lang: "en".to_string(),
+                params: vec![" ".to_string()],
+                input: req.input.clone()
+            }
+        );
+    };
+
+    HttpResponse::Ok().json(answer)
 }
 
 pub fn configure(cfg: &mut ServiceConfig) {

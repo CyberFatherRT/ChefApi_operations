@@ -16,5 +16,7 @@ pub fn char_rep(token: &str) -> &str {
         "\\x" => "\\x",
         "Nothing (separate chars)" => "",
         "None" => "",
-    ).get(token).unwrap_or(&token)
+    )
+    .get(token)
+    .unwrap_or(&token)
 }

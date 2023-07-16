@@ -1,7 +1,11 @@
-mod A1Z26CipherDecode;
-mod error;
+pub mod A1Z26CipherDecode;
 
-struct Operation {
-    params: Vec<String>,
-    input: String,
+use derivative::Derivative;
+
+#[derive(Derivative)]
+pub struct Operation {
+    #[derivative(Default(value = "en"))]
+    pub(crate) lang: String,
+    pub(crate) params: Vec<String>,
+    pub(crate) input: String,
 }
