@@ -1,11 +1,14 @@
+pub mod operations;
+pub mod macros;
+mod utils;
+
+
 use actix_web::{
     web::{post, resource, Json, ServiceConfig},
     HttpResponse,
 };
-
 use serde::{Deserialize, Serialize};
 
-pub mod operations;
 
 #[derive(Serialize, Deserialize)]
 pub struct Request {
