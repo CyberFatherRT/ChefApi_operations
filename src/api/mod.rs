@@ -20,19 +20,21 @@ pub struct Request {
 
 pub async fn root(req: Json<Request>) -> HttpResponse {
 
-    let mut answer =
-
     if req.method == "A1Z26CipherDecoder" {
-        answer = A1Z26CipherDecoder(
+        let answer = A1Z26CipherDecoder(
             Operation {
                 lang: "en".to_string(),
                 params: vec![" ".to_string()],
                 input: req.input.clone()
             }
         );
+        return match answer {
+            Ok(a) => HttpResponse::Ok().json(a),
+            Err(e) => HttpResponse::Ok().json(e.to_string())
+        }
     };
 
-    HttpResponse::Ok().json(answer)
+    HttpResponse::Ok().json("Hey Hey Hey")
 }
 
 pub fn configure(cfg: &mut ServiceConfig) {
