@@ -1,2 +1,10 @@
 .idea
 *__pycache__*
+
+# Added by cargo
+
+/target
+
+# Added by cargo
+
+/target
