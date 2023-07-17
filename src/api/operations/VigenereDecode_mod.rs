@@ -102,7 +102,7 @@ impl Operation for VigenereDecode {
             _ => return Err(Error::UnsupportedLanguageError),
         };
 
-        if !lang_reg.is_match(&self.request.lang) {
+        if !lang_reg.is_match(&self.request.params[0]) {
             return Err(Error::IvalidKeyError);
         }
 
