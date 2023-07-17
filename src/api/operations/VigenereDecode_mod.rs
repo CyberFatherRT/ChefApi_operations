@@ -1,4 +1,5 @@
 use regex::Regex;
+use unicode_segmentation::UnicodeSegmentation;
 
 use crate::api::error::Error;
 use super::{Operation, Request};
@@ -22,10 +23,10 @@ impl Operation for VigenereDecode {
             return Err(e);
         }
 
-        let alp = match &*self.request.lang {
-            "en" => "abcdefghijklmnopqrstuvwxyz",
-            "ru_with_yo" => "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
-            "ru" => "абвгдежзийклмнопрстуфхцчшщъыьэюя",
+        let (alp, reg) = match &*self.request.lang {
+            "en" => ("abcdefghijklmnopqrstuvwxyz", r"^[a-zA-Z]+$"),
+            "ru_with_yo" => ("абвгдеёжзийклмнопрстуфхцчшщъыьэюя", r"^[а-яА-ЯёЁ]+$"),
+            "ru" => ("абвгдежзийклмнопрстуфхцчшщъыьэюя", "^[а-яА-Я]+$"),
             _ => unreachable!()
         };
 
@@ -36,16 +37,22 @@ impl Operation for VigenereDecode {
 
 
         let key = &self.request.params[0].to_lowercase();
+        let rg = Regex::new(reg).unwrap();
         let mut index = 0usize;
         let mut cipher_text = String::new();
 
+        let key_len = key.graphemes(true).count();
+        let alp_len = alp.graphemes(true).count() as i16;
+
+
+
         for c in self.request.input.chars() {
-            if !c.is_alphabetic() {
+            if !rg.is_match(&c.to_string()) {
                 cipher_text.push(c);
                 continue;
             }
 
-            let key_idx = map.get(&key.chars().nth(index % key.len()).unwrap())
+            let key_idx = map.get(&key.chars().nth(index % key_len).unwrap())
                 .unwrap()
                 .to_owned() as i16;
 
@@ -54,15 +61,16 @@ impl Operation for VigenereDecode {
                 false => map.get(&c.to_lowercase().next().unwrap()).unwrap(),
             }.to_owned() as i16;
 
+
             cipher_text.push(match c.is_lowercase() {
                 true => {
                     alp.chars()
-                        .nth((text_idx - key_idx).rem_euclid(alp.len() as i16) as usize)
+                        .nth((text_idx - key_idx).rem_euclid(alp_len) as usize)
                         .unwrap()
                 }
                 false => {
                     alp.chars()
-                        .nth((text_idx - key_idx).rem_euclid(alp.len() as i16) as usize)
+                        .nth((text_idx - key_idx).rem_euclid(alp_len) as usize)
                         .unwrap()
                         .to_uppercase()
                         .next()
@@ -87,9 +95,14 @@ impl Operation for VigenereDecode {
             return Err(Error::InvalidNumberOfParamsError);
         }
 
-        let rg = Regex::new(r"^([a-zA-Z]+)|([а-яА-ЯёЁ]+)$").unwrap();
+        let lang_reg = match self.request.lang.as_str() {
+            "en" => Regex::new(r"^[a-zA-Z]+$").unwrap(),
+            "ru" => Regex::new(r"^[а-яА-Я]+$").unwrap(),
+            "ru_with_yo" => Regex::new(r"^[а-яА-ЯёЁ]+$").unwrap(),
+            _ => return Err(Error::UnsupportedLanguageError),
+        };
 
-        if !rg.is_match(&self.request.params[0]) {
+        if !lang_reg.is_match(&self.request.lang) {
             return Err(Error::IvalidKeyError);
         }
 
