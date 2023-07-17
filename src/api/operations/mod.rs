@@ -12,9 +12,7 @@ use A1Z26CipherEncode_mod::A1Z26CipherEncode;
 trait Operation {
     fn new(input: Request) -> Box<Self>;
     fn run(&self) -> Result<String, Error>;
-    fn validate(&self) -> Result<(), Error> {
-        Ok(())
-    }
+    fn validate(&self) -> Result<(), Error>;
 }
 
 #[derive(Deserialize)]
