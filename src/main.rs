@@ -15,7 +15,7 @@ async fn main() -> std::io::Result<()> {
             .route(
                 "/",
                 web::get().to(|| async {
-                    HttpResponse::Ok().body("I develop this site, don't touch me!!!")
+                    HttpResponse::Ok().body("I develop this site, don't touch me!!!😡")
                 }),
             )
             .configure(api::configure)
