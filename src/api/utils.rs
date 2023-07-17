@@ -5,7 +5,7 @@ pub fn char_rep(token: &str) -> &str {
         "Space" => " ",
         "Persent" => "%",
         "Comma" => ",",
-        "Semi-solon" => ";",
+        "Semi-colon" => ";",
         "Colon" => ":",
         "Tab" => "\t",
         "Line feed" => "\n",
