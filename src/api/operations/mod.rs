@@ -1,11 +1,11 @@
 pub mod A1Z26CipherDecode;
 
-use derivative::Derivative;
+use serde::Serialize;
 
-#[derive(Derivative)]
+#[derive(Serialize, Debug)]
 pub struct Operation {
-    #[derivative(Default(value = "en"))]
-    pub(crate) lang: String,
-    pub(crate) params: Vec<String>,
-    pub(crate) input: String,
+    pub name: String,
+    pub lang: String,
+    pub params: Vec<String>,
+    pub input: String,
 }

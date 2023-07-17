@@ -18,5 +18,5 @@ pub fn char_rep(token: &str) -> &str {
         "None" => "",
     )
     .get(token)
-    .unwrap_or(&token)
+    .unwrap_or(&" ")
 }

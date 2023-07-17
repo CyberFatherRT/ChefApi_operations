@@ -2,29 +2,39 @@ use super::Operation;
 use crate::api::error::Error;
 use crate::api::utils::char_rep;
 
-pub fn A1Z26CipherDecoder(request: Operation) -> Result<String, Error> {
-    let binding = char_rep("Space").to_string();
-    let separator = request.params.get(0).unwrap_or(&binding);
+pub async fn A1Z26CipherDecoder(request: Operation) -> Result<String, Error> {
+    let separator = char_rep(&request.params[0]);
 
     if request.input.is_empty() {
-        return Err(Error::EmptyInputError);
+        return Err(Error::InvalidInputError {
+            error: "Invalid length",
+        });
     }
 
     let cipher_text = request.input.split(separator);
-
     let mut plain_text = String::new();
 
     for letter in cipher_text {
         if letter.len() != 1 {
-            return Err(Error::InvalidInputError { error: "Invalid length" });
+            return Err(Error::InvalidInputError {
+                error: "Invalid length",
+            });
         }
 
         let letter = match letter.parse::<char>() {
             Ok(letter) => match letter.to_digit(10) {
                 Some(letter) => letter,
-                None => return Err(Error::InvalidInputError { error: "Invalid letter" }),
+                None => {
+                    return Err(Error::InvalidInputError {
+                        error: "Invalid letter",
+                    });
+                }
             },
-            Err(_) => return Err(Error::InvalidInputError { error: "Invalid letter" }),
+            Err(_) => {
+                return Err(Error::InvalidInputError {
+                    error: "Invalid letter",
+                });
+            }
         };
 
         if letter < 1 || letter > 26 {
