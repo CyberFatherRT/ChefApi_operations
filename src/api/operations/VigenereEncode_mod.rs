@@ -4,11 +4,11 @@ use crate::api::error::Error;
 use super::{Operation, Request};
 use crate::api::macros::create_struct;
 
-create_struct!(VigenereDecode);
+create_struct!(VigenereEncode);
 
-impl Operation for VigenereDecode {
+impl Operation for VigenereEncode {
     fn new(input: Request) -> Box<Self> {
-        Box::new(VigenereDecode {
+        Box::new(VigenereEncode {
             name: "VigenereDecode",
             module: "Cipher",
             description: Some("The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar ciphers based on the letters of a keyword. It is a simple form of polyalphabetic substitution."),
@@ -45,24 +45,24 @@ impl Operation for VigenereDecode {
                 continue;
             }
 
-            let key_idx = map.get(&key.chars().nth(index % key.len()).unwrap())
-                .unwrap()
-                .to_owned() as i16;
+            let key_idx = map.get(&key.chars().nth(index % key.len()).unwrap()).unwrap();
 
             let text_idx = match c.is_lowercase() {
                 true => map.get(&c).unwrap(),
                 false => map.get(&c.to_lowercase().next().unwrap()).unwrap(),
-            }.to_owned() as i16;
+            };
+
+            println!("{} {}", key_idx, text_idx);
 
             cipher_text.push(match c.is_lowercase() {
                 true => {
                     alp.chars()
-                        .nth((i16::abs(text_idx - key_idx) % alp.len() as i16) as usize)
+                        .nth((text_idx + key_idx) % alp.len())
                         .unwrap()
                 }
                 false => {
                     alp.chars()
-                        .nth((i16::abs(text_idx - key_idx) % alp.len() as i16) as usize)
+                        .nth((text_idx + key_idx) % alp.len())
                         .unwrap()
                         .to_uppercase()
                         .next()

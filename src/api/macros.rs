@@ -1,6 +1,6 @@
 macro_rules! map {
     ($($k:expr => $v:expr),* $(,)?) => {{
-        let mut m = ::std::collections::HashMap::new();
+        let mut m = std::collections::HashMap::new();
         $(m.insert($k, $v);)*
         m
     }};
@@ -8,7 +8,7 @@ macro_rules! map {
 
 macro_rules! regex_check {
     ($regex:tt == $string:expr) => {{
-        let regex = ::regex::Regex::new($regex).unwrap();
+        let regex = regex::Regex::new($regex).unwrap();
         regex.is_match($string)
     }}
 }
@@ -20,11 +20,9 @@ macro_rules! create_struct {
            module: &'static str,
            description: Option<&'static str>,
            infoURL: Option<&'static str>,
-           input: Request,
+           request: Request,
         }
     };
 }
 
-pub(crate) use map;
-pub(crate) use regex_check;
-pub(crate) use create_struct;
+pub(crate) use {map, regex_check, create_struct};

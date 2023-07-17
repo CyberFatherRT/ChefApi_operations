@@ -14,7 +14,7 @@ impl Operation for A1Z26CipherEncode {
             module: "Cipher",
             description: Some("Converts alphabet characters into their corresponding alphabet order number.<br><br>e.g. <code>a</code> becomes <code>1</code> and <code>b</code> becomes <code>2</code>.<br><br>Non-alphabet characters are dropped."),
             infoURL: None,
-            input,
+            request: input,
         })
     }
 
@@ -24,9 +24,9 @@ impl Operation for A1Z26CipherEncode {
         }
 
         let mut result = String::new();
-        let delimiter = char_rep(&self.input.params[0]);
+        let delimiter = char_rep(&self.request.params[0]);
 
-        for character in self.input.input.chars() {
+        for character in self.request.input.chars() {
             result.push_str(&*format!("{}{}", match character {
                 'a'..='z' => character as u8 - 96,
                 'A'..='Z' => character as u8 - 64,

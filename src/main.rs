@@ -1,4 +1,4 @@
-#![allow(non_snake_case)]
+#![allow(non_snake_case, dead_code)]
 
 use actix_web::{middleware::Logger, web, App, HttpResponse, HttpServer};
 use env_logger::Env;
@@ -15,7 +15,7 @@ async fn main() -> std::io::Result<()> {
             .route(
                 "/",
                 web::get().to(|| async {
-                    HttpResponse::Ok().body("I develop this site, don't touch me!!!😡")
+                    HttpResponse::Ok().body("I develop this site, don't touch me!!!")
                 }),
             )
             .configure(api::configure)
