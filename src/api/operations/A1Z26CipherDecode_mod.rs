@@ -1,15 +1,11 @@
 use super::{Operation, Request};
-use crate::api::error::Error;
-use crate::api::macros::regex_check;
-use crate::api::utils::char_rep;
+use crate::api::{
+    error::Error,
+    macros::{regex_check, create_struct},
+    utils::char_rep,
+};
 
-pub struct A1Z26CipherDecode {
-    name: &'static str,
-    module: &'static str,
-    description: Option<&'static str>,
-    infoURL: Option<&'static str>,
-    input: Request,
-}
+create_struct!(A1Z26CipherDecode);
 
 impl Operation for A1Z26CipherDecode {
     fn new(input: Request) -> Box<Self> {
