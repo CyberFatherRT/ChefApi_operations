@@ -19,18 +19,24 @@ impl Operation for A1Z26CipherEncode {
     }
 
     fn run(&self) -> Result<String, Error> {
+        if let Err(e) = self.validate() {
+            return Err(e);
+        }
+
         let mut result = String::new();
         let delimiter = char_rep(&self.input.params[0]);
 
         for character in self.input.input.chars() {
-            if character.is_ascii_alphabetic() {
-                result.push_str(&*format!("{}{}", character, delimiter));
-            }
+            result.push_str(&*format!("{}{}", match character {
+                'a'..='z' => character as u8 - 96,
+                'A'..='Z' => character as u8 - 64,
+                _ => { continue }
+            }, delimiter));
         }
-        Ok(result)
+        Ok(result.trim_end_matches(|c: char| &*c.to_string() == delimiter).to_string())
     }
 
-    fn check(&self) -> Result<(), Error> {
-        todo!()
+    fn validate(&self) -> Result<(), Error> {
+        Ok(())
     }
 }

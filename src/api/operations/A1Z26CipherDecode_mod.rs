@@ -19,7 +19,7 @@ impl Operation for A1Z26CipherDecode {
     }
 
     fn run(&self) -> Result<String, Error> {
-        if let Err(e) = self.check() {
+        if let Err(e) = self.validate() {
             return Err(e);
         }
 
@@ -43,7 +43,7 @@ impl Operation for A1Z26CipherDecode {
         Ok(plain_text)
     }
 
-    fn check(&self) -> Result<(), Error> {
+    fn validate(&self) -> Result<(), Error> {
         if self.input.input.is_empty() {
             return Err(Error::InvalidInputError {
                 error: "Input is empty",
