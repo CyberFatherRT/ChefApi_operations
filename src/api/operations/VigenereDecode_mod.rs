@@ -57,12 +57,12 @@ impl Operation for VigenereDecode {
             cipher_text.push(match c.is_lowercase() {
                 true => {
                     alp.chars()
-                        .nth((i16::abs(text_idx - key_idx) % alp.len() as i16) as usize)
+                        .nth((text_idx - key_idx).rem_euclid(alp.len() as i16) as usize)
                         .unwrap()
                 }
                 false => {
                     alp.chars()
-                        .nth((i16::abs(text_idx - key_idx) % alp.len() as i16) as usize)
+                        .nth((text_idx - key_idx).rem_euclid(alp.len() as i16) as usize)
                         .unwrap()
                         .to_uppercase()
                         .next()
