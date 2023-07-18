@@ -1,16 +1,11 @@
-use regex::Regex;
-use unicode_segmentation::UnicodeSegmentation;
-
 use super::{Operation, Request};
 
 use crate::api::{
     macros::create_struct,
+    utils::add,
     error::Error,
-    lib::VigenereTrait::VigenereCipher,
-    utils::{
-        get_index,
-        EN_ALP, RU_ALP, RU_ALP_WITH_YO,
-    }};
+    lib::VigenereCipher,
+};
 
 create_struct!(VigenereEncode);
 
@@ -28,61 +23,11 @@ impl Operation for VigenereEncode {
     }
 
     fn run(&self) -> Result<String, Error> {
-        if let Err(e) = <Self as VigenereCipher>::validate(&self.request.lang, &self.request.params) {
-            return Err(e);
-        }
+        <Self as VigenereCipher>::cipher(&self.request, add)
+    }
 
-        let (alp, reg) = match &*self.request.lang {
-            "en" => EN_ALP,
-            "ru" => RU_ALP,
-            "ru_with_yo" => RU_ALP_WITH_YO,
-            _ => unreachable!()
-        };
-
-        let mut map = std::collections::HashMap::new();
-        for (k, v) in alp.chars().enumerate() {
-            map.insert(v, k);
-        }
-
-        let key = &self.request.params[0].to_lowercase();
-        let rg = Regex::new(reg).unwrap();
-        let mut index = 0usize;
-        let mut cipher_text = String::new();
-
-        let key_len = key.graphemes(true).count();
-        let alp_len = alp.graphemes(true).count() as i16;
-
-        for c in self.request.input.chars() {
-            if !rg.is_match(&c.to_string()) {
-                cipher_text.push(c);
-                continue;
-            }
-
-            let key_idx = map.get(&get_index(key, index % key_len))
-                .unwrap()
-                .to_owned() as i16;
-
-            let text_idx = match c.is_lowercase() {
-                true => map.get(&c).unwrap(),
-                false => map.get(&c.to_lowercase().next().unwrap()).unwrap(),
-            }.to_owned() as i16;
-
-            cipher_text.push(match c.is_lowercase() {
-                true => {
-                    get_index(alp, (text_idx + key_idx).rem_euclid(alp_len))
-                }
-                false => {
-                    get_index(alp, (text_idx + key_idx).rem_euclid(alp_len))
-                        .to_uppercase()
-                        .next()
-                        .unwrap()
-                }
-            });
-
-            index += 1;
-        }
-
-        Ok(cipher_text)
+    fn validate(&self) -> Result<(), Error> {
+        Ok(())
     }
 }
 

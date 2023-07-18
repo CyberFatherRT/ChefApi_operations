@@ -1,5 +1,8 @@
 use super::macros::map;
-use num::{Integer, cast::ToPrimitive};
+use num::{
+    Integer,
+    cast::ToPrimitive,
+};
 
 pub const EN_ALP: (&str, &str) = ("abcdefghijklmnopqrstuvwxyz", r"^[a-zA-Z]+$");
 pub const RU_ALP: (&str, &str) = ("абвгдежзийклмнопрстуфхцчшщъыьэюя", "^[а-яА-Я]+$");
@@ -49,4 +52,12 @@ pub fn get_index<T>(text: &str, index: T) -> char
     where T: Integer + ToPrimitive
 {
     text.chars().nth(index.to_usize().unwrap()).unwrap()
+}
+
+pub fn add(a: i16, b: i16) -> i16 {
+    a + b
+}
+
+pub fn sub(a: i16, b: i16) -> i16 {
+    a - b
 }
