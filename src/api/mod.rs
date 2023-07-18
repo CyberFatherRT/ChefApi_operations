@@ -1,6 +1,8 @@
+pub mod lib;
+pub mod operations;
+
 pub mod error;
 pub mod macros;
-pub mod operations;
 pub mod utils;
 
 use actix_web::{

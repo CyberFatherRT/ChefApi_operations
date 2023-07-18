@@ -1,11 +1,20 @@
+use num::traits::Euclid;
 use regex::Regex;
 use unicode_segmentation::UnicodeSegmentation;
 
-use crate::api::error::Error;
 use super::{Operation, Request};
+use crate::api::lib::VigenereTrait::VigenereCipher;
+
+use crate::api::error::Error;
 use crate::api::macros::create_struct;
+use crate::api::utils::{
+    get_index,
+    EN_ALP, RU_ALP, RU_ALP_WITH_YO
+};
 
 create_struct!(VigenereDecode);
+
+impl VigenereCipher for VigenereDecode {}
 
 impl Operation for VigenereDecode {
     fn new(input: Request) -> Box<Self> {
@@ -24,9 +33,9 @@ impl Operation for VigenereDecode {
         }
 
         let (alp, reg) = match &*self.request.lang {
-            "en" => ("abcdefghijklmnopqrstuvwxyz", r"^[a-zA-Z]+$"),
-            "ru" => ("абвгдежзийклмнопрстуфхцчшщъыьэюя", "^[а-яА-Я]+$"),
-            "ru_with_yo" => ("абвгдеёжзийклмнопрстуфхцчшщъыьэюя", r"^[а-яА-ЯёЁ]+$"),
+            "en" => EN_ALP,
+            "ru" => RU_ALP,
+            "ru_with_yo" => RU_ALP_WITH_YO,
             _ => unreachable!()
         };
 
@@ -45,14 +54,13 @@ impl Operation for VigenereDecode {
         let alp_len = alp.graphemes(true).count() as i16;
 
 
-
         for c in self.request.input.chars() {
             if !rg.is_match(&c.to_string()) {
                 cipher_text.push(c);
                 continue;
             }
 
-            let key_idx = map.get(&key.chars().nth(index % key_len).unwrap())
+            let key_idx = map.get(&get_index(key, index % key_len))
                 .unwrap()
                 .to_owned() as i16;
 
@@ -61,17 +69,12 @@ impl Operation for VigenereDecode {
                 false => map.get(&c.to_lowercase().next().unwrap()).unwrap(),
             }.to_owned() as i16;
 
-
             cipher_text.push(match c.is_lowercase() {
                 true => {
-                    alp.chars()
-                        .nth((text_idx - key_idx).rem_euclid(alp_len) as usize)
-                        .unwrap()
+                    get_index(alp, (text_idx - key_idx).rem_euclid(alp_len))
                 }
                 false => {
-                    alp.chars()
-                        .nth((text_idx - key_idx).rem_euclid(alp_len) as usize)
-                        .unwrap()
+                    get_index(alp, (text_idx - key_idx).rem_euclid(alp_len))
                         .to_uppercase()
                         .next()
                         .unwrap()
@@ -84,28 +87,5 @@ impl Operation for VigenereDecode {
         Ok(cipher_text)
     }
 
-    fn validate<>(&self) -> Result<(), Error> {
-        let langs = ["en", "ru", "ru_with_yo"];
-
-        if !langs.contains(&&*self.request.lang) {
-            return Err(Error::UnsupportedLanguageError);
-        }
-
-        if self.request.params.len() != 1 {
-            return Err(Error::InvalidNumberOfParamsError);
-        }
-
-        let lang_reg = match self.request.lang.as_str() {
-            "en" => Regex::new(r"^[a-zA-Z]+$").unwrap(),
-            "ru" => Regex::new(r"^[а-яА-Я]+$").unwrap(),
-            "ru_with_yo" => Regex::new(r"^[а-яА-ЯёЁ]+$").unwrap(),
-            _ => return Err(Error::UnsupportedLanguageError),
-        };
-
-        if !lang_reg.is_match(&self.request.params[0]) {
-            return Err(Error::IvalidKeyError);
-        }
-
-        Ok(())
-    }
 }
+

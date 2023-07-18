@@ -18,7 +18,6 @@ use VigenereEncode_mod::VigenereEncode;
 trait Operation {
     fn new(input: Request) -> Box<Self>;
     fn run(&self) -> Result<String, Error>;
-    fn validate(&self) -> Result<(), Error>;
 }
 
 #[derive(Deserialize)]
