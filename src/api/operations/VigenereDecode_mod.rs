@@ -1,20 +1,22 @@
-use num::traits::Euclid;
 use regex::Regex;
 use unicode_segmentation::UnicodeSegmentation;
 
 use super::{Operation, Request};
-use crate::api::lib::VigenereTrait::VigenereCipher;
 
-use crate::api::error::Error;
-use crate::api::macros::create_struct;
-use crate::api::utils::{
-    get_index,
-    EN_ALP, RU_ALP, RU_ALP_WITH_YO
-};
+use crate::api::{
+    macros::create_struct,
+    error::Error,
+    lib::VigenereTrait::VigenereCipher,
+    utils::{
+        get_index,
+        EN_ALP, RU_ALP, RU_ALP_WITH_YO,
+}};
 
 create_struct!(VigenereDecode);
 
-impl VigenereCipher for VigenereDecode {}
+impl VigenereCipher for VigenereDecode {
+
+}
 
 impl Operation for VigenereDecode {
     fn new(input: Request) -> Box<Self> {
@@ -28,7 +30,7 @@ impl Operation for VigenereDecode {
     }
 
     fn run(&self) -> Result<String, Error> {
-        if let Err(e) = self.validate() {
+        if let Err(e) = <Self as VigenereCipher>::validate(&self.request.lang, &self.request.params) {
             return Err(e);
         }
 

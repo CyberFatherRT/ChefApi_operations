@@ -30,12 +30,14 @@ impl Operation for A1Z26CipherEncode {
             result.push_str(&*format!("{}{}", match character {
                 'a'..='z' => character as u8 - 96,
                 'A'..='Z' => character as u8 - 64,
-                _ => { continue }
+                _ => { continue; }
             }, delimiter));
         }
         Ok(result.trim_end_matches(|c: char| &*c.to_string() == delimiter).to_string())
     }
+}
 
+impl A1Z26CipherEncode {
     fn validate(&self) -> Result<(), Error> {
         Ok(())
     }
