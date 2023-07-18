@@ -1,4 +1,5 @@
-#![allow(non_snake_case, dead_code)]
+#![feature(step_trait)]
+#![allow(non_snake_case)]
 
 use actix_web::{middleware::Logger, web, App, HttpResponse, HttpServer};
 use env_logger::Env;

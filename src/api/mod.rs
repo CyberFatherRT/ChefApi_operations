@@ -13,7 +13,7 @@ use actix_web::{
 use operations::{do_magic, Request};
 
 pub async fn root(req: Json<Request>) -> HttpResponse {
-    HttpResponse::Ok().body(do_magic(req))
+    HttpResponse::Ok().json(do_magic(req))
 }
 
 pub fn configure(cfg: &mut ServiceConfig) {

@@ -54,22 +54,22 @@ impl Operation for A1Z26CipherDecode {
 
         let regex_checked = match self.request.params[0].as_str() {
             "Space" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]) ?)+\s*$" == &self.request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]) ?)+\s*$" => &self.request.input)
             }
             "Comma" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]),?)+\s*$" == &self.request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]),?)+\s*$" => &self.request.input)
             }
             "Semi-colon" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]);?)+\s*$" == &self.request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]);?)+\s*$" => &self.request.input)
             }
             "Colon" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]):?)+\s*$" == &self.request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]):?)+\s*$" => &self.request.input)
             }
             "Line feed" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6])\n?)+\s*$" == &self.request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6])\n?)+\s*$" => &self.request.input)
             }
             "CRLF" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6])\r\n?)+\s*$" == &self.request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6])\r\n?)+\s*$" => &self.request.input)
             }
             _ => false,
         };

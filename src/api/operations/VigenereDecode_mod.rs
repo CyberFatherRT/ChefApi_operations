@@ -1,16 +1,9 @@
 use super::{Operation, Request};
 
-use crate::api::{
-    macros::create_struct,
-    utils::sub,
-    error::Error,
-    lib::{VigenereCipher, SupportedLanguages},
-};
+use crate::api::{error::Error, lib::VigenereCipher, macros::create_struct, utils::sub};
 
 create_struct!(VigenereDecode);
 
-
-impl SupportedLanguages for VigenereDecode {}
 impl VigenereCipher for VigenereDecode {}
 
 impl Operation for VigenereDecode {
@@ -32,4 +25,3 @@ impl Operation for VigenereDecode {
         Ok(())
     }
 }
-

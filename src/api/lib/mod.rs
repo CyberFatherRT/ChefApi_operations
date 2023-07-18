@@ -1,5 +1,3 @@
-pub mod VigenereTrait;
-pub mod LanguageTrait;
+mod VigenereTrait;
 
 pub use VigenereTrait::VigenereCipher;
-pub use LanguageTrait::SupportedLanguages;

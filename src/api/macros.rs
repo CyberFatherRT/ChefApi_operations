@@ -7,7 +7,7 @@ macro_rules! map {
 }
 
 macro_rules! regex_check {
-    ($regex:tt == $string:expr) => {{
+    ($regex:expr => $string:expr) => {{
         let regex = regex::Regex::new($regex).unwrap();
         regex.is_match($string)
     }};
