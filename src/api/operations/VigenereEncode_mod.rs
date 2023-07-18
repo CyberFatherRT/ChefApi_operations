@@ -1,9 +1,16 @@
 use super::{Operation, Request};
 
-use crate::api::{error::Error, lib::VigenereCipher, macros::create_struct, utils::add};
+use crate::api::{
+    error::Error,
+    lib::{VigenereCipher, SupportedLanguages},
+    macros::create_struct,
+    utils::add
+};
 
 create_struct!(VigenereEncode);
 
+
+impl SupportedLanguages for VigenereEncode {}
 impl VigenereCipher for VigenereEncode {}
 
 impl Operation for VigenereEncode {
