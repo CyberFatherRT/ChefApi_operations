@@ -4,10 +4,7 @@ use unicode_segmentation::UnicodeSegmentation;
 use crate::api::{
     error::Error,
     operations::Request,
-    utils::{
-        get_index,
-        EN_ALP, RU_ALP, RU_ALP_WITH_YO,
-    },
+    utils::{get_index, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
 };
 
 pub trait VigenereCipher {
@@ -20,14 +17,13 @@ pub trait VigenereCipher {
             "en" => EN_ALP,
             "ru" => RU_ALP,
             "ru_with_yo" => RU_ALP_WITH_YO,
-            _ => unreachable!()
+            _ => unreachable!(),
         };
 
         let mut map = std::collections::HashMap::new();
         for (k, v) in alp.chars().enumerate() {
             map.insert(v, k);
         }
-
 
         let key = &request.params[0].to_lowercase();
         let rg = Regex::new(reg).unwrap();
@@ -37,14 +33,14 @@ pub trait VigenereCipher {
         let key_len = key.graphemes(true).count();
         let alp_len = alp.graphemes(true).count() as i16;
 
-
         for c in request.input.chars() {
             if !rg.is_match(&c.to_string()) {
                 cipher_text.push(c);
                 continue;
             }
 
-            let key_idx = map.get(&get_index(key, index % key_len))
+            let key_idx = map
+                .get(&get_index(key, index % key_len))
                 .unwrap()
                 .to_owned() as i16;
 
@@ -53,18 +49,14 @@ pub trait VigenereCipher {
                 false => map.get(&c.to_lowercase().next().unwrap()).unwrap(),
             }.to_owned() as i16;
 
-            let idx = f(key_idx, text_idx);
+            let idx = f(text_idx, key_idx);
 
             cipher_text.push(match c.is_lowercase() {
-                true => {
-                    get_index(alp, idx.rem_euclid(alp_len))
-                }
-                false => {
-                    get_index(alp, idx.rem_euclid(alp_len))
-                        .to_uppercase()
-                        .next()
-                        .unwrap()
-                }
+                true => get_index(alp, idx.rem_euclid(alp_len)),
+                false => get_index(alp, idx.rem_euclid(alp_len))
+                    .to_uppercase()
+                    .next()
+                    .unwrap(),
             });
 
             index += 1;
@@ -83,7 +75,6 @@ pub trait VigenereCipher {
         if params.len() != 1 {
             return Err(Error::InvalidNumberOfParamsError);
         }
-
 
         let reg = match lang.as_str() {
             "en" => Regex::new(EN_ALP.1).unwrap(),

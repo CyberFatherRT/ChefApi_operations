@@ -1,7 +1,7 @@
 use super::{Operation, Request};
 use crate::api::{
     error::Error,
-    macros::{regex_check, create_struct},
+    macros::{create_struct, regex_check},
     utils::char_rep,
 };
 
@@ -25,7 +25,9 @@ impl Operation for A1Z26CipherDecode {
 
         let delimiter = char_rep(self.request.params.get(0).unwrap());
 
-        let cipher_text = self.request.input
+        let cipher_text = self
+            .request
+            .input
             .trim_matches(|c: char| [delimiter].contains(&&*c.to_string()))
             .split(delimiter);
 
@@ -35,7 +37,7 @@ impl Operation for A1Z26CipherDecode {
             let c = c.parse::<u32>().unwrap();
             if c < 1 || c > 26 {
                 return Err(Error::OperationError {
-                    error: "Error: all numbers must be between 1 and 26."
+                    error: "Error: all numbers must be between 1 and 26.",
                 });
             }
             plain_text.push(char::from_u32(c + 96u32).unwrap());
@@ -69,7 +71,7 @@ impl Operation for A1Z26CipherDecode {
             "CRLF" => {
                 regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6])\r\n?)+\s*$" == &self.request.input)
             }
-            _ => false
+            _ => false,
         };
         if !regex_checked {
             return Err(Error::InvalidInputError {

@@ -10,8 +10,7 @@ use actix_web::{
     HttpResponse,
 };
 
-use operations::{Request, do_magic};
-
+use operations::{do_magic, Request};
 
 pub async fn root(req: Json<Request>) -> HttpResponse {
     HttpResponse::Ok().body(do_magic(req))

@@ -4,7 +4,6 @@ mod AffineCipherDecode_mod;
 mod VigenereDecode_mod;
 mod VigenereEncode_mod;
 
-
 use actix_web::web::Json;
 use serde::Deserialize;
 
@@ -39,22 +38,14 @@ pub enum Operations {
 
 pub fn do_magic(request: Json<Request>) -> String {
     let result = match request.name {
-        Operations::A1Z26CipherDecode => A1Z26CipherDecode::new(
-            request.0
-        ).run(),
-        Operations::A1Z26CipherEncode => A1Z26CipherEncode::new(
-            request.0
-        ).run(),
-        Operations::VigenereDecode => VigenereDecode::new(
-            request.0
-        ).run(),
-        Operations::VigenereEncode => VigenereEncode::new(
-            request.0
-        ).run(),
+        Operations::A1Z26CipherDecode => A1Z26CipherDecode::new(request.0).run(),
+        Operations::A1Z26CipherEncode => A1Z26CipherEncode::new(request.0).run(),
+        Operations::VigenereDecode => VigenereDecode::new(request.0).run(),
+        Operations::VigenereEncode => VigenereEncode::new(request.0).run(),
     };
 
     match result {
         Ok(s) => s,
-        Err(e) => e.to_string()
+        Err(e) => e.to_string(),
     }
 }

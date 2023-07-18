@@ -20,7 +20,7 @@ async fn main() -> std::io::Result<()> {
             )
             .configure(api::configure)
     })
-        .bind(("127.0.0.1", 8080))?
-        .run()
-        .await
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
 }
