@@ -42,9 +42,7 @@ impl Operation for A1Z26CipherDecode {
         }
         Ok(plain_text)
     }
-}
 
-impl A1Z26CipherDecode {
     fn validate(&self) -> Result<(), Error> {
         if self.request.input.is_empty() {
             return Err(Error::InvalidInputError {

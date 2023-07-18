@@ -35,9 +35,7 @@ impl Operation for A1Z26CipherEncode {
         }
         Ok(result.trim_end_matches(|c: char| &*c.to_string() == delimiter).to_string())
     }
-}
 
-impl A1Z26CipherEncode {
     fn validate(&self) -> Result<(), Error> {
         Ok(())
     }
