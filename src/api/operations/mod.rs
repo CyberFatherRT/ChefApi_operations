@@ -1,7 +1,9 @@
 mod A1Z26CipherDecode_mod;
 mod A1Z26CipherEncode_mod;
+mod AffineCipherDecode_mod;
 mod VigenereDecode_mod;
 mod VigenereEncode_mod;
+
 
 use actix_web::web::Json;
 use serde::Deserialize;

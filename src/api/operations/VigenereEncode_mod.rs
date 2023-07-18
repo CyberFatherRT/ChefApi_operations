@@ -4,13 +4,17 @@ use unicode_segmentation::UnicodeSegmentation;
 use crate::api::error::Error;
 use super::{Operation, Request};
 use crate::api::macros::create_struct;
+use crate::api::utils::{
+    get_index,
+    EN_ALP, RU_ALP, RU_ALP_WITH_YO
+};
 
 create_struct!(VigenereEncode);
 
 impl Operation for VigenereEncode {
     fn new(input: Request) -> Box<Self> {
         Box::new(VigenereEncode {
-            name: "VigenereDecode",
+            name: "Vigenere Encode",
             module: "Cipher",
             description: Some("The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar ciphers based on the letters of a keyword. It is a simple form of polyalphabetic substitution."),
             infoURL: Some("https://wikipedia.org/wiki/Vigenère_cipher"),
@@ -24,9 +28,9 @@ impl Operation for VigenereEncode {
         }
 
         let (alp, reg) = match &*self.request.lang {
-            "en" => ("abcdefghijklmnopqrstuvwxyz", r"^[a-zA-Z]+$"),
-            "ru_with_yo" => ("абвгдеёжзийклмнопрстуфхцчшщъыьэюя", r"^[а-яА-ЯёЁ]+$"),
-            "ru" => ("абвгдежзийклмнопрстуфхцчшщъыьэюя", "^[а-яА-Я]+$"),
+            "en" => EN_ALP,
+            "ru" => RU_ALP,
+            "ru_with_yo" => RU_ALP_WITH_YO,
             _ => unreachable!()
         };
 
@@ -49,7 +53,7 @@ impl Operation for VigenereEncode {
                 continue;
             }
 
-            let key_idx = map.get(&key.chars().nth(index % key_len).unwrap())
+            let key_idx = map.get(&get_index(key, index % key_len))
                 .unwrap()
                 .to_owned() as i16;
 
@@ -60,14 +64,10 @@ impl Operation for VigenereEncode {
 
             cipher_text.push(match c.is_lowercase() {
                 true => {
-                    alp.chars()
-                        .nth((text_idx + key_idx).rem_euclid(alp_len) as usize)
-                        .unwrap()
+                    get_index(alp, (text_idx + key_idx).rem_euclid(alp_len))
                 }
                 false => {
-                    alp.chars()
-                        .nth((text_idx + key_idx).rem_euclid(alp_len) as usize)
-                        .unwrap()
+                    get_index(alp, (text_idx + key_idx).rem_euclid(alp_len))
                         .to_uppercase()
                         .next()
                         .unwrap()
@@ -93,9 +93,9 @@ impl Operation for VigenereEncode {
 
 
         let reg = match self.request.lang.as_str() {
-            "en" => Regex::new(r"^[a-zA-Z]+$").unwrap(),
-            "ru" => Regex::new(r"^[а-яА-Я]+$").unwrap(),
-            "ru_with_yo" => Regex::new(r"^[а-яА-ЯёЁ]+$").unwrap(),
+            "en" => Regex::new(EN_ALP.1).unwrap(),
+            "ru" => Regex::new(RU_ALP.1).unwrap(),
+            "ru_with_yo" => Regex::new(RU_ALP_WITH_YO.1).unwrap(),
             _ => return Err(Error::UnsupportedLanguageError),
         };
 

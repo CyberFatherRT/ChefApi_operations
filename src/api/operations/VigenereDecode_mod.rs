@@ -10,7 +10,7 @@ create_struct!(VigenereDecode);
 impl Operation for VigenereDecode {
     fn new(input: Request) -> Box<Self> {
         Box::new(VigenereDecode {
-            name: "VigenereDecode",
+            name: "Vigenere Decode",
             module: "Cipher",
             description: Some("The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar ciphers based on the letters of a keyword. It is a simple form of polyalphabetic substitution."),
             infoURL: Some("https://wikipedia.org/wiki/Vigenère_cipher"),
@@ -25,8 +25,8 @@ impl Operation for VigenereDecode {
 
         let (alp, reg) = match &*self.request.lang {
             "en" => ("abcdefghijklmnopqrstuvwxyz", r"^[a-zA-Z]+$"),
-            "ru_with_yo" => ("абвгдеёжзийклмнопрстуфхцчшщъыьэюя", r"^[а-яА-ЯёЁ]+$"),
             "ru" => ("абвгдежзийклмнопрстуфхцчшщъыьэюя", "^[а-яА-Я]+$"),
+            "ru_with_yo" => ("абвгдеёжзийклмнопрстуфхцчшщъыьэюя", r"^[а-яА-ЯёЁ]+$"),
             _ => unreachable!()
         };
 

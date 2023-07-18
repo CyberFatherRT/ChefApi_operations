@@ -16,13 +16,15 @@ macro_rules! regex_check {
 macro_rules! create_struct {
     ($name:ident) => {
         pub struct $name {
-           name: &'static str,
-           module: &'static str,
-           description: Option<&'static str>,
-           infoURL: Option<&'static str>,
-           request: Request,
+           pub name: &'static str,
+           pub module: &'static str,
+           pub description: Option<&'static str>,
+           pub infoURL: Option<&'static str>,
+           pub request: Request,
         }
     };
 }
 
-pub(crate) use {map, regex_check, create_struct};
+pub(crate) use {
+    map, regex_check, create_struct
+};
