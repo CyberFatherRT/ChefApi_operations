@@ -1,7 +1,7 @@
 use super::{Operation, Request};
 use crate::api::error::Error;
 use crate::api::macros::create_struct;
-use crate::api::utils::char_rep;
+use crate::api::utils::charRepr;
 
 create_struct!(A1Z26CipherEncode);
 
@@ -26,7 +26,7 @@ impl Operation for A1Z26CipherEncode {
         }
 
         let mut result = String::new();
-        let delimiter = char_rep(&self.request.params[0]);
+        let delimiter = charRepr(&self.request.params[0]);
 
         for character in self.request.input.chars() {
             result.push_str(&*format!(

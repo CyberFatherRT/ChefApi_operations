@@ -4,7 +4,7 @@ use unicode_segmentation::UnicodeSegmentation;
 use crate::api::{
     error::Error,
     operations::Request,
-    utils::{get_by_index, modulus, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
+    utils::{getCharByIndex, modulus, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
 };
 
 pub trait VigenereCipher {
@@ -43,7 +43,7 @@ pub trait VigenereCipher {
             }
 
             let key_idx = map
-                .get(&get_by_index(key, index % key_len))
+                .get(&getCharByIndex(key, index % key_len))
                 .unwrap()
                 .to_owned() as i16;
 
@@ -56,8 +56,8 @@ pub trait VigenereCipher {
             let idx = f(text_idx, key_idx);
 
             cipher_text.push(match c.is_lowercase() {
-                true => get_by_index(alp, modulus(idx, alp_len)),
-                false => get_by_index(alp, modulus(idx, alp_len))
+                true => getCharByIndex(alp, modulus(idx, alp_len)),
+                false => getCharByIndex(alp, modulus(idx, alp_len))
                     .to_uppercase()
                     .next()
                     .unwrap(),

@@ -10,10 +10,10 @@ use actix_web::{
     HttpResponse,
 };
 
-use operations::{do_magic, Request};
+use operations::{some_magic, Request};
 
 pub async fn root(req: Json<Request>) -> HttpResponse {
-    HttpResponse::Ok().json(do_magic(req))
+    HttpResponse::Ok().json(some_magic(req))
 }
 
 pub fn configure(cfg: &mut ServiceConfig) {

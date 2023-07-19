@@ -2,7 +2,7 @@ use super::{Operation, Request};
 use crate::api::{
     error::Error,
     macros::{create_struct, regex_check},
-    utils::char_rep,
+    utils::charRepr,
 };
 
 create_struct!(A1Z26CipherDecode);
@@ -23,7 +23,7 @@ impl Operation for A1Z26CipherDecode {
             return Err(e);
         }
 
-        let delimiter = char_rep(self.request.params.get(0).unwrap());
+        let delimiter = charRepr(self.request.params.get(0).unwrap());
 
         let cipher_text = self
             .request

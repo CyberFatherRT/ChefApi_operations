@@ -2,14 +2,14 @@ use crate::api::{
     error::Error,
     macros::regex_check,
     operations::Request,
-    utils::{get_alphabet, get_index_by_char, mod_inv, modulus, validate_lang, NUM},
+    utils::{getAlphabet, getIndexByChar, mod_inv, modulus, validateLang, NUM},
 };
 use unicode_segmentation::UnicodeSegmentation;
 
 pub trait AffineCipher {
     fn encode(a: isize, b: isize, x: char, alp: &str) -> isize {
         let m = alp.graphemes(true).count() as isize;
-        let Ex = ((a * get_index_by_char(alp, x)) + b).rem_euclid(m);
+        let Ex = ((a * getIndexByChar(alp, x)) + b).rem_euclid(m);
         return Ex;
     }
 
@@ -18,7 +18,7 @@ pub trait AffineCipher {
 
         let inv_a = mod_inv(a, alp.graphemes(true).count() as isize);
 
-        let Dy = modulus(inv_a * (get_index_by_char(alp, y) - b), m);
+        let Dy = modulus(inv_a * (getIndexByChar(alp, y) - b), m);
 
         return Dy;
     }
@@ -33,7 +33,7 @@ pub trait AffineCipher {
     fn get_plaintext_alp(request: &Request) -> (String, (&str, &str)) {
         return (
             String::with_capacity(request.input.graphemes(true).count()),
-            get_alphabet(&request.lang),
+            getAlphabet(&request.lang),
         );
     }
 
@@ -50,7 +50,7 @@ pub trait AffineCipher {
             });
         }
 
-        if !validate_lang(&request.input, &request.lang) {
+        if !validateLang(&request.input, &request.lang) {
             return Err(Error::UnsupportedLanguageError {
                 error: "Invalid language.",
             });

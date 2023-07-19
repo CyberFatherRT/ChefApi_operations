@@ -13,7 +13,6 @@ use VigenereCipherDecode_mod::VigenereCipherDecode;
 use VigenereCipherEncode_mod::VigenereCipherEncode;
 
 use crate::api::error::Error;
-
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize)]
@@ -51,7 +50,7 @@ impl Response {
     }
 }
 
-pub fn do_magic(request: actix_web::web::Json<Request>) -> Response {
+pub fn some_magic(request: actix_web::web::Json<Request>) -> Response {
     let result = match request.name {
         Operations::A1Z26CipherDecode => A1Z26CipherDecode::new(request.0).run(),
         Operations::A1Z26CipherEncode => A1Z26CipherEncode::new(request.0).run(),

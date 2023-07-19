@@ -29,5 +29,5 @@ async fn main() -> std::io::Result<()> {
 async fn root() -> actix_web::Result<HttpResponse> {
     Ok(HttpResponse::build(StatusCode::OK)
         .content_type("text/html; charset=utf-8")
-        .body("<div style=\"text-align: center; font-weight: bold\">I do API and I DON'T CARE about frontend</div>"))
+        .body("<div style=\"margin-top:150px;text-align:center;font-weight:bolder\">I do API and I DON'T CARE about frontend</div>"))
 }
