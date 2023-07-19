@@ -1,5 +1,4 @@
 use num::{traits::Euclid, Integer, ToPrimitive};
-use std::fmt::Display;
 
 use super::macros::{map, regex_check};
 
@@ -76,7 +75,7 @@ where
     (old_r, old_s, old_t)
 }
 
-pub fn mod_inv<T: Integer + Copy + Display>(a: T, module: T) -> T {
+pub fn mod_inv<T: Integer + Copy>(a: T, module: T) -> T {
     let (_, x, _) = extended_gcd(a, module);
 
     if x < T::zero() {

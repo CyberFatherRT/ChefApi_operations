@@ -1,4 +1,3 @@
-#![feature(step_trait)]
 #![allow(non_snake_case)]
 
 use actix_web::{middleware::Logger, web, App, HttpResponse, HttpServer};
