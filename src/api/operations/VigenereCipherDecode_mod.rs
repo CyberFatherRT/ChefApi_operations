@@ -1,15 +1,15 @@
 use super::{Operation, Request};
 
-use crate::api::{error::Error, lib::VigenereCipher, macros::create_struct, utils::add};
+use crate::api::{error::Error, lib::VigenereCipher, macros::create_struct, utils::sub};
 
-create_struct!(VigenereEncode);
+create_struct!(VigenereCipherDecode);
 
-impl VigenereCipher for VigenereEncode {}
+impl VigenereCipher for VigenereCipherDecode {}
 
-impl Operation for VigenereEncode {
+impl Operation for VigenereCipherDecode {
     fn new(input: Request) -> Self {
-        VigenereEncode {
-            name: "Vigenere Encode",
+        VigenereCipherDecode {
+            name: "Vigenere Decode",
             module: "Cipher",
             description: Some("The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar ciphers based on the letters of a keyword. It is a simple form of polyalphabetic substitution."),
             infoURL: Some("https://wikipedia.org/wiki/Vigenère_cipher"),
@@ -18,7 +18,7 @@ impl Operation for VigenereEncode {
     }
 
     fn run(&self) -> Result<String, Error> {
-        <Self as VigenereCipher>::cipher(&self.request, add)
+        <Self as VigenereCipher>::cipher(&self.request, sub)
     }
 
     fn validate(&self) -> Result<(), Error> {

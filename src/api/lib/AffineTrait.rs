@@ -4,7 +4,6 @@ use crate::api::{
     operations::Request,
     utils::{get_index_by_char, validate_lang, NUM},
 };
-use num::traits::Euclid;
 use unicode_segmentation::UnicodeSegmentation;
 
 pub trait AffineCipher {

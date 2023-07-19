@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use num::{traits::Euclid, Integer, ToPrimitive};
 
 use super::macros::{map, regex_check};

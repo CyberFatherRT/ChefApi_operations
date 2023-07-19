@@ -2,26 +2,28 @@ mod A1Z26CipherDecode_mod;
 mod A1Z26CipherEncode_mod;
 mod AffineCipherDecode_mod;
 mod AffineCipherEncode_mod;
-mod VigenereDecode_mod;
-mod VigenereEncode_mod;
+mod VigenereCipherDecode_mod;
+mod VigenereCipherEncode_mod;
 
 use A1Z26CipherDecode_mod::A1Z26CipherDecode;
 use A1Z26CipherEncode_mod::A1Z26CipherEncode;
 use AffineCipherDecode_mod::AffineCipherDecode;
 use AffineCipherEncode_mod::AffineCipherEncode;
-use VigenereDecode_mod::VigenereDecode;
-use VigenereEncode_mod::VigenereEncode;
+use VigenereCipherDecode_mod::VigenereCipherDecode;
+use VigenereCipherEncode_mod::VigenereCipherEncode;
 
 use crate::api::error::Error;
 
-#[derive(serde::Deserialize)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Deserialize)]
 pub enum Operations {
     A1Z26CipherDecode,
     A1Z26CipherEncode,
     AffineCipherDecode,
     AffineCipherEncode,
-    VigenereDecode,
-    VigenereEncode,
+    VigenereCipherDecode,
+    VigenereCipherEncode,
 }
 
 trait Operation {
@@ -30,7 +32,7 @@ trait Operation {
     fn validate(&self) -> Result<(), Error>;
 }
 
-#[derive(serde::Deserialize)]
+#[derive(Deserialize)]
 pub struct Request {
     pub name: Operations,
     pub lang: String,
@@ -38,7 +40,7 @@ pub struct Request {
     pub input: String,
 }
 
-#[derive(serde::Serialize)]
+#[derive(Serialize)]
 pub struct Response {
     pub output: Result<String, Error>,
 }
@@ -55,8 +57,8 @@ pub fn do_magic(request: actix_web::web::Json<Request>) -> Response {
         Operations::A1Z26CipherEncode => A1Z26CipherEncode::new(request.0).run(),
         Operations::AffineCipherDecode => AffineCipherDecode::new(request.0).run(),
         Operations::AffineCipherEncode => AffineCipherEncode::new(request.0).run(),
-        Operations::VigenereDecode => VigenereDecode::new(request.0).run(),
-        Operations::VigenereEncode => VigenereEncode::new(request.0).run(),
+        Operations::VigenereCipherDecode => VigenereCipherDecode::new(request.0).run(),
+        Operations::VigenereCipherEncode => VigenereCipherEncode::new(request.0).run(),
     };
 
     Response::new(result)

@@ -1,5 +1,5 @@
 use super::{Operation, Request};
-use crate::api::utils::{get_by_index, get_index_by_char};
+use crate::api::utils::get_by_index;
 use crate::api::{error::Error, lib::AffineCipher, macros::create_struct, utils::get_alphabet};
 use unicode_segmentation::UnicodeSegmentation;
 
@@ -41,20 +41,11 @@ impl Operation for AffineCipherEncode {
         let mut plaintext = String::with_capacity(self.request.input.graphemes(true).count());
         let alp = get_alphabet(&self.request.lang);
 
-        println!("{} {}", a, b);
-
         for c in self.request.input.chars() {
             if !c.is_alphabetic() {
                 plaintext.push(c);
                 continue;
             }
-
-            println!(
-                "{}-{} {}",
-                c,
-                get_index_by_char(alp.0, c.to_lowercase().next().unwrap()),
-                <Self as AffineCipher>::encode(a, b, c.to_lowercase().next().unwrap(), alp.0)
-            );
 
             plaintext.push(match c.is_lowercase() {
                 true => get_by_index(alp.0, <Self as AffineCipher>::encode(a, b, c, alp.0)),
