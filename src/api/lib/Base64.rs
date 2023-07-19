@@ -1,66 +1,58 @@
+use itertools::Itertools;
+use unicode_segmentation::UnicodeSegmentation;
+
 use crate::api::{
     error::Error,
     utils::{expandAlphabetRange, getCharByIndex, strToArrayBuffer},
 };
-use unicode_segmentation::UnicodeSegmentation;
 
-pub fn toBase64(data: &str, mut alphabet: String) -> Result<String, Error> {
+pub fn toBase64(data: &str, mut alphabet: &str) -> Result<String, Error> {
     if data.is_empty() {
         return Ok(String::new());
     }
-
     if alphabet.is_empty() {
-        alphabet = "A-Za-z0-9+/=".to_string();
+        alphabet = "A-Za-z0-9+/=";
     }
 
-    alphabet = String::from_iter(expandAlphabetRange(&alphabet));
-    let alphabet_length = alphabet.graphemes(true).count();
+    let alphabet = expandAlphabetRange(&alphabet).iter().collect::<String>();
 
+    let alphabet_length = alphabet.graphemes(true).count();
+    println!("{}", alphabet_length);
     if alphabet_length != 64 && alphabet_length != 65 {
         return Err(Error::Error {
             error: "Invalid base64 alphabet length",
         });
     }
 
-    let data = strToArrayBuffer(data);
     let mut output = String::new();
-    let mut i = 0;
+    let mut padding = 0;
 
-    while i < data.len() {
-        let char1 = match data.get(i) {
-            Some(x) => *x,
-            None => 0u32,
-        };
-        i += 1;
-        let char2 = match data.get(i) {
-            Some(x) => *x,
-            None => 0u32,
-        };
-        i += 1;
-        let char3 = match data.get(i) {
-            Some(x) => *x,
-            None => 0u32,
-        };
-        i += 1;
-
-        let enc1 = char1 >> 4;
-        let enc2 = ((char1 & 0x03) << 4) | (char2 >> 4);
-        let enc3 = ((char2 & 0x0f) << 2) | (char3 >> 6);
-        let enc4 = char3 & 0x3f;
-
-        if enc1 != 0 {
-            output.push(getCharByIndex(&alphabet, enc1))
-        }
-        if enc2 != 0 {
-            output.push(getCharByIndex(&alphabet, enc2))
-        }
-        if enc3 != 0 {
-            output.push(getCharByIndex(&alphabet, enc3))
-        }
-        if enc4 != 0 {
-            output.push(getCharByIndex(&alphabet, enc4))
-        }
+    for i in strToArrayBuffer(data)
+        .iter()
+        .map(|x| format!("{:08b}", x))
+        .collect::<String>()
+        .chars()
+        .chunks(6)
+        .into_iter()
+        .map(|x| {
+            let sextet = x.collect::<String>();
+            match sextet.len() {
+                6 => u8::from_str_radix(&sextet, 2),
+                _ => {
+                    padding += 1;
+                    u8::from_str_radix(&format!("{:0<6}", sextet), 2)
+                }
+            }
+            .unwrap()
+        })
+    {
+        output.push(getCharByIndex(&alphabet, i))
     }
+
+    output.push_str(&match alphabet_length {
+        65 => getCharByIndex(&alphabet, 64).to_string().repeat(padding),
+        _ => "".to_string(),
+    });
 
     Ok(output)
 }

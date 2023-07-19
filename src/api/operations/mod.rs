@@ -2,6 +2,7 @@ mod A1Z26CipherDecode_mod;
 mod A1Z26CipherEncode_mod;
 mod AffineCipherDecode_mod;
 mod AffineCipherEncode_mod;
+mod ToBase64_mod;
 mod VigenereCipherDecode_mod;
 mod VigenereCipherEncode_mod;
 
@@ -9,6 +10,7 @@ use A1Z26CipherDecode_mod::A1Z26CipherDecode;
 use A1Z26CipherEncode_mod::A1Z26CipherEncode;
 use AffineCipherDecode_mod::AffineCipherDecode;
 use AffineCipherEncode_mod::AffineCipherEncode;
+use ToBase64_mod::ToBase64;
 use VigenereCipherDecode_mod::VigenereCipherDecode;
 use VigenereCipherEncode_mod::VigenereCipherEncode;
 
@@ -21,6 +23,7 @@ pub enum Operations {
     A1Z26CipherEncode,
     AffineCipherDecode,
     AffineCipherEncode,
+    ToBase64,
     VigenereCipherDecode,
     VigenereCipherEncode,
 }
@@ -56,6 +59,7 @@ pub fn some_magic(request: actix_web::web::Json<Request>) -> Response {
         Operations::A1Z26CipherEncode => A1Z26CipherEncode::new(request.0).run(),
         Operations::AffineCipherDecode => AffineCipherDecode::new(request.0).run(),
         Operations::AffineCipherEncode => AffineCipherEncode::new(request.0).run(),
+        Operations::ToBase64 => ToBase64::new(request.0).run(),
         Operations::VigenereCipherDecode => VigenereCipherDecode::new(request.0).run(),
         Operations::VigenereCipherEncode => VigenereCipherEncode::new(request.0).run(),
     };

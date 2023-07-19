@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use super::macros::{map, regex_check};
 use num::{Integer, ToPrimitive};
 use unicode_segmentation::UnicodeSegmentation;
@@ -22,23 +20,26 @@ pub fn expandAlphabetRange(alphabet: &str) -> Vec<char> {
 
     while i < alphabet_length {
         let by_index = getCharByIndex(alphabet, i);
-        if i < alphabet_length - 2 && getCharByIndex(alphabet, i + 1) == '-' && by_index != '\\' {
+        if (i < alphabet_length - 2)
+            && (getCharByIndex(alphabet, i + 1) == '-')
+            && (by_index != '\\')
+        {
             let (start, end) = (ord(by_index), ord(getCharByIndex(alphabet, i + 2)));
 
             for j in start..=end {
                 result.push(chr(j));
             }
             i += 2;
-        } else if i < alphabet_length - 2
-            && by_index == '\\'
-            && getCharByIndex(alphabet, i + 1) != '-'
+        } else if (i < alphabet_length - 2)
+            && (by_index == '\\')
+            && (getCharByIndex(alphabet, i + 1) == '-')
         {
             result.push('-');
             i += 1;
         } else {
             result.push(by_index);
-            i += 1;
         }
+        i += 1;
     }
 
     return result;
@@ -49,13 +50,13 @@ pub fn strToArrayBuffer(string: &str) -> Vec<u32> {
         return Vec::new();
     }
 
-    let mut result: Vec<u32> = Vec::with_capacity(string.len());
-    let mut i = string.len();
+    let string_length = string.graphemes(true).count();
+    let mut result: Vec<u32> = vec![0; string_length];
 
-    while i > 0 {
+    for i in 0..string_length {
         result[i] = ord(getCharByIndex(string, i));
-        i -= 1;
     }
+
     result
 }
 

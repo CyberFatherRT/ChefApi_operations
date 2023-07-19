@@ -10,7 +10,7 @@ custom_error! {
     InvalidInputError{error: &'static str} = "Data is not a valid string: {error}",
     MissingParameterError{error: &'static str} = "{error}",
     UnsupportedLanguageError{error: &'static str} = "Unsupported language: {error}",
-    InvalidNumberOfParamsError{error: &'static str} = "Invalid number of parameters: {error}",
+    InvalidNumberOfParamsError{error: &'static str} = "{error}",
     IvalidKeyError{error: &'static str} = "Invalid key: {error}",
     InvalidParamTypeError{error: &'static str} = "{error}"
 }
