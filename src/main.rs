@@ -1,3 +1,4 @@
+#![feature(let_chains)]
 #![allow(non_snake_case)]
 
 use actix_web::{get, http::StatusCode, middleware::Logger, App, HttpResponse, HttpServer};

@@ -21,6 +21,10 @@ impl Operation for A1Z26CipherEncode {
             return Err(e);
         }
 
+        if self.request.input.is_empty() {
+            return Ok(String::new());
+        }
+
         let mut result = String::new();
         let delimiter = char_rep(&self.request.params[0]);
 
@@ -41,6 +45,12 @@ impl Operation for A1Z26CipherEncode {
     }
 
     fn validate(&self) -> Result<(), Error> {
+        if self.request.input.is_empty() {
+            return Err(Error::InvalidInputError {
+                error: "Input is empty.",
+            });
+        }
+
         Ok(())
     }
 }

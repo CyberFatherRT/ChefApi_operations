@@ -1,7 +1,6 @@
 use super::{Operation, Request};
 use crate::api::utils::get_by_index;
-use crate::api::{error::Error, lib::AffineCipher, macros::create_struct, utils::get_alphabet};
-use unicode_segmentation::UnicodeSegmentation;
+use crate::api::{error::Error, lib::AffineCipher, macros::create_struct};
 
 create_struct!(AffineCipherEncode);
 
@@ -23,23 +22,9 @@ impl Operation for AffineCipherEncode {
             return Err(e);
         }
 
-        let (a, b) = (
-            self.request
-                .params
-                .get(0)
-                .unwrap()
-                .parse::<isize>()
-                .unwrap(),
-            self.request
-                .params
-                .get(1)
-                .unwrap()
-                .parse::<isize>()
-                .unwrap(),
-        );
+        let (a, b) = <Self as AffineCipher>::get_a_b(&self.request);
 
-        let mut plaintext = String::with_capacity(self.request.input.graphemes(true).count());
-        let alp = get_alphabet(&self.request.lang);
+        let (mut plaintext, alp) = <Self as AffineCipher>::get_plaintext_alp(&self.request);
 
         for c in self.request.input.chars() {
             if !c.is_alphabetic() {

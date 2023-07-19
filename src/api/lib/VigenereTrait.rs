@@ -70,25 +70,41 @@ pub trait VigenereCipher {
     }
 
     fn validate_language(request: &Request) -> Result<(), Error> {
+        if request.input.is_empty() {
+            return Err(Error::InvalidInputError {
+                error: "Input is empty",
+            });
+        }
+
         let langs = ["en", "ru", "ru_with_yo"];
 
         if !langs.contains(&&*request.lang.clone()) {
-            return Err(Error::UnsupportedLanguageError);
+            return Err(Error::UnsupportedLanguageError {
+                error: "Unsupported language.",
+            });
         }
 
         if request.params.len() != 1 {
-            return Err(Error::InvalidNumberOfParamsError);
+            return Err(Error::InvalidNumberOfParamsError {
+                error: "Invalid number of params error.",
+            });
         }
 
         let reg = match request.lang.as_str() {
             "en" => Regex::new(EN_ALP.1).unwrap(),
             "ru" => Regex::new(RU_ALP.1).unwrap(),
             "ru_with_yo" => Regex::new(RU_ALP_WITH_YO.1).unwrap(),
-            _ => return Err(Error::UnsupportedLanguageError),
+            _ => {
+                return Err(Error::UnsupportedLanguageError {
+                    error: "Unsupported language.",
+                })
+            }
         };
 
         if !reg.is_match(&request.params[0]) {
-            return Err(Error::IvalidKeyError);
+            return Err(Error::IvalidKeyError {
+                error: "invalid key.",
+            });
         }
 
         Ok(())

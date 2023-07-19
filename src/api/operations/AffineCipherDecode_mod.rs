@@ -1,7 +1,11 @@
 use super::{Operation, Request};
-use crate::api::{error::Error, macros::create_struct};
+use crate::api::{error::Error, lib::AffineCipher, macros::create_struct, utils::get_by_index};
+use num::Integer;
+use unicode_segmentation::UnicodeSegmentation;
 
 create_struct!(AffineCipherDecode);
+
+impl AffineCipher for AffineCipherDecode {}
 
 impl Operation for AffineCipherDecode {
     fn new(input: Request) -> Self {
@@ -15,10 +19,58 @@ impl Operation for AffineCipherDecode {
     }
 
     fn run(&self) -> Result<String, Error> {
-        todo!()
+        if let Err(e) = self.validate() {
+            return Err(e);
+        }
+
+        if self.request.input.is_empty() {
+            return Ok(String::new());
+        }
+
+        let (a, b) = <Self as AffineCipher>::get_a_b(&self.request);
+        let (mut plaintext, alp) = <Self as AffineCipher>::get_plaintext_alp(&self.request);
+
+        for c in self.request.input.chars() {
+            if !c.is_alphabetic() {
+                plaintext.push(c);
+                continue;
+            }
+
+            plaintext.push(match c.is_lowercase() {
+                true => get_by_index(alp.0, <Self as AffineCipher>::decode(a, b, c, alp.0)),
+                false => get_by_index(
+                    alp.0,
+                    <Self as AffineCipher>::decode(a, b, c.to_lowercase().next().unwrap(), alp.0),
+                )
+                .to_uppercase()
+                .next()
+                .unwrap(),
+            });
+        }
+
+        Ok(plaintext)
     }
 
     fn validate(&self) -> Result<(), Error> {
-        todo!()
+        if let Err(e) = <Self as AffineCipher>::validate(&self.request) {
+            return Err(e);
+        };
+
+        if self
+            .request
+            .params
+            .get(0)
+            .unwrap()
+            .parse::<isize>()
+            .unwrap()
+            .gcd(&(self.request.lang.graphemes(true).count() as isize))
+            != 1
+        {
+            return Err(Error::InvalidParamTypeError {
+                error: "The value of `a` must be coprime to 26.",
+            });
+        }
+
+        Ok(())
     }
 }

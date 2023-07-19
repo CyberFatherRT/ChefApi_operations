@@ -2,24 +2,58 @@ use crate::api::{
     error::Error,
     macros::regex_check,
     operations::Request,
-    utils::{get_index_by_char, validate_lang, NUM},
+    utils::{get_alphabet, get_index_by_char, mod_inv, modulus, validate_lang, NUM},
 };
 use unicode_segmentation::UnicodeSegmentation;
 
 pub trait AffineCipher {
     fn encode(a: isize, b: isize, x: char, alp: &str) -> isize {
-        let Ex =
-            ((a * get_index_by_char(alp, x)) + b).rem_euclid(alp.graphemes(true).count() as isize);
+        let m = alp.graphemes(true).count() as isize;
+        let Ex = ((a * get_index_by_char(alp, x)) + b).rem_euclid(m);
         return Ex;
+    }
+
+    fn decode(a: isize, b: isize, y: char, alp: &str) -> isize {
+        let m = alp.graphemes(true).count() as isize;
+
+        let inv_a = mod_inv(a, alp.graphemes(true).count() as isize);
+
+        let Dy = modulus(inv_a * (get_index_by_char(alp, y) - b), m);
+
+        return Dy;
+    }
+
+    fn get_a_b(request: &Request) -> (isize, isize) {
+        return (
+            request.params.get(0).unwrap().parse::<isize>().unwrap(),
+            request.params.get(1).unwrap().parse::<isize>().unwrap(),
+        );
+    }
+
+    fn get_plaintext_alp(request: &Request) -> (String, (&str, &str)) {
+        return (
+            String::with_capacity(request.input.graphemes(true).count()),
+            get_alphabet(&request.lang),
+        );
     }
 
     fn validate(request: &Request) -> Result<(), Error> {
         if request.params.len() != 2 {
-            return Err(Error::InvalidNumberOfParamsError);
+            return Err(Error::InvalidNumberOfParamsError {
+                error: "Invalid number of params.",
+            });
+        }
+
+        if request.input.is_empty() {
+            return Err(Error::InvalidInputError {
+                error: "Input is empty.",
+            });
         }
 
         if !validate_lang(&request.input, &request.lang) {
-            return Err(Error::UnsupportedLanguageError);
+            return Err(Error::UnsupportedLanguageError {
+                error: "Invalid language.",
+            });
         }
 
         let (a, b) = (
