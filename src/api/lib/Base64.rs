@@ -24,7 +24,6 @@ pub fn toBase64(data: &str, mut alphabet: String) -> Result<String, Error> {
 
     let data = strToArrayBuffer(data);
     let mut output = String::new();
-    let (mut enc1, mut enc2, mut enc3, mut enc4) = (0u32, 0u32, 0u32, 0u32);
     let mut i = 0;
 
     while i < data.len() {
@@ -44,10 +43,10 @@ pub fn toBase64(data: &str, mut alphabet: String) -> Result<String, Error> {
         };
         i += 1;
 
-        enc1 = char1 >> 4;
-        enc2 = ((char1 & 0x03) << 4) | (char2 >> 4);
-        enc3 = ((char2 & 0x0f) << 2) | (char3 >> 6);
-        enc4 = char3 & 0x3f;
+        let enc1 = char1 >> 4;
+        let enc2 = ((char1 & 0x03) << 4) | (char2 >> 4);
+        let enc3 = ((char2 & 0x0f) << 2) | (char3 >> 6);
+        let enc4 = char3 & 0x3f;
 
         if enc1 != 0 {
             output.push(getCharByIndex(&alphabet, enc1))

@@ -50,11 +50,10 @@ pub fn strToArrayBuffer(string: &str) -> Vec<u32> {
     }
 
     let mut result: Vec<u32> = Vec::with_capacity(string.len());
-    let (mut i, mut b) = (string.len(), 0u32);
+    let mut i = string.len();
 
     while i > 0 {
-        b = ord(getCharByIndex(string, i));
-        result[i] = b;
+        result[i] = ord(getCharByIndex(string, i));
         i -= 1;
     }
     result
