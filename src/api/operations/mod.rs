@@ -25,7 +25,7 @@ pub enum Operations {
 }
 
 trait Operation {
-    fn new(input: Request) -> Box<Self>;
+    fn new(input: Request) -> Self;
     fn run(&self) -> Result<String, Error>;
     fn validate(&self) -> Result<(), Error>;
 }

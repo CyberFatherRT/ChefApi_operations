@@ -6,14 +6,14 @@ use crate::api::utils::char_rep;
 create_struct!(A1Z26CipherEncode);
 
 impl Operation for A1Z26CipherEncode {
-    fn new(input: Request) -> Box<Self> {
-        Box::new(A1Z26CipherEncode {
+    fn new(input: Request) -> Self {
+        A1Z26CipherEncode {
             name: "A1Z26 Cipher Encode",
             module: "Cipher",
             description: Some("Converts alphabet characters into their corresponding alphabet order number.<br><br>e.g. <code>a</code> becomes <code>1</code> and <code>b</code> becomes <code>2</code>.<br><br>Non-alphabet characters are dropped."),
             infoURL: None,
             request: input,
-        })
+        }
     }
 
     fn run(&self) -> Result<String, Error> {
