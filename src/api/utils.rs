@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
 use super::macros::{map, regex_check};
-use num::{traits::Euclid, Integer, ToPrimitive};
+use num::{Integer, ToPrimitive};
 use unicode_segmentation::UnicodeSegmentation;
 
 // region constants
@@ -66,7 +66,13 @@ pub fn strToArrayBuffer(string: &str) -> Vec<u32> {
 }
 
 pub fn strToUtf8ArrayBuffer(string: &str) -> Vec<u32> {
-    todo!()
+
+    if string.is_empty() {
+        return Vec::new();
+    }
+
+    let mut result: Vec
+
 }
 
 pub fn validateLang(text: &str, lang: &str) -> bool {
@@ -161,8 +167,8 @@ pub fn mod_inv<T: Integer + Copy>(a: T, module: T) -> T {
     }
 }
 
-pub fn modulus<T: Integer + Euclid>(a: T, m: T) -> T {
-    a.rem_euclid(&m)
+pub fn modulus<T: Integer + Copy>(x: T, y: T) -> T {
+    ((x % y) + y) % y
 }
 
 pub fn add(a: i16, b: i16) -> i16 {

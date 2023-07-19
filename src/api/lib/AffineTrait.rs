@@ -9,7 +9,7 @@ use unicode_segmentation::UnicodeSegmentation;
 pub trait AffineCipher {
     fn encode(a: isize, b: isize, x: char, alp: &str) -> isize {
         let m = alp.graphemes(true).count() as isize;
-        let Ex = ((a * getIndexByChar(alp, x)) + b).rem_euclid(m);
+        let Ex = modulus((a * getIndexByChar(alp, x)) + b, m);
         return Ex;
     }
 
