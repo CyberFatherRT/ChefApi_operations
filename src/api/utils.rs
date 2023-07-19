@@ -55,24 +55,9 @@ pub fn strToArrayBuffer(string: &str) -> Vec<u32> {
     while i > 0 {
         b = ord(getCharByIndex(string, i));
         result[i] = b;
-
-        if b > 255 {
-            return strToUtf8ArrayBuffer(string);
-        }
-
         i -= 1;
     }
     result
-}
-
-pub fn strToUtf8ArrayBuffer(string: &str) -> Vec<u32> {
-
-    if string.is_empty() {
-        return Vec::new();
-    }
-
-    let mut result: Vec
-
 }
 
 pub fn validateLang(text: &str, lang: &str) -> bool {
@@ -143,15 +128,15 @@ pub fn update_step<T: Integer + Copy>(a: &mut T, old_a: &mut T, quotient: T) {
 
 pub fn extended_gcd<T: Integer + Copy>(a: T, b: T) -> (T, T, T) {
     let (mut old_r, mut rem) = (a, b);
-    let (mut old_s, mut coeff_s) = (T::one(), T::zero());
-    let (mut old_t, mut coeff_t) = (T::zero(), T::one());
+    let (mut old_s, mut coefficient_s) = (T::one(), T::zero());
+    let (mut old_t, mut coefficient_t) = (T::zero(), T::one());
 
     while rem != T::zero() {
         let quotient = old_r / rem;
 
         update_step(&mut rem, &mut old_r, quotient);
-        update_step(&mut coeff_s, &mut old_s, quotient);
-        update_step(&mut coeff_t, &mut old_t, quotient);
+        update_step(&mut coefficient_s, &mut old_s, quotient);
+        update_step(&mut coefficient_t, &mut old_t, quotient);
     }
 
     (old_r, old_s, old_t)

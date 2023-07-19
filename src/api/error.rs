@@ -4,6 +4,7 @@ use serde::Serialize;
 custom_error! {
     #[derive(Serialize)]
     pub Error
+    Error{error: &'static str} = "{error}",
     EmptyInputError = "Input string is empty",
     OperationError{error: &'static str} = "{error}",
     InvalidInputError{error: &'static str} = "Data is not a valid string: {error}",
