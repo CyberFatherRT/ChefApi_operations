@@ -141,20 +141,12 @@ pub fn fromBase64(
 
     for i in strToArrayBufferByAlphabet(&data, &alphabet)
         .iter()
-        .map(|x| {
-            let x = format!("{:08b}", x)[2..].to_string();
-            println!("{x}");
-            x
-        })
+        .map(|x| format!("{:08b}", x)[2..].to_string())
         .collect::<String>()
         .chars()
         .chunks(8)
         .into_iter()
-        .map(|x| {
-            let x = x.collect::<String>();
-            println!("{x}");
-            char::from_u32(u32::from_str_radix(&x, 2).unwrap()).unwrap()
-        })
+        .map(|x| char::from_u32(u32::from_str_radix(&x.collect::<String>(), 2).unwrap()).unwrap())
     {
         output.push(i)
     }
