@@ -19,8 +19,6 @@ use VigenereCipherEncode_mod::VigenereCipherEncode;
 use crate::api::error::Error;
 use serde::{Deserialize, Serialize};
 
-use crate::api::lib::fromBase64;
-
 #[derive(Deserialize)]
 pub enum Operations {
     A1Z26CipherDecode,
