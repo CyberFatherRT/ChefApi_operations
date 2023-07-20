@@ -9,7 +9,7 @@ use unicode_segmentation::UnicodeSegmentation;
 pub trait AffineCipher {
     fn encode(a: isize, b: isize, x: char, alp: &str) -> isize {
         let m = alp.graphemes(true).count() as isize;
-        let Ex = modulus((a * getIndexByChar(alp, x)) + b, m);
+        let Ex = modulus((a * getIndexByChar(alp, x) as isize) + b, m);
         return Ex;
     }
 
@@ -18,7 +18,7 @@ pub trait AffineCipher {
 
         let inv_a = mod_inv(a, alp.graphemes(true).count() as isize);
 
-        let Dy = modulus(inv_a * (getIndexByChar(alp, y) - b), m);
+        let Dy = modulus(inv_a * (getIndexByChar(alp, y) as isize - b), m);
 
         return Dy;
     }

@@ -1,5 +1,6 @@
 use super::macros::{map, regex_check};
 use num::{Integer, ToPrimitive};
+use regex::Regex;
 use unicode_segmentation::UnicodeSegmentation;
 
 // region constants
@@ -60,6 +61,28 @@ pub fn strToArrayBuffer(string: &str) -> Vec<u32> {
     result
 }
 
+pub fn strToArrayBufferByAlphabet(string: &str, alphabet: &str) -> Vec<u32> {
+    if string.is_empty() {
+        return Vec::new();
+    }
+
+    let string_length = string.graphemes(true).count();
+    let mut result: Vec<u32> = vec![0; string_length];
+    let mut idx = 0;
+
+    for c in string.chars() {
+        result[idx] = getIndexByChar(alphabet, c) as u32;
+        idx += 1;
+    }
+
+    result
+}
+
+pub fn regex_replace(string: &str, regex: &str, replacement: &str) -> String {
+    let re = Regex::new(regex).unwrap();
+    return re.replace_all(string, replacement).to_string();
+}
+
 pub fn validateLang(text: &str, lang: &str) -> bool {
     let re = match lang {
         "en" => r"^[a-zA-Z\p{P}\s\d]+$",
@@ -83,8 +106,8 @@ pub fn getCharByIndex<T: Integer + ToPrimitive>(text: &str, index: T) -> char {
     text.chars().nth(index.to_usize().unwrap()).unwrap()
 }
 
-pub fn getIndexByChar(text: &str, ch: char) -> isize {
-    text.chars().position(|c| c == ch).unwrap() as isize
+pub fn getIndexByChar(text: &str, ch: char) -> usize {
+    text.chars().position(|c| c == ch).unwrap()
 }
 
 pub fn charRepr(token: &str) -> &str {

@@ -1,7 +1,9 @@
 #![feature(let_chains)]
 #![allow(non_snake_case)]
 
-use actix_web::{get, http::StatusCode, middleware::Logger, App, HttpResponse, HttpServer};
+use actix_web::{
+    get, http::StatusCode, middleware::Logger, App, HttpResponse, HttpServer, Responder,
+};
 use dotenv::dotenv;
 use env_logger::Env;
 
@@ -26,8 +28,8 @@ async fn main() -> std::io::Result<()> {
 }
 
 #[get("/")]
-async fn root() -> actix_web::Result<HttpResponse> {
-    Ok(HttpResponse::build(StatusCode::OK)
-        .content_type("text/html; charset=utf-8")
-        .body("<div style=\"margin-top:150px;text-align:center;font-weight:bolder\">I do API and I DON'T CARE about frontend</div>"))
+async fn root() -> impl Responder {
+    HttpResponse::build(StatusCode::OK)
+        .content_type("text/html; charset=UTF-8")
+        .body("<div style=\"text-align:center;margin-top:150px;font-weight:bolder;background-color:red;\">I do API and I DON'T CARE about frontend!</div>")
 }

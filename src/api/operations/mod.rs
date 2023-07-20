@@ -17,6 +17,8 @@ use VigenereCipherEncode_mod::VigenereCipherEncode;
 use crate::api::error::Error;
 use serde::{Deserialize, Serialize};
 
+use crate::api::lib::fromBase64;
+
 #[derive(Deserialize)]
 pub enum Operations {
     A1Z26CipherDecode,
@@ -54,6 +56,11 @@ impl Response {
 }
 
 pub fn some_magic(request: actix_web::web::Json<Request>) -> Response {
+    println!(
+        "{:?}",
+        fromBase64("SA--".to_string(), "A-Za-z0-9._-", false, false)
+    );
+
     let result = match request.name {
         Operations::A1Z26CipherDecode => A1Z26CipherDecode::new(request.0).run(),
         Operations::A1Z26CipherEncode => A1Z26CipherEncode::new(request.0).run(),
