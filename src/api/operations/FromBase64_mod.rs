@@ -6,7 +6,7 @@ create_struct!(FromBase64);
 impl Operation for FromBase64 {
     fn new(input: Request) -> Self {
         FromBase64 {
-            name: "To Base64",
+            name: "From Base64",
             module: "Default",
             description: Some("Base64 is a notation for encoding arbitrary byte data using a restricted set of symbols that can be conveniently used by humans and processed by computers.<br><br>This operation encodes raw data into an ASCII Base64 string.<br><br>e.g. <code>hello</code> becomes <code>aGVsbG8=</code>"),
             infoURL: Some("https://wikipedia.org/wiki/Base64"),
