@@ -2,7 +2,7 @@
 #![allow(non_snake_case)]
 
 use actix_web::{
-    get, http::StatusCode, middleware::Logger, App, HttpResponse, HttpServer, Responder,
+    get, http::StatusCode, middleware, middleware::Logger, App, HttpResponse, HttpServer, Responder,
 };
 use dotenv::dotenv;
 use env_logger::Env;
@@ -22,7 +22,7 @@ async fn main() -> std::io::Result<()> {
             .service(root)
             .configure(api::configure)
     })
-    .bind((IP, 8080))?
+    .bind((IP, 45678))?
     .run()
     .await
 }
