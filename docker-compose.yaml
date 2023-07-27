@@ -1,6 +1,6 @@
 services:
   CyberKnightApi:
-    image: ghcr.io/thegodfatherru/cyber_knight_api
+    image: ghcr.io/thegodfatherru/cyber_knight_api:v1
     container_name: CyberKnightApi
     ports:
       - "8081:8081"

@@ -57,7 +57,6 @@ impl Response {
 }
 
 pub fn some_magic(request: actix_web::web::Json<Request>) -> Response {
-    println!("{:?}", request);
     let result = match request.name {
         Operations::A1Z26CipherDecode => A1Z26CipherDecode::new(request.0).run(),
         Operations::A1Z26CipherEncode => A1Z26CipherEncode::new(request.0).run(),
