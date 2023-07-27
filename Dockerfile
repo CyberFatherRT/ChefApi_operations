@@ -1,8 +1,6 @@
 FROM rust:slim-buster as builder
 LABEL author="godfather"
 
-RUN USER=root cargo new --bin CyberKnightApi
-
 WORKDIR /CyberKnightApi
 
 RUN rustup toolchain install nightly
