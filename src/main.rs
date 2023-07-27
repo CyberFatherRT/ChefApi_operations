@@ -19,7 +19,7 @@ async fn main() -> std::io::Result<()> {
             .service(root)
             .configure(api::configure)
     })
-    .bind(("0.0.0.0", 3000))?
+    .bind(("0.0.0.0", 8081))?
     .run()
     .await
 }
@@ -28,5 +28,5 @@ async fn main() -> std::io::Result<()> {
 async fn root() -> impl Responder {
     HttpResponse::build(StatusCode::OK)
         .content_type("text/html; charset=UTF-8")
-        .body("<div style=\"text-align:center;margin-top:150px;font-weight:bolder;background-color:red;\">I do API and I DON'T CARE about frontend!</div>")
+        .body("<div style=\"position:absolute;left:50%;top:50%;text-align:center;font-weight:bolder;background-color:red;\">I do API and I DON'T CARE about frontend!</div>")
 }

@@ -1,0 +1,12 @@
+services:
+  CyberKnightApi:
+    image: cyber_knight_api
+    container_name: CyberKnightApi
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+
+networks:
+  default:
+    driver: bridge
+    name: CyberKnight
