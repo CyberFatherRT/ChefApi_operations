@@ -19,9 +19,7 @@ impl Operation for AffineCipherDecode {
     }
 
     fn run(&self) -> Result<String, Error> {
-        if let Err(e) = self.validate() {
-            return Err(e);
-        }
+        self.validate()?;
 
         let (a, b) = <Self as AffineCipher>::get_a_b(&self.request);
         let (mut plaintext, alp) = <Self as AffineCipher>::get_plaintext_alp(&self.request);
@@ -48,9 +46,7 @@ impl Operation for AffineCipherDecode {
     }
 
     fn validate(&self) -> Result<(), Error> {
-        if let Err(e) = <Self as AffineCipher>::validate(&self.request) {
-            return Err(e);
-        };
+        <Self as AffineCipher>::validate(&self.request)?;
 
         if self
             .request

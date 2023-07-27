@@ -43,7 +43,7 @@ pub fn expandAlphabetRange(alphabet: &str) -> Vec<char> {
         i += 1;
     }
 
-    return result;
+    result
 }
 
 pub fn strToArrayBuffer(string: &str) -> Vec<u32> {
@@ -54,7 +54,7 @@ pub fn strToArrayBuffer(string: &str) -> Vec<u32> {
     let string_length = string.graphemes(true).count();
     let mut result: Vec<u32> = vec![0; string_length];
 
-    for i in 0..string_length {
+    for i in 0..result.len() {
         result[i] = ord(getCharByIndex(string, i));
     }
 
@@ -68,11 +68,9 @@ pub fn strToArrayBufferByAlphabet(string: &str, alphabet: &str) -> Vec<u32> {
 
     let string_length = string.graphemes(true).count();
     let mut result: Vec<u32> = vec![0; string_length];
-    let mut idx = 0;
 
-    for c in string.chars() {
+    for (idx, c) in string.chars().enumerate() {
         result[idx] = getIndexByChar(alphabet, c) as u32;
-        idx += 1;
     }
 
     result

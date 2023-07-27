@@ -9,18 +9,13 @@ use unicode_segmentation::UnicodeSegmentation;
 pub trait AffineCipher {
     fn encode(a: isize, b: isize, x: char, alp: &str) -> isize {
         let m = alp.graphemes(true).count() as isize;
-        let Ex = modulus((a * getIndexByChar(alp, x) as isize) + b, m);
-        return Ex;
+        modulus((a * getIndexByChar(alp, x) as isize) + b, m)
     }
 
     fn decode(a: isize, b: isize, y: char, alp: &str) -> isize {
         let m = alp.graphemes(true).count() as isize;
-
         let inv_a = mod_inv(a, alp.graphemes(true).count() as isize);
-
-        let Dy = modulus(inv_a * (getIndexByChar(alp, y) as isize - b), m);
-
-        return Dy;
+        modulus(inv_a * (getIndexByChar(alp, y) as isize - b), m)
     }
 
     fn get_a_b(request: &Request) -> (isize, isize) {

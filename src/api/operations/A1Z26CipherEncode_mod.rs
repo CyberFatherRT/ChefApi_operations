@@ -17,9 +17,7 @@ impl Operation for A1Z26CipherEncode {
     }
 
     fn run(&self) -> Result<String, Error> {
-        if let Err(e) = self.validate() {
-            return Err(e);
-        }
+        self.validate()?;
 
         if self.request.input.is_empty() {
             return Ok(String::new());
@@ -29,7 +27,7 @@ impl Operation for A1Z26CipherEncode {
         let delimiter = charRepr(&self.request.params[0]);
 
         for character in self.request.input.chars() {
-            result.push_str(&*format!(
+            result.push_str(&format!(
                 "{}{}",
                 match character {
                     'a'..='z' => character as u8 - 96,

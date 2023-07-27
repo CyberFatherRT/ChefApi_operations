@@ -17,7 +17,7 @@ pub fn toBase64(data: &str, mut alphabet: &str) -> Result<String, Error> {
         alphabet = "A-Za-z0-9+/=";
     }
 
-    let alphabet = expandAlphabetRange(&alphabet).iter().collect::<String>();
+    let alphabet = expandAlphabetRange(alphabet).iter().collect::<String>();
 
     let alphabet_length = alphabet.graphemes(true).count();
 
@@ -82,7 +82,7 @@ pub fn fromBase64(
         }
     }
 
-    let alphabet = expandAlphabetRange(&alphabet).iter().collect::<String>();
+    let alphabet = expandAlphabetRange(alphabet).iter().collect::<String>();
 
     let alphabet_length = alphabet.graphemes(true).count();
 
@@ -111,8 +111,8 @@ pub fn fromBase64(
             let pad = getCharByIndex(&alphabet, 64);
             let padPos = data.find(pad);
 
-            if padPos.is_some() {
-                if padPos.unwrap() < data.len() - 2 || getCharByIndex(&data, data.len() - 1) != pad
+            if let Some(padPos) = padPos {
+                if padPos < data.len() - 2 || getCharByIndex(&data, data.len() - 1) != pad
                 {
                     return Err(Error::Error {
                         error: format!(

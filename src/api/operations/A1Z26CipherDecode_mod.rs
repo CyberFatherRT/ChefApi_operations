@@ -19,9 +19,7 @@ impl Operation for A1Z26CipherDecode {
     }
 
     fn run(&self) -> Result<String, Error> {
-        if let Err(e) = self.validate() {
-            return Err(e);
-        }
+        self.validate()?;
 
         let delimiter = charRepr(self.request.params.get(0).unwrap());
 
@@ -35,7 +33,7 @@ impl Operation for A1Z26CipherDecode {
 
         for c in cipher_text {
             let c = c.parse::<u32>().unwrap();
-            if c < 1 || c > 26 {
+            if !(1..=26).contains(&c) {
                 return Err(Error::OperationError {
                     error: "Error: all numbers must be between 1 and 26.",
                 });

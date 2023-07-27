@@ -1,5 +1,5 @@
 [package]
-name = "CyberKnightApi"
+name = "cyber_knight_api"
 version = "0.1.0"
 edition = "2021"
 

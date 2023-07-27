@@ -12,9 +12,7 @@ pub trait VigenereCipher {
     where
         F: Fn(i16, i16) -> i16,
     {
-        if let Err(e) = <Self as VigenereCipher>::validate_language(&request) {
-            return Err(e);
-        }
+        <Self as VigenereCipher>::validate_language(request)?;
 
         let (alp, reg) = match &*request.lang {
             "en" => EN_ALP,

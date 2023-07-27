@@ -15,20 +15,13 @@ impl Operation for FromBase64 {
     }
 
     fn run(&self) -> Result<String, Error> {
-        if let Err(e) = self.validate() {
-            return Err(e);
-        }
+        self.validate()?;
+
         match fromBase64(
             self.request.input.clone(),
             &self.request.params[0],
-            match &*self.request.params[1] {
-                "true" => true,
-                _ => false,
-            },
-            match &*self.request.params[2] {
-                "true" => true,
-                _ => false,
-            },
+            matches!(&*self.request.params[1], "true"),
+            matches!(&*self.request.params[1], "true")
         ) {
             Ok(output) => Ok(output.trim_end_matches('\0').to_string()),
             Err(e) => Err(e),

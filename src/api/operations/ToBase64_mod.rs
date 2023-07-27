@@ -15,9 +15,7 @@ impl Operation for ToBase64 {
     }
 
     fn run(&self) -> Result<String, Error> {
-        if let Err(e) = self.validate() {
-            return Err(e);
-        }
+        self.validate()?;
         toBase64(&self.request.input, &self.request.params[0])
     }
 
