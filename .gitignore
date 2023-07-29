@@ -1,6 +1,3 @@
 .idea
-*__pycache__*
-/venv
-/target
-.env
+backend/src/config.rs
 Cargo.lock

@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN rustup default nightly
 RUN cargo install cargo-chef
-COPY . .
+COPY .. .
 RUN cargo chef prepare --recipe-path recipe.json
 
 
@@ -22,7 +22,7 @@ FROM rust AS builder
 
 WORKDIR /app
 
-COPY . .
+COPY .. .
 COPY --from=cacher /app/target target
 COPY --from=cacher /usr/local/cargo /usr/local/cargo
 
