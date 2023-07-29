@@ -1,20 +1,19 @@
 use regex::Regex;
 use unicode_segmentation::UnicodeSegmentation;
 
-use crate::api::{
+use crate::{
     error::Error,
-    operations::Request,
-    utils::{getCharByIndex, modulus, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
+    utils::{get_char_by_index, modulus, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
 };
 
 pub trait VigenereCipher {
-    fn cipher<F>(request: &Request, f: F) -> Result<String, Error>
+    fn cipher<F>(lang: &str, params: &Vec<String>, input: &str, f: F) -> Result<String, Error>
     where
         F: Fn(i16, i16) -> i16,
     {
-        <Self as VigenereCipher>::validate_language(request)?;
+        <Self as VigenereCipher>::validate_language(lang, params, input)?;
 
-        let (alp, reg) = match &*request.lang {
+        let (alp, reg) = match lang {
             "en" => EN_ALP,
             "ru" => RU_ALP,
             "ru_with_yo" => RU_ALP_WITH_YO,
@@ -26,7 +25,7 @@ pub trait VigenereCipher {
             map.insert(v, k);
         }
 
-        let key = &request.params[0].to_lowercase();
+        let key = &params[0].to_lowercase();
         let rg = Regex::new(reg).unwrap();
         let mut index = 0usize;
         let mut cipher_text = String::new();
@@ -34,14 +33,14 @@ pub trait VigenereCipher {
         let key_len = key.graphemes(true).count();
         let alp_len = alp.graphemes(true).count() as i16;
 
-        for c in request.input.chars() {
+        for c in input.chars() {
             if !rg.is_match(&c.to_string()) {
                 cipher_text.push(c);
                 continue;
             }
 
             let key_idx = map
-                .get(&getCharByIndex(key, index % key_len))
+                .get(&get_char_by_index(key, index % key_len))
                 .unwrap()
                 .to_owned() as i16;
 
@@ -54,8 +53,8 @@ pub trait VigenereCipher {
             let idx = f(text_idx, key_idx);
 
             cipher_text.push(match c.is_lowercase() {
-                true => getCharByIndex(alp, modulus(idx, alp_len)),
-                false => getCharByIndex(alp, modulus(idx, alp_len))
+                true => get_char_by_index(alp, modulus(idx, alp_len)),
+                false => get_char_by_index(alp, modulus(idx, alp_len))
                     .to_uppercase()
                     .next()
                     .unwrap(),
@@ -67,8 +66,8 @@ pub trait VigenereCipher {
         Ok(cipher_text)
     }
 
-    fn validate_language(request: &Request) -> Result<(), Error> {
-        if request.input.is_empty() {
+    fn validate_language(lang: &str, params: &Vec<String>, input: &str) -> Result<(), Error> {
+        if input.is_empty() {
             return Err(Error::InvalidInputError {
                 error: "Input is empty",
             });
@@ -76,19 +75,19 @@ pub trait VigenereCipher {
 
         let langs = ["en", "ru", "ru_with_yo"];
 
-        if !langs.contains(&&*request.lang.clone()) {
+        if !langs.contains(&lang.clone()) {
             return Err(Error::UnsupportedLanguageError {
                 error: "Unsupported language.",
             });
         }
 
-        if request.params.len() != 1 {
+        if params.len() != 1 {
             return Err(Error::InvalidNumberOfParamsError {
                 error: "Invalid number of params error.",
             });
         }
 
-        let reg = match request.lang.as_str() {
+        let reg = match lang {
             "en" => Regex::new(EN_ALP.1).unwrap(),
             "ru" => Regex::new(RU_ALP.1).unwrap(),
             "ru_with_yo" => Regex::new(RU_ALP_WITH_YO.1).unwrap(),
@@ -99,7 +98,7 @@ pub trait VigenereCipher {
             }
         };
 
-        if !reg.is_match(&request.params[0]) {
+        if !reg.is_match(&params[0]) {
             return Err(Error::IvalidKeyError {
                 error: "invalid key.",
             });

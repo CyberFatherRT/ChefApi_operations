@@ -14,18 +14,18 @@ pub const NUM: (&str, &str) = ("0123456789", r"^\+?(0|[1-9]\d*)$");
 
 // region work with strings
 
-pub fn expandAlphabetRange(alphabet: &str) -> Vec<char> {
+pub fn expand_alphabet_range(alphabet: &str) -> Vec<char> {
     let mut result: Vec<char> = Vec::new();
     let alphabet_length = alphabet.graphemes(true).count();
     let mut i = 0;
 
     while i < alphabet_length {
-        let by_index = getCharByIndex(alphabet, i);
+        let by_index = get_char_by_index(alphabet, i);
         if (i < alphabet_length - 2)
-            && (getCharByIndex(alphabet, i + 1) == '-')
+            && (get_char_by_index(alphabet, i + 1) == '-')
             && (by_index != '\\')
         {
-            let (start, end) = (ord(by_index), ord(getCharByIndex(alphabet, i + 2)));
+            let (start, end) = (ord(by_index), ord(get_char_by_index(alphabet, i + 2)));
 
             for j in start..=end {
                 result.push(chr(j));
@@ -33,7 +33,7 @@ pub fn expandAlphabetRange(alphabet: &str) -> Vec<char> {
             i += 2;
         } else if (i < alphabet_length - 2)
             && (by_index == '\\')
-            && (getCharByIndex(alphabet, i + 1) == '-')
+            && (get_char_by_index(alphabet, i + 1) == '-')
         {
             result.push('-');
             i += 1;
@@ -46,7 +46,7 @@ pub fn expandAlphabetRange(alphabet: &str) -> Vec<char> {
     result
 }
 
-pub fn strToArrayBuffer(string: &str) -> Vec<u32> {
+pub fn str_to_array_buffer(string: &str) -> Vec<u32> {
     if string.is_empty() {
         return Vec::new();
     }
@@ -55,13 +55,13 @@ pub fn strToArrayBuffer(string: &str) -> Vec<u32> {
     let mut result: Vec<u32> = vec![0; string_length];
 
     for i in 0..result.len() {
-        result[i] = ord(getCharByIndex(string, i));
+        result[i] = ord(get_char_by_index(string, i));
     }
 
     result
 }
 
-pub fn strToArrayBufferByAlphabet(string: &str, alphabet: &str) -> Vec<u32> {
+pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<u32> {
     if string.is_empty() {
         return Vec::new();
     }
@@ -70,7 +70,7 @@ pub fn strToArrayBufferByAlphabet(string: &str, alphabet: &str) -> Vec<u32> {
     let mut result: Vec<u32> = vec![0; string_length];
 
     for (idx, c) in string.chars().enumerate() {
-        result[idx] = getIndexByChar(alphabet, c) as u32;
+        result[idx] = get_index_by_char(alphabet, c) as u32;
     }
 
     result
@@ -81,7 +81,7 @@ pub fn regex_replace(string: &str, regex: &str, replacement: &str) -> String {
     return re.replace_all(string, replacement).to_string();
 }
 
-pub fn validateLang(text: &str, lang: &str) -> bool {
+pub fn validate_lang(text: &str, lang: &str) -> bool {
     let re = match lang {
         "en" => r"^[a-zA-Z\p{P}\s\d]+$",
         "ru" => r"^[а-яА-Я\p{P}\s\d]+$",
@@ -91,7 +91,7 @@ pub fn validateLang(text: &str, lang: &str) -> bool {
     regex_check!(re => text)
 }
 
-pub fn getAlphabet(lang: &str) -> (&str, &str) {
+pub fn get_alphabet(lang: &str) -> (&'static str, &'static str) {
     match lang {
         "en" => EN_ALP,
         "ru" => RU_ALP,
@@ -100,15 +100,15 @@ pub fn getAlphabet(lang: &str) -> (&str, &str) {
     }
 }
 
-pub fn getCharByIndex<T: Integer + ToPrimitive>(text: &str, index: T) -> char {
+pub fn get_char_by_index<T: Integer + ToPrimitive>(text: &str, index: T) -> char {
     text.chars().nth(index.to_usize().unwrap()).unwrap()
 }
 
-pub fn getIndexByChar(text: &str, ch: char) -> usize {
+pub fn get_index_by_char(text: &str, ch: char) -> usize {
     text.chars().position(|c| c == ch).unwrap()
 }
 
-pub fn charRepr(token: &str) -> &str {
+pub fn char_repr(token: &str) -> &str {
     map!(
         "Space" => " ",
         "Persent" => "%",

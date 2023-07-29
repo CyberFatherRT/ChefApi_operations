@@ -1,7 +1,10 @@
 services:
   CyberKnightApi:
-    image: ghcr.io/thegodfatherru/cyber_knight_api:v1
-    container_name: CyberKnightApi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cyber_knight_api
+    container_name: cyber_knight_api
     ports:
       - "8081:8081"
     restart: unless-stopped
@@ -9,4 +12,4 @@ services:
 networks:
   default:
     driver: bridge
-    name: CyberKnight
+    name: cyber_knight_api

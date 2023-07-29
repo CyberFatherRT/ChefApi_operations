@@ -1,59 +1,58 @@
-use crate::api::{
+use crate::{
     error::Error,
     macros::regex_check,
-    operations::Request,
-    utils::{getAlphabet, getIndexByChar, mod_inv, modulus, validateLang, NUM},
+    utils::{get_alphabet, get_index_by_char, mod_inv, modulus, validate_lang, NUM},
 };
 use unicode_segmentation::UnicodeSegmentation;
 
 pub trait AffineCipher {
     fn encode(a: isize, b: isize, x: char, alp: &str) -> isize {
         let m = alp.graphemes(true).count() as isize;
-        modulus((a * getIndexByChar(alp, x) as isize) + b, m)
+        modulus((a * get_index_by_char(alp, x) as isize) + b, m)
     }
 
     fn decode(a: isize, b: isize, y: char, alp: &str) -> isize {
         let m = alp.graphemes(true).count() as isize;
         let inv_a = mod_inv(a, alp.graphemes(true).count() as isize);
-        modulus(inv_a * (getIndexByChar(alp, y) as isize - b), m)
+        modulus(inv_a * (get_index_by_char(alp, y) as isize - b), m)
     }
 
-    fn get_a_b(request: &Request) -> (isize, isize) {
+    fn get_a_b(params: &[String]) -> (isize, isize) {
         return (
-            request.params.get(0).unwrap().parse::<isize>().unwrap(),
-            request.params.get(1).unwrap().parse::<isize>().unwrap(),
+            params.get(0).unwrap().parse().unwrap(),
+            params.get(1).unwrap().parse().unwrap(),
         );
     }
 
-    fn get_plaintext_alp(request: &Request) -> (String, (&str, &str)) {
+    fn get_plaintext_alp(input: &str, lang: &str) -> (String, (&'static str, &'static str)) {
         return (
-            String::with_capacity(request.input.graphemes(true).count()),
-            getAlphabet(&request.lang),
+            String::with_capacity(input.graphemes(true).count()),
+            get_alphabet(lang),
         );
     }
 
-    fn validate(request: &Request) -> Result<(), Error> {
-        if request.params.len() != 2 {
+    fn validate(lang: &str, params: &Vec<String>, input: &str) -> Result<(), Error> {
+        if params.len() != 2 {
             return Err(Error::InvalidNumberOfParamsError {
                 error: "Invalid number of params.",
             });
         }
 
-        if request.input.is_empty() {
+        if input.is_empty() {
             return Err(Error::InvalidInputError {
                 error: "Input is empty.",
             });
         }
 
-        if !validateLang(&request.input, &request.lang) {
+        if !validate_lang(input, lang) {
             return Err(Error::UnsupportedLanguageError {
                 error: "Invalid language.",
             });
         }
 
         let (a, b) = (
-            request.params.get(0).unwrap(),
-            request.params.get(1).unwrap(),
+            params.get(0).unwrap(),
+            params.get(1).unwrap(),
         );
 
         if !regex_check!(NUM.1 => a) || !regex_check!(NUM.1 => b) {

@@ -31,7 +31,7 @@ RUN cargo build --release
 RUN strip -s ./target/release/cyber_knight_api
 
 
-FROM gcr.io/distroless/cc-debian11
+FROM debian:bullseye-slim
 
 WORKDIR /app
 COPY --from=builder /app/target/release/cyber_knight_api .

@@ -19,8 +19,10 @@ macro_rules! create_struct {
             pub name: &'static str,
             pub module: &'static str,
             pub description: Option<&'static str>,
-            pub infoURL: Option<&'static str>,
-            pub request: Request,
+            pub info_url: Option<&'static str>,
+            pub lang: String,
+            pub params: Vec<String>,
+            pub input: String,
         }
     };
 }

@@ -1,15 +1,15 @@
 use itertools::Itertools;
 use unicode_segmentation::UnicodeSegmentation;
 
-use crate::api::{
+use crate::{
     error::Error,
     utils::{
-        expandAlphabetRange, getCharByIndex, regex_replace, strToArrayBuffer,
-        strToArrayBufferByAlphabet,
+        expand_alphabet_range, get_char_by_index, regex_replace, str_to_array_buffer,
+        str_to_array_buffer_by_alphabet,
     },
 };
 
-pub fn toBase64(data: &str, mut alphabet: &str) -> Result<String, Error> {
+pub fn to_base64(data: &str, mut alphabet: &str) -> Result<String, Error> {
     if data.is_empty() {
         return Ok(String::new());
     }
@@ -17,7 +17,7 @@ pub fn toBase64(data: &str, mut alphabet: &str) -> Result<String, Error> {
         alphabet = "A-Za-z0-9+/=";
     }
 
-    let alphabet = expandAlphabetRange(alphabet).iter().collect::<String>();
+    let alphabet = expand_alphabet_range(alphabet).iter().collect::<String>();
 
     let alphabet_length = alphabet.graphemes(true).count();
 
@@ -30,7 +30,7 @@ pub fn toBase64(data: &str, mut alphabet: &str) -> Result<String, Error> {
     let mut output = String::new();
     let mut padding = 0;
 
-    for i in strToArrayBuffer(data)
+    for i in str_to_array_buffer(data)
         .iter()
         .map(|x| format!("{:08b}", x))
         .collect::<String>()
@@ -49,22 +49,22 @@ pub fn toBase64(data: &str, mut alphabet: &str) -> Result<String, Error> {
             .unwrap()
         })
     {
-        output.push(getCharByIndex(&alphabet, i))
+        output.push(get_char_by_index(&alphabet, i))
     }
 
     output.push_str(&match alphabet_length {
-        65 => getCharByIndex(&alphabet, 64).to_string().repeat(padding),
+        65 => get_char_by_index(&alphabet, 64).to_string().repeat(padding),
         _ => "".to_string(),
     });
 
     Ok(output)
 }
 
-pub fn fromBase64(
+pub fn from_base64(
     mut data: String,
     mut alphabet: &str,
-    removeNonAlpChars: bool,
-    strictMode: bool,
+    remove_non_alp_chars: bool,
+    strict_mode: bool,
 ) -> Result<String, Error> {
     if data.is_empty() {
         return Ok(String::new());
@@ -82,7 +82,7 @@ pub fn fromBase64(
         }
     }
 
-    let alphabet = expandAlphabetRange(alphabet).iter().collect::<String>();
+    let alphabet = expand_alphabet_range(alphabet).iter().collect::<String>();
 
     let alphabet_length = alphabet.graphemes(true).count();
 
@@ -92,12 +92,12 @@ pub fn fromBase64(
         });
     }
 
-    if removeNonAlpChars {
+    if remove_non_alp_chars {
         let re = format!("[^{}]", regex_replace(&alphabet, r"[\[\]\\\-^$]", r"\$&"));
         data = regex_replace(&data, &re, "");
     }
 
-    if strictMode {
+    if strict_mode {
         if data.len() % 4 == 1 {
             return Err(Error::Error {
                 error: format!(
@@ -108,11 +108,11 @@ pub fn fromBase64(
         }
 
         if alphabet_length == 65 {
-            let pad = getCharByIndex(&alphabet, 64);
-            let padPos = data.find(pad);
+            let pad = get_char_by_index(&alphabet, 64);
+            let pad_pos = data.find(pad);
 
-            if let Some(padPos) = padPos {
-                if padPos < data.len() - 2 || getCharByIndex(&data, data.len() - 1) != pad
+            if let Some(pad_pos) = pad_pos {
+                if pad_pos < data.len() - 2 || get_char_by_index(&data, data.len() - 1) != pad
                 {
                     return Err(Error::Error {
                         error: format!(
@@ -133,13 +133,13 @@ pub fn fromBase64(
 
     if alphabet_length == 65 {
         data = data
-            .trim_end_matches(getCharByIndex(&alphabet, 64))
+            .trim_end_matches(get_char_by_index(&alphabet, 64))
             .to_string();
     }
 
     let mut output = String::new();
 
-    for i in strToArrayBufferByAlphabet(&data, &alphabet)
+    for i in str_to_array_buffer_by_alphabet(&data, &alphabet)
         .iter()
         .map(|x| format!("{:08b}", x)[2..].to_string())
         .collect::<String>()
