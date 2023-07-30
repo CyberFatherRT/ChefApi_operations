@@ -1,5 +1,8 @@
 .idea
 target
+node_modules
 backend/src/config.rs
 frontend/dist
+frontend/node_modules
+frontend/package-lock.json
 Cargo.lock

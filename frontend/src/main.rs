@@ -1,22 +1,27 @@
-use yew::{function_component, html, Html, Properties, Renderer};
+use leptos::{ev::SubmitEvent, html::Input, *};
 
-#[derive(Properties, PartialEq)]
-pub struct Props {
-    pub is_loading: bool,
+#[component]
+fn App(cx: Scope) -> impl IntoView {
+    let (name, set_name) = create_signal(cx, "Maksim".to_string());
+
+    let input_element: NodeRef<Input> = create_node_ref(cx);
+
+    let on_submit = move |ev: SubmitEvent| {
+        ev.prevent_default();
+        let value = input_element().expect().value();
+        set_name(value)
+    };
+
+    view! { cx,
+        <input type="text" prop:value=name
+            on:input=move |ev| {
+                set_name(event_target_value(&ev));
+            }
+        />
+        <p>"Name is: " {name}</p>
+    }
 }
-
-#[function_component]
-fn HelloWorld(props: &Props) -> Html {
-    html! { <>{"Am I loading? - "}{props.is_loading.clone()}</> }
-}
-
-// Then supply the prop
-#[function_component]
-fn App() -> Html {
-    html! {<HelloWorld is_loading={true} />}
-}
-
 
 fn main() {
-    Renderer::<App>::new().render();
+    mount_to_body(|cx| view! { cx, <App/> })
 }
