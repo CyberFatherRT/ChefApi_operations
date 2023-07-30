@@ -1,7 +1,7 @@
-mod operations;
-mod macros;
-mod utils;
-mod libs;
 pub mod error;
+mod libs;
+mod macros;
+mod operations;
+mod utils;
 
 pub use operations::*;

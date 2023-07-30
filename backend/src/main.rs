@@ -1,13 +1,14 @@
 mod config;
 mod routes;
 
-use actix_web::{get, middleware::Logger, App, HttpResponse, HttpServer};
+use actix_web::{middleware::Logger , App, HttpServer};
+use actix_files::NamedFile;
 
 use routes::configure;
 
-#[get("/")]
-async fn index() -> HttpResponse {
-    HttpResponse::Ok().body("I think I want new structure for web site")
+
+async fn react_index() -> NamedFile{
+    NamedFile::open("/frontend/dist/index.html").unwrap()
 }
 
 #[actix_web::main]
@@ -17,8 +18,8 @@ async fn main() -> std::io::Result<()> {
 
         App::new()
             .wrap(logger)
-            .service(index)
             .configure(configure)
+            .service(actix_files::Files::new("/","./static_content").index_file("index.html"))
     })
     .bind(config::HOSTNAME)?
     .run()

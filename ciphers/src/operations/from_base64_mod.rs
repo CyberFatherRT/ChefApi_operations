@@ -23,7 +23,7 @@ impl Operation for FromBase64 {
             self.input.clone(),
             &self.params[0],
             matches!(&*self.params[1], "true"),
-            matches!(&*self.params[1], "true")
+            matches!(&*self.params[1], "true"),
         ) {
             Ok(output) => Ok(output.trim_end_matches('\0').to_string()),
             Err(e) => Err(e),

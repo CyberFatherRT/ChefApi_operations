@@ -22,7 +22,8 @@ impl Operation for AffineCipherEncode {
         self.validate()?;
 
         let (a, b) = <Self as AffineCipher>::get_a_b(&self.params);
-        let (mut plaintext, alp) = <Self as AffineCipher>::get_plaintext_alp(&self.input, &self.lang);
+        let (mut plaintext, alp) =
+            <Self as AffineCipher>::get_plaintext_alp(&self.input, &self.lang);
 
         for c in self.input.chars() {
             if !c.is_alphabetic() {

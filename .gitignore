@@ -1,4 +1,5 @@
 .idea
 target
 backend/src/config.rs
+frontend/dist
 Cargo.lock

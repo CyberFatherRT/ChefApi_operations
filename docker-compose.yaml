@@ -1,8 +1,8 @@
 services:
-  CyberKnightApi:
+  CyberKnight:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: backend
     image: cyber_knight
     container_name: cyber_knight
     ports:

@@ -1,13 +1,13 @@
+use actix_web::web::{post, resource, Json, ServiceConfig};
 use actix_web::HttpResponse;
-use actix_web::web::{resource, post, Json, ServiceConfig};
 
-use serde::Serialize;
 use ciphers::error::Error;
 use ciphers::*;
+use serde::Serialize;
 
 #[derive(Serialize)]
 struct Response {
-    output: Result<String, Error>
+    output: Result<String, Error>,
 }
 
 impl Response {
@@ -17,8 +17,11 @@ impl Response {
 }
 
 async fn ciphers_handler(request: Json<Request>) -> HttpResponse {
-
-    let (lang, params, input) = (request.lang.to_owned(), request.params.to_owned(), request.input.to_owned());
+    let (lang, params, input) = (
+        request.lang.to_owned(),
+        request.params.to_owned(),
+        request.input.to_owned(),
+    );
 
     let response = match request.name {
         Operations::A1Z26CipherDecode => A1Z26CipherDecode::new(lang, params, input).run(),

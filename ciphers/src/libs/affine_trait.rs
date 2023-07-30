@@ -50,10 +50,7 @@ pub trait AffineCipher {
             });
         }
 
-        let (a, b) = (
-            params.get(0).unwrap(),
-            params.get(1).unwrap(),
-        );
+        let (a, b) = (params.get(0).unwrap(), params.get(1).unwrap());
 
         if !regex_check!(NUM.1 => a) || !regex_check!(NUM.1 => b) {
             return Err(Error::InvalidParamTypeError {

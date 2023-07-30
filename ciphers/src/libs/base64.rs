@@ -112,8 +112,7 @@ pub fn from_base64(
             let pad_pos = data.find(pad);
 
             if let Some(pad_pos) = pad_pos {
-                if pad_pos < data.len() - 2 || get_char_by_index(&data, data.len() - 1) != pad
-                {
+                if pad_pos < data.len() - 2 || get_char_by_index(&data, data.len() - 1) != pad {
                     return Err(Error::Error {
                         error: format!(
                             "Base64 padding character ({}) not used in the correct place.",
