@@ -6,3 +6,4 @@ frontend/dist
 frontend/node_modules
 frontend/package-lock.json
 Cargo.lock
+*.http

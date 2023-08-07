@@ -6,4 +6,4 @@ edition = "2021"
 [dependencies]
 ciphers = { path = "../ciphers" }
 
-leptos = "0.3.1"
+leptos = "0.4.3"

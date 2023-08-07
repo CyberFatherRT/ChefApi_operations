@@ -3,6 +3,7 @@ use unicode_segmentation::UnicodeSegmentation;
 
 use crate::{
     error::Error,
+    libs::SwitchCase,
     utils::{get_char_by_index, modulus, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
 };
 
@@ -46,7 +47,7 @@ pub trait VigenereCipher {
 
             let text_idx = match c.is_lowercase() {
                 true => map.get(&c).unwrap(),
-                false => map.get(&c.to_lowercase().next().unwrap()).unwrap(),
+                false => map.get(&c.to_lower_case()).unwrap(),
             }
             .to_owned() as i16;
 
@@ -54,10 +55,7 @@ pub trait VigenereCipher {
 
             cipher_text.push(match c.is_lowercase() {
                 true => get_char_by_index(alp, modulus(idx, alp_len)),
-                false => get_char_by_index(alp, modulus(idx, alp_len))
-                    .to_uppercase()
-                    .next()
-                    .unwrap(),
+                false => get_char_by_index(alp, modulus(idx, alp_len)).to_upper_case(),
             });
 
             index += 1;

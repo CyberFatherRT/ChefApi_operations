@@ -1,5 +1,10 @@
 use super::Operation;
-use crate::{error::Error, libs::AffineCipher, macros::create_struct, utils::get_char_by_index};
+use crate::{
+    error::Error,
+    libs::{AffineCipher, SwitchCase},
+    macros::create_struct,
+    utils::get_char_by_index,
+};
 use num::Integer;
 use unicode_segmentation::UnicodeSegmentation;
 
@@ -37,11 +42,9 @@ impl Operation for AffineCipherDecode {
                 true => get_char_by_index(alp.0, <Self as AffineCipher>::decode(a, b, c, alp.0)),
                 false => get_char_by_index(
                     alp.0,
-                    <Self as AffineCipher>::decode(a, b, c.to_lowercase().next().unwrap(), alp.0),
+                    <Self as AffineCipher>::decode(a, b, c.to_lower_case(), alp.0),
                 )
-                .to_uppercase()
-                .next()
-                .unwrap(),
+                .to_upper_case(),
             });
         }
 

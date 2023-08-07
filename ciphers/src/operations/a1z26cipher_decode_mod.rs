@@ -39,7 +39,7 @@ impl Operation for A1Z26CipherDecode {
                     error: "Error: all numbers must be between 1 and 26.",
                 });
             }
-            plain_text.push(char::from_u32(c + 96u32).unwrap());
+            plain_text.push(char::from_u32(c + 96).unwrap());
         }
         Ok(plain_text)
     }

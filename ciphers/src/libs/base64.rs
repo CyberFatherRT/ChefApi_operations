@@ -153,73 +153,73 @@ pub fn from_base64(
     Ok(output)
 }
 
-struct AlphabetOptions {
+struct _AlphabetOptions {
     name: &'static str,
     value: &'static str,
 }
 
-const ALPHABET_OPTIONS: &[AlphabetOptions] = &[
-    AlphabetOptions {
+const _ALPHABET_OPTIONS: &[_AlphabetOptions] = &[
+    _AlphabetOptions {
         name: "Standard (RFC 4648): A-Za-z0-9+/=",
         value: "A-Za-z0-9+/=",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "URL safe (RFC 4648 §5): A-Za-z0-9-_",
         value: "A-Za-z0-9-_",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "Filename safe: A-Za-z0-9+-=",
         value: "A-Za-z0-9+\\-=",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "itoa64: ./0-9A-Za-z=",
         value: "./0-9A-Za-z=",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "y64: A-Za-z0-9._-",
         value: "A-Za-z0-9._-",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "z64: 0-9a-zA-Z+/=",
         value: "0-9a-zA-Z+/=",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "Radix-64 (RFC 4880): 0-9A-Za-z+/=",
         value: "0-9A-Za-z+/=",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "Uuencoding: [space]-_",
         value: " -_",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "Xxencoding: +-0-9A-Za-z",
         value: "+\\-0-9A-Za-z",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "BinHex: !-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
         value: "!-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "ROT13: N-ZA-Mn-za-m0-9+/=",
         value: "N-ZA-Mn-za-m0-9+/=",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "UNIX crypt: ./0-9A-Za-z",
         value: "./0-9A-Za-z",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "Atom128: /128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
         value: "/128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "Megan35: 3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
         value: "3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "Zong22: ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
         value: "ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
     },
-    AlphabetOptions {
+    _AlphabetOptions {
         name: "Hazz15: HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
         value: "HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
     },
