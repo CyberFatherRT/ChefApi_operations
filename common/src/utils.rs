@@ -76,11 +76,6 @@ pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<u32>
     result
 }
 
-pub fn regex_replace(string: &str, regex: &str, replacement: &str) -> String {
-    let re = Regex::new(regex).unwrap();
-    return re.replace_all(string, replacement).to_string();
-}
-
 pub fn validate_lang(text: &str, lang: &str) -> bool {
     let re = match lang {
         "en" => r"^[a-zA-Z\p{P}\s\d]+$",
