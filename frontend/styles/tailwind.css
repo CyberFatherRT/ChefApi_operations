@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#banner i {
+    vertical-align: middle;
+    padding-right: 10px;
+}
+
+#banner a {
+    color: #1976d2
+}
