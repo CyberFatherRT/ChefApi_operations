@@ -11,7 +11,8 @@ impl Operation for AffineCipherEncode {
         AffineCipherEncode {
             name: "Affine Cipher Decode",
             module: "Cipher",
-            description: Some("The Affine cipher is a type of monoalphabetic substitution cipher. To decrypt, each letter in an alphabet is mapped to its numeric equivalent, decrypted by a mathematical function, and converted back to a letter."),
+            description_en: Some("The Affine cipher is a type of monoalphabetic substitution cipher. To decrypt, each letter in an alphabet is mapped to its numeric equivalent, decrypted by a mathematical function, and converted back to a letter."),
+            description_ru: Some("Аффинный шифр — это тип моноалфавитного шифра замены. Чтобы расшифровать, каждая буква в алфавите сопоставляется с ее числовым эквивалентом, расшифровывается с помощью математической функции и преобразуется обратно в букву."),
             info_url: Some("https://wikipedia.org/wiki/Affine_cipher"),
             lang,
             params,

@@ -10,7 +10,8 @@ impl Operation for VigenereCipherEncode {
         VigenereCipherEncode {
             name: "Vigenere Encode",
             module: "Cipher",
-            description: Some("The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar common based on the letters of a keyword. It is a simple form of polyalphabetic substitution."),
+            description_en: Some("The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar common based on the letters of a keyword. It is a simple form of polyalphabetic substitution."),
+            description_ru: Some("Шифр Виженера — это метод шифрования алфавитного текста с использованием ряда различных общих символов Цезаря, основанных на буквах ключевого слова. Это простая форма полиалфавитной замены."),
             info_url: Some("https://wikipedia.org/wiki/Vigenère_cipher"),
             lang,
             params,

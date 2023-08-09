@@ -8,7 +8,8 @@ impl Operation for A1Z26CipherDecode {
         A1Z26CipherDecode {
             name: "A1Z26 Cipher Decode",
             module: "Cipher",
-            description: Some("Converts alphabet order numbers into their corresponding  alphabet character.<br><br>e.g. <code>1</code> becomes <code>a</code> and <code>2</code> becomes <code>b</code>."),
+            description_en: Some("Converts alphabet order numbers into their corresponding  alphabet character.<br><br>e.g. <code>1</code> becomes <code>a</code> and <code>2</code> becomes <code>b</code>."),
+            description_ru: Some("Преобразует порядковые номера алфавита в соответствующие им символы алфавита.<br><br>Например: <code>1</code> становиться <code>a</code> и <code>2</code> становиться <code>b</code>."),
             info_url: None,
             lang,
             params,

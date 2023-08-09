@@ -20,7 +20,8 @@ macro_rules! create_struct {
         pub struct $name {
             pub name: &'static str,
             pub module: &'static str,
-            pub description: Option<&'static str>,
+            pub description_en: Option<&'static str>,
+            pub description_ru: Option<&'static str>,
             pub info_url: Option<&'static str>,
             pub lang: String,
             pub params: Vec<String>,

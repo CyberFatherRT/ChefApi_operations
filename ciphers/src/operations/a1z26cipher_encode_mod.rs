@@ -7,7 +7,8 @@ impl Operation for A1Z26CipherEncode {
         A1Z26CipherEncode {
             name: "A1Z26 Cipher Encode",
             module: "Cipher",
-            description: Some("Converts alphabet characters into their corresponding alphabet order number.<br><br>e.g. <code>a</code> becomes <code>1</code> and <code>b</code> becomes <code>2</code>.<br><br>Non-alphabet characters are dropped."),
+            description_en: Some("Converts alphabet characters into their corresponding alphabet order number.<br><br>e.g. <code>a</code> becomes <code>1</code> and <code>b</code> becomes <code>2</code>.<br><br>Non-alphabet characters are dropped."),
+            description_ru: Some("Преобразует символы алфавита в соответствующие им порядковые номера алфавита.<br><br>Например: <code>a</code> становиться <code>1</code> и <code>b</code> становиться <code>2</code>.<br><br>Неалфавитные символы отбрасываются."),
             info_url: None,
             lang,
             params,
