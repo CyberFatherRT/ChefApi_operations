@@ -15,7 +15,9 @@ fn DownloadMeDaddy(cx: Scope) -> impl IntoView {
 #[component]
 fn MiddleStuff(cx: Scope) -> impl IntoView {
     view! {cx,
-        <span> - New is here! Read about the new features <a href=""></a> </span>
+        <span> "\u{2012} "<b>New version is here!</b> Read about the new features
+            <a href="https://github.com/TheGodfatherru/CyberKnight/blob/master/CHANGELOG.md">here</a>
+        </span>
     }
 }
 
@@ -23,14 +25,8 @@ fn MiddleStuff(cx: Scope) -> impl IntoView {
 fn OptionAbout(cx: Scope) -> impl IntoView {
     view! {cx,
         <div>
-            <a href="#">
-                Settings
-                <i class="material-icons">settings</i>
-            </a>
-            <a href="#">
-                About / Support
-                <i class="material-icons">help</i>
-            </a>
+            <a href="#"> Settings <i class="material-icons"> settings </i></a>
+            <a href="#"> About / Support <i class="material-icons"> help </i></a>
         </div>
     }
 }
@@ -38,7 +34,7 @@ fn OptionAbout(cx: Scope) -> impl IntoView {
 #[component]
 pub fn Banner(cx: Scope) -> impl IntoView {
     view! {cx,
-        <div id="banner" class="flex flex-nowrap justify-between -mr-15 bg-[#DFF0D8] text-[#468847] absolute w-full h-7">
+        <div id="banner" class="flex flex-nowrap justify-between -mr-15 bg-[#DFF0D8] text-[#468847] absolute w-full h-[30px]">
             <DownloadMeDaddy/>
             <MiddleStuff/>
             <OptionAbout/>
