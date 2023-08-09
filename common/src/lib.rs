@@ -27,7 +27,9 @@ impl Operations {
 pub trait Operation {
     fn new(lang: String, params: Vec<String>, input: String) -> Self;
     fn run(&self) -> Result<String, Error>;
-    fn validate(&self) -> Result<(), Error>;
+    fn validate(&self) -> Result<(), Error> {
+        Ok(())
+    }
 }
 
 #[derive(Deserialize, Serialize, Debug)]
