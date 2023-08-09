@@ -3,8 +3,8 @@ use leptos::{component, view, IntoView, Scope};
 #[component]
 fn DownloadMeDaddy(cx: Scope) -> impl IntoView {
     view! {cx,
-        <div class="ml-2.5">
-            <a href="#" class="text-center">
+        <div class="ml-2.5 text-center">
+            <a href="#">
                 Download CyberKnight
                 <i class="material-icons">file_download</i>
             </a>
@@ -15,7 +15,11 @@ fn DownloadMeDaddy(cx: Scope) -> impl IntoView {
 #[component]
 fn MiddleStuff(cx: Scope) -> impl IntoView {
     view! {cx,
-        <span> "\u{2012} "<b>New version is here!</b> Read about the new features
+        <span>
+            <a href="https://github.com/TheGodfatherru/CyberKnight/blob/master/CHANGELOG.md">
+                "\u{2012} "<b>New version is here!</b>
+            </a>
+            Read about the new features
             <a href="https://github.com/TheGodfatherru/CyberKnight/blob/master/CHANGELOG.md">here</a>
         </span>
     }
@@ -34,7 +38,7 @@ fn OptionAbout(cx: Scope) -> impl IntoView {
 #[component]
 pub fn Banner(cx: Scope) -> impl IntoView {
     view! {cx,
-        <div id="banner" class="flex flex-nowrap justify-between -mr-15 bg-[#DFF0D8] text-[#468847] absolute w-full h-[30px]">
+         <div id="banner" class="flex flex-nowrap justify-between bg-[#DFF0D8] text-[#468847] absolute w-full h-[30px]">
             <DownloadMeDaddy/>
             <MiddleStuff/>
             <OptionAbout/>
