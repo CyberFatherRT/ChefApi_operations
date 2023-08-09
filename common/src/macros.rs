@@ -1,3 +1,4 @@
+#[macro_export]
 macro_rules! map {
     ($($k:expr => $v:expr),* $(,)?) => {{
         let mut m = std::collections::HashMap::new();
@@ -6,13 +7,14 @@ macro_rules! map {
     }};
 }
 
+#[macro_export]
 macro_rules! regex_check {
     ($regex:expr => $string:expr) => {{
         let regex = regex::Regex::new($regex).unwrap();
         regex.is_match($string)
     }};
 }
-
+#[macro_export]
 macro_rules! create_struct {
     ($name:ident) => {
         pub struct $name {
@@ -26,5 +28,3 @@ macro_rules! create_struct {
         }
     };
 }
-
-pub(crate) use {create_struct, map, regex_check};

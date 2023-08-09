@@ -1,6 +1,6 @@
-use crate::{
-    error::Error, macros::create_struct, traits::SwitchCase, utils::get_char_by_index,
-    AffineCipher, Operation,
+use crate::libs::affine_trait::AffineCipher;
+use common::{
+    create_struct, error::Error, traits::SwitchCase, utils::get_char_by_index, Operation,
 };
 use num::Integer;
 use unicode_segmentation::UnicodeSegmentation;

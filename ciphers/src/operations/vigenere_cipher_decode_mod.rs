@@ -1,4 +1,5 @@
-use crate::{error::Error, macros::create_struct, utils::sub, Operation, VigenereCipher};
+use crate::libs::vigenere_trait::VigenereCipher;
+use common::{create_struct, error::Error, utils::sub, Operation};
 
 create_struct!(VigenereCipherDecode);
 

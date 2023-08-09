@@ -1,9 +1,5 @@
-use crate::{
-    error::Error,
-    macros::{create_struct, regex_check},
-    utils::char_repr,
-    Operation,
-};
+use common::{create_struct, regex_check, Operation};
+use common::{error::Error, utils::char_repr};
 
 create_struct!(A1Z26CipherDecode);
 

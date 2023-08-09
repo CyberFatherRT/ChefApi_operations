@@ -1,6 +1,6 @@
-use crate::{
+use common::{
     error::Error,
-    macros::regex_check,
+    regex_check,
     utils::{get_alphabet, get_index_by_char, mod_inv, modulus, validate_lang, NUM},
 };
 use unicode_segmentation::UnicodeSegmentation;

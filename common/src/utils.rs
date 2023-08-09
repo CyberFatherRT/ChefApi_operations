@@ -1,4 +1,4 @@
-use super::macros::{map, regex_check};
+use super::{map, regex_check};
 use num::{Integer, ToPrimitive};
 use regex::Regex;
 use unicode_segmentation::UnicodeSegmentation;

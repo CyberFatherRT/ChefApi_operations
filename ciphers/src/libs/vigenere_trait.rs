@@ -1,7 +1,7 @@
 use regex::Regex;
 use unicode_segmentation::UnicodeSegmentation;
 
-use crate::{
+use common::{
     error::Error,
     traits::SwitchCase,
     utils::{get_char_by_index, modulus, EN_ALP, RU_ALP, RU_ALP_WITH_YO},

@@ -1,4 +1,4 @@
-use crate::{error::Error, macros::create_struct, utils::char_repr, Operation};
+use common::{create_struct, error::Error, utils::char_repr, Operation};
 
 create_struct!(A1Z26CipherEncode);
 
