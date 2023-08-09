@@ -1,8 +1,9 @@
+#![allow(non_snake_case)]
+
 mod config;
 mod routes;
 
 use actix_web::{middleware::Logger, App, HttpServer};
-
 use routes::configure;
 
 #[actix_web::main]

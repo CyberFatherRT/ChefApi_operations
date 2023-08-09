@@ -1,5 +1,4 @@
-use super::Operation;
-use crate::{error::Error, macros::create_struct, utils::char_repr};
+use crate::{error::Error, macros::create_struct, utils::char_repr, Operation};
 
 create_struct!(A1Z26CipherEncode);
 
@@ -43,7 +42,7 @@ impl Operation for A1Z26CipherEncode {
     fn validate(&self) -> Result<(), Error> {
         if self.params.len() != 1 {
             return Err(Error::InvalidNumberOfParamsError {
-                error: "Invalid number of params.",
+                error: "Invalid number of params.".to_string(),
             });
         }
 

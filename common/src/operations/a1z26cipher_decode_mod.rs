@@ -1,8 +1,8 @@
-use super::Operation;
 use crate::{
     error::Error,
     macros::{create_struct, regex_check},
     utils::char_repr,
+    Operation,
 };
 
 create_struct!(A1Z26CipherDecode);
@@ -36,7 +36,7 @@ impl Operation for A1Z26CipherDecode {
             let c = c.parse::<u32>().unwrap();
             if !(1..=26).contains(&c) {
                 return Err(Error::OperationError {
-                    error: "Error: all numbers must be between 1 and 26.",
+                    error: "Error: all numbers must be between 1 and 26.".to_string(),
                 });
             }
             plain_text.push(char::from_u32(c + 96).unwrap());
@@ -47,7 +47,7 @@ impl Operation for A1Z26CipherDecode {
     fn validate(&self) -> Result<(), Error> {
         if self.input.is_empty() {
             return Err(Error::InvalidInputError {
-                error: "Input is empty",
+                error: "Input is empty".to_string(),
             });
         }
 
@@ -74,7 +74,7 @@ impl Operation for A1Z26CipherDecode {
         };
         if !regex_checked {
             return Err(Error::InvalidInputError {
-                error: "Invalid input",
+                error: "Invalid input".to_string(),
             });
         }
 

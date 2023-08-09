@@ -34,19 +34,19 @@ pub trait AffineCipher {
     fn validate(lang: &str, params: &Vec<String>, input: &str) -> Result<(), Error> {
         if params.len() != 2 {
             return Err(Error::InvalidNumberOfParamsError {
-                error: "Invalid number of params.",
+                error: "Invalid number of params.".to_string(),
             });
         }
 
         if input.is_empty() {
             return Err(Error::InvalidInputError {
-                error: "Input is empty.",
+                error: "Input is empty.".to_string(),
             });
         }
 
         if !validate_lang(input, lang) {
             return Err(Error::UnsupportedLanguageError {
-                error: "Invalid language.",
+                error: "Invalid language.".to_string(),
             });
         }
 
@@ -54,7 +54,7 @@ pub trait AffineCipher {
 
         if !regex_check!(NUM.1 => a) || !regex_check!(NUM.1 => b) {
             return Err(Error::InvalidParamTypeError {
-                error: "The values of a and b can only be integers.",
+                error: "The values of a and b can only be integers.".to_string(),
             });
         };
 
@@ -62,7 +62,7 @@ pub trait AffineCipher {
             Ok(a) => a,
             Err(_) => {
                 return Err(Error::InvalidParamTypeError {
-                    error: "The values of a and b can only be integers.",
+                    error: "The values of a and b can only be integers.".to_string(),
                 });
             }
         };

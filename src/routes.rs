@@ -1,22 +1,12 @@
-use actix_web::web::{post, resource, Json, ServiceConfig};
+use actix_web::http::StatusCode;
+use actix_web::web::{self, resource, ServiceConfig};
 use actix_web::HttpResponse;
 
-use ciphers::error::Error;
-use ciphers::*;
-use serde::Serialize;
+use common::*;
 
-#[derive(Serialize)]
-struct Response {
-    output: Result<String, Error>,
-}
+async fn ciphers_handler(request: String) -> HttpResponse {
+    let request: Request = serde_json::from_str(&request).unwrap();
 
-impl Response {
-    fn new(output: Result<String, Error>) -> Self {
-        Self { output }
-    }
-}
-
-async fn ciphers_handler(request: Json<Request>) -> HttpResponse {
     let (lang, params, input) = (
         request.lang.to_owned(),
         request.params.to_owned(),
@@ -34,9 +24,11 @@ async fn ciphers_handler(request: Json<Request>) -> HttpResponse {
         Operations::VigenereCipherEncode => VigenereCipherEncode::new(lang, params, input).run(),
     };
 
-    HttpResponse::Ok().json(Response::new(response))
+    HttpResponse::build(StatusCode::OK)
+        .append_header(("Access-Control-Allow-Origin", "*"))
+        .json(Response::new(response))
 }
 
 pub fn configure(cfg: &mut ServiceConfig) {
-    cfg.service(resource("/api/ciphers").route(post().to(ciphers_handler)));
+    cfg.service(resource("/api/ciphers").route(web::post().to(ciphers_handler)));
 }

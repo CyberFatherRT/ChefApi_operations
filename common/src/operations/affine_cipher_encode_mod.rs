@@ -1,9 +1,6 @@
-use super::Operation;
 use crate::{
-    error::Error,
-    libs::{AffineCipher, SwitchCase},
-    macros::create_struct,
-    utils::get_char_by_index,
+    error::Error, macros::create_struct, traits::SwitchCase, utils::get_char_by_index,
+    AffineCipher, Operation,
 };
 
 create_struct!(AffineCipherEncode);

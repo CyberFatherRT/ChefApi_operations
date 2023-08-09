@@ -1,5 +1,4 @@
-use super::Operation;
-use crate::{error::Error, libs::from_base64, macros::create_struct};
+use crate::{error::Error, from_base64, macros::create_struct, Operation};
 
 create_struct!(FromBase64);
 
@@ -33,7 +32,7 @@ impl Operation for FromBase64 {
     fn validate(&self) -> Result<(), Error> {
         if self.params.len() != 3 {
             return Err(Error::InvalidNumberOfParamsError {
-                error: "Invalid number of params.",
+                error: "Invalid number of params.".to_string(),
             });
         }
 

@@ -1,7 +1,20 @@
+[package]
+name = "CyberKnight"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-cors = "0.6.4"
+actix-web = "4.3.1"
+serde = { version = "1.0.171", features = ["derive"] }
+serde_json = "1.0.103"
+env_logger = "0.10.0"
+
+common = { path = "common" }
+
 [workspace]
 members = [
-    "backend",
     "frontend",
-    "ciphers"
+    "common"
 ]
-default-members = ["backend"]
+

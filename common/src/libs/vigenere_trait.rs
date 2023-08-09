@@ -3,7 +3,7 @@ use unicode_segmentation::UnicodeSegmentation;
 
 use crate::{
     error::Error,
-    libs::SwitchCase,
+    traits::SwitchCase,
     utils::{get_char_by_index, modulus, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
 };
 
@@ -67,21 +67,21 @@ pub trait VigenereCipher {
     fn validate_language(lang: &str, params: &Vec<String>, input: &str) -> Result<(), Error> {
         if input.is_empty() {
             return Err(Error::InvalidInputError {
-                error: "Input is empty",
+                error: "Input is empty".to_string(),
             });
         }
 
         let langs = ["en", "ru", "ru_with_yo"];
 
-        if !langs.contains(&lang.clone()) {
+        if !langs.contains(&lang) {
             return Err(Error::UnsupportedLanguageError {
-                error: "Unsupported language.",
+                error: "Unsupported language.".to_string(),
             });
         }
 
         if params.len() != 1 {
             return Err(Error::InvalidNumberOfParamsError {
-                error: "Invalid number of params error.",
+                error: "Invalid number of params error.".to_string(),
             });
         }
 
@@ -91,14 +91,14 @@ pub trait VigenereCipher {
             "ru_with_yo" => Regex::new(RU_ALP_WITH_YO.1).unwrap(),
             _ => {
                 return Err(Error::UnsupportedLanguageError {
-                    error: "Unsupported language.",
+                    error: "Unsupported language.".to_string(),
                 })
             }
         };
 
         if !reg.is_match(&params[0]) {
             return Err(Error::IvalidKeyError {
-                error: "invalid key.",
+                error: "invalid key.".to_string(),
             });
         }
 

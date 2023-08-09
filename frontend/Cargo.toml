@@ -3,7 +3,10 @@ name = "frontend"
 version = "0.1.0"
 edition = "2021"
 
-[dependencies]
-ciphers = { path = "../ciphers" }
 
-leptos = "0.4.3"
+[dependencies]
+leptos = { version = "0.4.8", features = ["csr", "nightly"] }
+serde_json = "1.0.103"
+reqwasm = "0.5.0"
+
+common = { path = "../common" }
