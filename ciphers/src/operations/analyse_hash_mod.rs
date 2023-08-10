@@ -1,4 +1,4 @@
-use common::{create_struct, error::Error, regex_check, traits::RegexReplace, Operation};
+use common::{create_struct, error::Error, regex_check, Operation};
 
 create_struct!(AnalyseHash);
 

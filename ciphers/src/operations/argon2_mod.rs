@@ -99,7 +99,7 @@ impl Operation for Argon2 {
 
         let output = match &*out_format {
             "Encoded hash" => hash,
-            "Raw hash" => {
+            format @ ("Raw hash" | "Hex hash") => {
                 let raw_hash = hash.split('$').nth(5).unwrap();
 
                 let DataRepresentation::String(data) = from_base64(
@@ -114,24 +114,12 @@ impl Operation for Argon2 {
                         error: String::new(),
                     });
                 };
-                data
-            }
-            "Hex hash" => {
-                let raw_hash = hash.split('$').nth(5).unwrap();
 
-                let DataRepresentation::String(data) = from_base64(
-                    raw_hash.to_string(),
-                    "",
-                    DataRepresentation::String(String::new()),
-                    false,
-                    false,
-                )
-                .unwrap() else {
-                    return Err(Error::Error {
-                        error: String::new(),
-                    });
-                };
-                to_hex(data.as_bytes())
+                match format {
+                    "Raw hash" => data,
+                    "Hex hash" => to_hex(data.as_bytes()),
+                    _ => unreachable!(),
+                }
             }
             _ => unreachable!(),
         };
