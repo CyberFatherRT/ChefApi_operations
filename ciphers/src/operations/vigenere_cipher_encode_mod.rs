@@ -1,7 +1,7 @@
 use crate::libs::vigenere_trait::VigenereCipher;
-use common::{create_struct, error::Error, utils::add, Operation};
+use common::{create_operation_struct, error::Error, utils::add, Operation};
 
-create_struct!(VigenereCipherEncode);
+create_operation_struct!(VigenereCipherEncode);
 
 impl VigenereCipher for VigenereCipherEncode {}
 

@@ -1,11 +1,11 @@
 use crate::libs::affine_trait::AffineCipher;
 use common::{
-    create_struct, error::Error, traits::SwitchCase, utils::get_char_by_index, Operation,
+    create_operation_struct, error::Error, traits::SwitchCase, utils::get_char_by_index, Operation,
 };
 use num::Integer;
 use unicode_segmentation::UnicodeSegmentation;
 
-create_struct!(AffineCipherDecode);
+create_operation_struct!(AffineCipherDecode);
 
 impl AffineCipher for AffineCipherDecode {}
 

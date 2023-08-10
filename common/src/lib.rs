@@ -4,7 +4,7 @@ pub mod traits;
 pub mod utils;
 
 use error::Error;
-use serde::{Deserialize, Serialize};
+use serde::{de, Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum Operations {
@@ -26,6 +26,22 @@ pub trait Operation {
     fn validate(&self) -> Result<(), Error> {
         Ok(())
     }
+}
+
+pub fn deserialize_json<'a, T>(json: &'a str) -> Result<T, Error>
+where
+    T: de::Deserialize<'a>,
+{
+    let temp: T = match serde_json::from_str(json) {
+        Ok(value) => value,
+        Err(err) => {
+            return Err(Error::Error {
+                error: err.to_string(),
+            })
+        }
+    };
+
+    Ok(temp)
 }
 
 #[derive(Deserialize, Serialize, Debug)]

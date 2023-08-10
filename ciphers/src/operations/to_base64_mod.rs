@@ -1,6 +1,6 @@
-use common::{create_struct, error::Error, utils::to_base64, Operation};
+use common::{create_operation_struct, error::Error, utils::to_base64, Operation};
 
-create_struct!(ToBase64);
+create_operation_struct!(ToBase64);
 
 impl Operation for ToBase64 {
     fn new(lang: String, params: Vec<String>, input: String) -> Self {

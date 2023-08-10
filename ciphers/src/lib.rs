@@ -11,3 +11,9 @@ pub use operations::from_base64_mod::FromBase64;
 pub use operations::to_base64_mod::ToBase64;
 pub use operations::vigenere_cipher_decode_mod::VigenereCipherDecode;
 pub use operations::vigenere_cipher_encode_mod::VigenereCipherEncode;
+
+pub trait Operation<O> {
+    fn new(request: String) -> Self;
+    fn run(&self) -> Result<String, String>;
+    fn validate(&self) -> Result<O, String>;
+}

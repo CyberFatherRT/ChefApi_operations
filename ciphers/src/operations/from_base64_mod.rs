@@ -1,11 +1,11 @@
 use common::{
-    create_struct,
+    create_operation_struct,
     error::Error,
     utils::{from_base64, DataRepresentation},
     Operation,
 };
 
-create_struct!(FromBase64);
+create_operation_struct!(FromBase64);
 
 impl Operation for FromBase64 {
     fn new(lang: String, params: Vec<String>, input: String) -> Self {

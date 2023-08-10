@@ -1,7 +1,7 @@
-use common::{create_struct, regex_check, Operation};
+use common::{create_operation_struct, regex_check, Operation};
 use common::{error::Error, utils::char_repr};
 
-create_struct!(A1Z26CipherDecode);
+create_operation_struct!(A1Z26CipherDecode);
 
 impl Operation for A1Z26CipherDecode {
     fn new(lang: String, params: Vec<String>, input: String) -> Self {

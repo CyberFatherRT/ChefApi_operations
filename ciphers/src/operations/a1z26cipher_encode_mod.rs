@@ -1,6 +1,6 @@
-use common::{create_struct, error::Error, utils::char_repr, Operation};
+use common::{create_operation_struct, error::Error, utils::char_repr, Operation};
 
-create_struct!(A1Z26CipherEncode);
+create_operation_struct!(A1Z26CipherEncode);
 
 impl Operation for A1Z26CipherEncode {
     fn new(lang: String, params: Vec<String>, input: String) -> Self {

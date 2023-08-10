@@ -135,8 +135,8 @@ pub fn str_to_array_buffer(string: &str) -> Vec<u32> {
     let string_length = string.graphemes(true).count();
     let mut result: Vec<u32> = vec![0; string_length];
 
-    for i in 0..result.len() {
-        result[i] = ord(get_char_by_index(string, i));
+    for (idx, elem) in result.iter_mut().enumerate() {
+        *elem = ord(get_char_by_index(string, idx));
     }
 
     result
@@ -149,9 +149,7 @@ pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<usiz
 
     let string_length = string.graphemes(true).count();
     let mut result: Vec<usize> = vec![0; string_length];
-    println!("{}", alphabet);
     for (idx, c) in string.chars().enumerate() {
-        println!("{c}");
         result[idx] = get_index_by_char(alphabet, c);
     }
 
@@ -291,8 +289,7 @@ pub fn to_base64(data: &str, mut alphabet: &str) -> Result<String, Error> {
 
     for i in str_to_array_buffer(data)
         .iter()
-        .map(|x| format!("{:08b}", x))
-        .collect::<String>()
+        .fold(String::new(), |acc, x| acc + &format!("{:08b}", x))
         .chars()
         .chunks(6)
         .into_iter()

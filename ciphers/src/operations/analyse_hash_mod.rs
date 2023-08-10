@@ -1,6 +1,6 @@
-use common::{create_struct, error::Error, regex_check, Operation};
+use common::{create_operation_struct, error::Error, regex_check, Operation};
 
-create_struct!(AnalyseHash);
+create_operation_struct!(AnalyseHash);
 
 impl Operation for AnalyseHash {
     fn new(lang: String, params: Vec<String>, input: String) -> Self {
