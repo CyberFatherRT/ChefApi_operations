@@ -1,5 +1,9 @@
-use crate::libs::base64::from_base64;
-use common::{create_struct, error::Error, Operation};
+use common::{
+    create_struct,
+    error::Error,
+    utils::{from_base64, DataRepresentation},
+    Operation,
+};
 
 create_struct!(FromBase64);
 
@@ -23,10 +27,16 @@ impl Operation for FromBase64 {
         match from_base64(
             self.input.clone(),
             &self.params[0],
+            DataRepresentation::String(String::new()),
             matches!(&*self.params[1], "true"),
             matches!(&*self.params[1], "true"),
         ) {
-            Ok(output) => Ok(output.trim_end_matches('\0').to_string()),
+            Ok(output) => {
+                let DataRepresentation::String(output) = output else {
+                    unreachable!()
+                };
+                Ok(output.trim_end_matches('\0').to_string())
+            }
             Err(e) => Err(e),
         }
     }

@@ -24,12 +24,12 @@ impl SwitchCase for char {
 }
 
 pub trait RegexReplace {
-    fn replace_all(&self, regex: &str, replacement: &str) -> Result<String, String>;
-    fn replace(&self, regex: &str, replacement: &str) -> Result<String, String>;
+    fn regex_replace_all(&self, regex: &str, replacement: &str) -> Result<String, String>;
+    fn regex_replace(&self, regex: &str, replacement: &str) -> Result<String, String>;
 }
 
 impl RegexReplace for String {
-    fn replace_all(&self, regex_str: &str, replacement: &str) -> Result<String, String> {
+    fn regex_replace_all(&self, regex_str: &str, replacement: &str) -> Result<String, String> {
         let Ok(re) = regex::Regex::new(regex_str) else {
             return Err(String::from("wrong regex"));
         };
@@ -38,7 +38,7 @@ impl RegexReplace for String {
         Ok(output)
     }
 
-    fn replace(&self, regex_str: &str, replacement: &str) -> Result<String, String> {
+    fn regex_replace(&self, regex_str: &str, replacement: &str) -> Result<String, String> {
         let Ok(re) = regex::Regex::new(regex_str) else {
             return Err(String::from("wrong regex"));
         };

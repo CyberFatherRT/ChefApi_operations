@@ -19,7 +19,7 @@ impl Operation for AnalyseHash {
     fn run(&self) -> Result<String, Error> {
         self.validate()?;
 
-        let input: String = self.input.replace_all(r"\s", "").unwrap();
+        let input: String = self.input.regex_replace_all(r"\s", "").unwrap();
 
         let byte_length: f64 = input.len() as f64 / 2.0;
         let bit_length: f64 = byte_length * 8.0;

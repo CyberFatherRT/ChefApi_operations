@@ -1,9 +1,91 @@
-use super::{map, regex_check};
+use crate::{error::Error, map, regex_check, traits::RegexReplace};
+use encoding_rs::UTF_8_INIT;
+use itertools::Itertools;
 use num::{Integer, ToPrimitive};
-use regex::Regex;
+use std::fmt::Debug;
+use std::str::FromStr;
+use std::string::FromUtf8Error;
 use unicode_segmentation::UnicodeSegmentation;
 
 // region constants
+
+#[derive(Eq, PartialEq)]
+pub enum DataRepresentation {
+    String(String),
+    ByteArray(Vec<u8>),
+}
+
+struct _AlphabetOptions {
+    name: &'static str,
+    value: &'static str,
+}
+
+const _ALPHABET_OPTIONS: &[_AlphabetOptions] = &[
+    _AlphabetOptions {
+        name: "Standard (RFC 4648): A-Za-z0-9+/=",
+        value: "A-Za-z0-9+/=",
+    },
+    _AlphabetOptions {
+        name: "URL safe (RFC 4648 §5): A-Za-z0-9-_",
+        value: "A-Za-z0-9-_",
+    },
+    _AlphabetOptions {
+        name: "Filename safe: A-Za-z0-9+-=",
+        value: "A-Za-z0-9+\\-=",
+    },
+    _AlphabetOptions {
+        name: "itoa64: ./0-9A-Za-z=",
+        value: "./0-9A-Za-z=",
+    },
+    _AlphabetOptions {
+        name: "y64: A-Za-z0-9._-",
+        value: "A-Za-z0-9._-",
+    },
+    _AlphabetOptions {
+        name: "z64: 0-9a-zA-Z+/=",
+        value: "0-9a-zA-Z+/=",
+    },
+    _AlphabetOptions {
+        name: "Radix-64 (RFC 4880): 0-9A-Za-z+/=",
+        value: "0-9A-Za-z+/=",
+    },
+    _AlphabetOptions {
+        name: "Uuencoding: [space]-_",
+        value: " -_",
+    },
+    _AlphabetOptions {
+        name: "Xxencoding: +-0-9A-Za-z",
+        value: "+\\-0-9A-Za-z",
+    },
+    _AlphabetOptions {
+        name: "BinHex: !-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
+        value: "!-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
+    },
+    _AlphabetOptions {
+        name: "ROT13: N-ZA-Mn-za-m0-9+/=",
+        value: "N-ZA-Mn-za-m0-9+/=",
+    },
+    _AlphabetOptions {
+        name: "UNIX crypt: ./0-9A-Za-z",
+        value: "./0-9A-Za-z",
+    },
+    _AlphabetOptions {
+        name: "Atom128: /128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
+        value: "/128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
+    },
+    _AlphabetOptions {
+        name: "Megan35: 3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
+        value: "3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
+    },
+    _AlphabetOptions {
+        name: "Zong22: ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
+        value: "ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
+    },
+    _AlphabetOptions {
+        name: "Hazz15: HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
+        value: "HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
+    },
+];
 
 pub const EN_ALP: (&str, &str) = ("abcdefghijklmnopqrstuvwxyz", r"^[a-zA-Z]+$");
 pub const RU_ALP: (&str, &str) = ("абвгдежзийклмнопрстуфхцчшщъыьэюя", "^[а-яА-Я]+$");
@@ -61,19 +143,294 @@ pub fn str_to_array_buffer(string: &str) -> Vec<u32> {
     result
 }
 
-pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<u32> {
+pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<usize> {
     if string.is_empty() {
         return Vec::new();
     }
 
     let string_length = string.graphemes(true).count();
-    let mut result: Vec<u32> = vec![0; string_length];
+    let mut result: Vec<usize> = vec![0; string_length];
 
     for (idx, c) in string.chars().enumerate() {
-        result[idx] = get_index_by_char(alphabet, c) as u32;
+        result[idx] = get_index_by_char(alphabet, c);
     }
 
     result
+}
+
+pub fn byte_array_to_chars<T: Debug>(byte_array: Vec<T>) -> Result<String, String> {
+    let mut output = String::new();
+    for i in byte_array {
+        match char::from_str(&format!("{:?}", i)) {
+            Ok(c) => output.push(c),
+            Err(e) => return Err(e.to_string()),
+        }
+    }
+    Ok(output)
+}
+
+pub fn convert_to_byte_string(string: &str, convert_type: &str) -> Result<String, String> {
+    match &*convert_type.to_lowercase() {
+        "binary" => match from_binary(string, None, None) {
+            Ok(data) => byte_array_to_chars(data),
+            Err(e) => Err(e.to_string()),
+        },
+        "hex" => match from_hex(string, None, None) {
+            Ok(data) => byte_array_to_chars(data),
+            Err(e) => Err(e.to_string()),
+        },
+        "decimal" => match from_decimal(string, None) {
+            Ok(data) => byte_array_to_chars(data),
+            Err(e) => Err(e.to_string()),
+        },
+        "base64" => match from_base64(
+            string.to_string(),
+            "",
+            DataRepresentation::ByteArray(Vec::new()),
+            true,
+            false,
+        ) {
+            Ok(data) => {
+                let DataRepresentation::ByteArray(data) = data else {
+                    unreachable!()
+                };
+                byte_array_to_chars(data)
+            }
+            Err(e) => Err(e.to_string()),
+        },
+        "utf8" => match String::from_utf8(UTF_8_INIT.encode(string).0.into()) {
+            Ok(data) => Ok(data),
+            Err(e) => Err(e.to_string()),
+        },
+        "latin1" => unimplemented!(),
+        _ => Ok(String::new()),
+    }
+}
+
+pub fn from_binary(
+    data: &str,
+    delim: Option<&str>,
+    byte_len: Option<usize>,
+) -> Result<Vec<u32>, String> {
+    if byte_len.unwrap_or(8) < 1 {
+        return Err("Byte length must be a positive integer".to_string());
+    };
+
+    let delim = char_repr(delim.unwrap_or("Space"));
+    let data = data.replace(delim, " ");
+
+    let mut output: Vec<u32> = Vec::new();
+    for i in data.split_whitespace() {
+        match u32::from_str_radix(i, 2) {
+            Ok(data) => output.push(data),
+            Err(e) => return Err(e.to_string()),
+        }
+    }
+
+    Ok(output)
+}
+
+pub fn from_hex(
+    data: &str,
+    delim: Option<&str>,
+    byte_len: Option<usize>,
+) -> Result<Vec<u8>, String> {
+    if byte_len.unwrap_or(8) < 1 {
+        return Err("Byte length must be a positive integer".to_string());
+    }
+
+    let mut output: Vec<u8> = Vec::new();
+    let delim = char_repr(delim.unwrap_or("Space"));
+
+    for i in data.split(&delim) {
+        match u8::from_str_radix(i, 16) {
+            Ok(data) => output.push(data),
+            Err(e) => return Err(e.to_string()),
+        }
+    }
+
+    Ok(output)
+}
+
+pub fn from_decimal(data: &str, delim: Option<&str>) -> Result<Vec<usize>, String> {
+    let mut output = Vec::new();
+    for i in data.split(char_repr(delim.unwrap_or("Space"))) {
+        match i.parse::<usize>() {
+            Ok(data) => output.push(data),
+            Err(e) => return Err(e.to_string()),
+        }
+    }
+    Ok(output)
+}
+
+pub fn to_base64(data: &str, mut alphabet: &str) -> Result<String, Error> {
+    if data.is_empty() {
+        return Ok(String::new());
+    }
+    if alphabet.is_empty() {
+        alphabet = "A-Za-z0-9+/=";
+    }
+
+    let alphabet = expand_alphabet_range(alphabet).iter().collect::<String>();
+
+    let alphabet_length = alphabet.graphemes(true).count();
+
+    if alphabet_length != 64 && alphabet_length != 65 {
+        return Err(Error::Error {
+            error: "Invalid base64 alphabet length".to_string(),
+        });
+    }
+
+    let mut output = String::new();
+    let mut padding = 0;
+
+    for i in str_to_array_buffer(data)
+        .iter()
+        .map(|x| format!("{:08b}", x))
+        .collect::<String>()
+        .chars()
+        .chunks(6)
+        .into_iter()
+        .map(|x| {
+            let sextet = x.collect::<String>();
+            match sextet.len() {
+                6 => u8::from_str_radix(&sextet, 2),
+                _ => {
+                    padding += 1;
+                    u8::from_str_radix(&format!("{:0<6}", sextet), 2)
+                }
+            }
+            .unwrap()
+        })
+    {
+        output.push(get_char_by_index(&alphabet, i))
+    }
+
+    output.push_str(&match alphabet_length {
+        65 => get_char_by_index(&alphabet, 64).to_string().repeat(padding),
+        _ => "".to_string(),
+    });
+
+    Ok(output)
+}
+
+// TODO
+//  - do this function "convert_to_byte_string"
+
+pub fn from_base64(
+    mut data: String,
+    mut alphabet: &str,
+    return_type: DataRepresentation,
+    remove_non_alp_chars: bool,
+    strict_mode: bool,
+) -> Result<DataRepresentation, Error> {
+    if data.is_empty() {
+        return match return_type {
+            DataRepresentation::String(_) => Ok(DataRepresentation::String(String::new())),
+            DataRepresentation::ByteArray(_) => Ok(DataRepresentation::ByteArray(Vec::new())),
+        };
+    }
+    if alphabet.is_empty() {
+        alphabet = "A-Za-z0-9+/=";
+    }
+
+    {
+        let regex = regex::Regex::new(&format!("[{}]", alphabet)).unwrap();
+        if !regex.is_match(&data) {
+            return Err(Error::Error {
+                error: "Invalid base64 alphabet".to_string(),
+            });
+        }
+    }
+
+    let alphabet = expand_alphabet_range(alphabet).iter().collect::<String>();
+    let alphabet_length = alphabet.graphemes(true).count();
+
+    if alphabet_length != 64 && alphabet_length != 65 {
+        return Err(Error::Error {
+            error: "Invalid base64 alphabet length".to_string(),
+        });
+    }
+
+    if remove_non_alp_chars {
+        let re = format!(
+            "[^{}]",
+            alphabet.regex_replace_all(r"[\[\]\\\-^$]", r"\$&").unwrap()
+        );
+        data = data.regex_replace_all(&re, "").unwrap();
+    }
+
+    if strict_mode {
+        if data.len() % 4 == 1 {
+            return Err(Error::Error {
+                error: format!(
+                    "Invalid Base64 input length ({}) cannot be 4n+1, even without padding chars.",
+                    data.len()
+                ),
+            });
+        }
+
+        if alphabet_length == 65 {
+            let pad = get_char_by_index(&alphabet, 64);
+            let pad_pos = data.find(pad);
+
+            if let Some(pad_pos) = pad_pos {
+                if pad_pos < data.len() - 2 || get_char_by_index(&data, data.len() - 1) != pad {
+                    return Err(Error::Error {
+                        error: format!(
+                            "Base64 padding character ({}) not used in the correct place.",
+                            pad
+                        ),
+                    });
+                }
+
+                if data.len() % 4 != 0 {
+                    return Err(Error::Error {
+                        error: "Base64 not padded to a multiple of 4.".to_string(),
+                    });
+                }
+            }
+        }
+    }
+
+    if alphabet_length == 65 {
+        data = data
+            .trim_end_matches(get_char_by_index(&alphabet, 64))
+            .to_string();
+    }
+
+    return match return_type {
+        DataRepresentation::String(_) => {
+            let mut output = String::new();
+
+            str_to_array_buffer_by_alphabet(&data, &alphabet)
+                .iter()
+                .map(|x| format!("{:08b}", x)[2..].to_string())
+                .collect::<String>()
+                .chars()
+                .chunks(8)
+                .into_iter()
+                .map(|x| u8::from_str_radix(&x.collect::<String>(), 2).unwrap() as char)
+                .for_each(|x| output.push(x));
+
+            Ok(DataRepresentation::String(output))
+        }
+        DataRepresentation::ByteArray(_) => {
+            let mut output = Vec::new();
+
+            str_to_array_buffer_by_alphabet(&data, &alphabet)
+                .iter()
+                .map(|x| format!("{:08b}", x)[2..].to_string())
+                .collect::<String>()
+                .chars()
+                .chunks(8)
+                .into_iter()
+                .map(|x| u8::from_str_radix(&x.collect::<String>(), 2).unwrap())
+                .for_each(|x| output.push(x));
+
+            Ok(DataRepresentation::ByteArray(output))
+        }
+    };
 }
 
 pub fn validate_lang(text: &str, lang: &str) -> bool {

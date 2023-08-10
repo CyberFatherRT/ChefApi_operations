@@ -1,5 +1,4 @@
-use crate::libs::base64::to_base64;
-use common::{create_struct, error::Error, Operation};
+use common::{create_struct, error::Error, utils::to_base64, Operation};
 
 create_struct!(ToBase64);
 
