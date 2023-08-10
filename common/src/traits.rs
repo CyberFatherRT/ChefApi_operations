@@ -33,7 +33,6 @@ impl RegexReplace for String {
         let Ok(re) = regex::Regex::new(regex_str) else {
             return Err(String::from("wrong regex"));
         };
-
         let output: String = re.replace_all(regex_str, replacement).to_string();
         Ok(output)
     }

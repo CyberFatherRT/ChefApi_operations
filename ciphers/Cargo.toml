@@ -6,10 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-argon2 = "0.5.1"
 itertools = "0.11.0"
 num = "0.4.1"
 regex = "1.9.3"
+rust-argon2 = "1.0.1"
 unicode-segmentation = "1.10.1"
 
 common = { path = "../common" }

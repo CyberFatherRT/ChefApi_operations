@@ -25,6 +25,8 @@ async fn ciphers_handler(request: String) -> HttpResponse {
         Operations::A1Z26CipherEncode => A1Z26CipherEncode::new(lang, params, input).run(),
         Operations::AffineCipherDecode => AffineCipherDecode::new(lang, params, input).run(),
         Operations::AffineCipherEncode => AffineCipherEncode::new(lang, params, input).run(),
+        Operations::Argon2 => Argon2::new(lang, params, input).run(),
+        Operations::AnalyseHash => AnalyseHash::new(lang, params, input).run(),
         Operations::FromBase64 => FromBase64::new(lang, params, input).run(),
         Operations::ToBase64 => ToBase64::new(lang, params, input).run(),
         Operations::VigenereCipherDecode => VigenereCipherDecode::new(lang, params, input).run(),

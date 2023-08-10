@@ -4,7 +4,6 @@ use itertools::Itertools;
 use num::{Integer, ToPrimitive};
 use std::fmt::Debug;
 use std::str::FromStr;
-use std::string::FromUtf8Error;
 use unicode_segmentation::UnicodeSegmentation;
 
 // region constants
@@ -150,8 +149,9 @@ pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<usiz
 
     let string_length = string.graphemes(true).count();
     let mut result: Vec<usize> = vec![0; string_length];
-
+    println!("{}", alphabet);
     for (idx, c) in string.chars().enumerate() {
+        println!("{c}");
         result[idx] = get_index_by_char(alphabet, c);
     }
 
@@ -198,7 +198,7 @@ pub fn convert_to_byte_string(string: &str, convert_type: &str) -> Result<String
             }
             Err(e) => Err(e.to_string()),
         },
-        "utf8" => match String::from_utf8(UTF_8_INIT.encode(string).0.into()) {
+        "utf8" | "utf-8" => match String::from_utf8(UTF_8_INIT.encode(string).0.into()) {
             Ok(data) => Ok(data),
             Err(e) => Err(e.to_string()),
         },
@@ -228,6 +228,11 @@ pub fn from_binary(
     }
 
     Ok(output)
+}
+
+pub fn to_hex(data: &[u8]) -> String {
+    data.iter()
+        .fold(String::new(), |out, x| format!("{out}{:x}", x))
 }
 
 pub fn from_hex(
@@ -313,10 +318,6 @@ pub fn to_base64(data: &str, mut alphabet: &str) -> Result<String, Error> {
 
     Ok(output)
 }
-
-// TODO
-//  - do this function "convert_to_byte_string"
-
 pub fn from_base64(
     mut data: String,
     mut alphabet: &str,
@@ -392,7 +393,6 @@ pub fn from_base64(
             }
         }
     }
-
     if alphabet_length == 65 {
         data = data
             .trim_end_matches(get_char_by_index(&alphabet, 64))
@@ -402,7 +402,6 @@ pub fn from_base64(
     return match return_type {
         DataRepresentation::String(_) => {
             let mut output = String::new();
-
             str_to_array_buffer_by_alphabet(&data, &alphabet)
                 .iter()
                 .map(|x| format!("{:08b}", x)[2..].to_string())

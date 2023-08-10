@@ -12,16 +12,12 @@ pub enum Operations {
     A1Z26CipherEncode,
     AffineCipherDecode,
     AffineCipherEncode,
+    Argon2,
+    AnalyseHash,
     FromBase64,
     ToBase64,
     VigenereCipherDecode,
     VigenereCipherEncode,
-}
-
-impl Operations {
-    pub fn create_vec() -> Vec<Operations> {
-        vec![Operations::VigenereCipherEncode]
-    }
 }
 
 pub trait Operation {
