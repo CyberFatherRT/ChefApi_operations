@@ -5,7 +5,14 @@ use ciphers::*;
 use common::{Operation, Operations, Request, Response};
 
 async fn ciphers_handler(request: String) -> HttpResponse {
-    let request: Request = serde_json::from_str(&request).unwrap();
+    let request: Request = match serde_json::from_str(&request) {
+        Ok(req) => req,
+        Err(_) => {
+            return HttpResponse::build(StatusCode::BAD_REQUEST)
+                .append_header(("Access-Control-Allow-Origin", "*"))
+                .body("Unsupported operation")
+        }
+    };
 
     let (lang, params, input) = (
         request.lang.to_owned(),
