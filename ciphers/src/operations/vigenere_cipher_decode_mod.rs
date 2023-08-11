@@ -1,31 +1,27 @@
-use crate::error::Error;
-use crate::libs::vigenere_trait::VigenereCipher;
-use crate::utils::sub;
-use common::{create_operation_struct, Operation};
-
-create_operation_struct!(VigenereCipherDecode);
+use crate::{
+    create_me_daddy,
+    libs::vigenere_trait::VigenereCipher,
+    utils::{sub, SupportedLanguage},
+    Operation,
+};
+use serde::Deserialize;
 
 impl VigenereCipher for VigenereCipherDecode {}
 
-impl Operation for VigenereCipherDecode {
-    fn new(lang: String, params: Vec<String>, input: String) -> Self {
-        VigenereCipherDecode {
-            name: "Vigenere Decode",
-            module: "Cipher",
-            description_en: Some("The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar common based on the letters of a keyword. It is a simple form of polyalphabetic substitution."),
-            description_ru: Some("Шифр Виженера — это метод шифрования алфавитного текста с использованием ряда различных общих символов Цезаря, основанных на буквах ключевого слова. Это простая форма полиалфавитной замены."),
-            info_url: Some("https://wikipedia.org/wiki/Vigenère_cipher"),
-            lang,
-            params,
-            input
-        }
-    }
+#[derive(Deserialize)]
+struct Params {
+    lang: SupportedLanguage,
+    key: String,
+}
 
-    fn run(&self) -> Result<String, Error> {
-        <Self as VigenereCipher>::cipher(&self.lang, &self.params, &self.input, sub)
-    }
+create_me_daddy!();
 
-    fn validate(&self) -> Result<(), Error> {
-        Ok(())
+pub struct VigenereCipherDecode;
+
+impl Operation<'_, DeserializeMeDaddy, String> for VigenereCipherDecode {
+    fn run(&self, request: &str) -> Result<String, String> {
+        let request = self.validate(request)?;
+        let (input, lang, key) = (request.input, request.params.lang, request.params.key);
+        <Self as VigenereCipher>::cipher(lang, &key, &input, sub)
     }
 }

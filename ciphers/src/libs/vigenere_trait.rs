@@ -1,30 +1,29 @@
 use regex::Regex;
+use std::collections::HashMap;
 use unicode_segmentation::UnicodeSegmentation;
 
-use crate::error::Error;
-use crate::traits::SwitchCase;
-use crate::utils::{get_char_by_index, modulus, EN_ALP, RU_ALP, RU_ALP_WITH_YO};
+use crate::{
+    traits::CharTrait,
+    utils::{get_char_by_index, modulus, SupportedLanguage, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
+};
 
 pub trait VigenereCipher {
-    fn cipher<F>(lang: &str, params: &Vec<String>, input: &str, f: F) -> Result<String, Error>
+    fn cipher<F>(lang: SupportedLanguage, key: &str, input: &str, f: F) -> Result<String, String>
     where
         F: Fn(i16, i16) -> i16,
     {
-        <Self as VigenereCipher>::validate_language(lang, params, input)?;
+        <Self as VigenereCipher>::validate_language(&lang, key, input)?;
 
-        let (alp, reg) = match lang {
-            "en" => EN_ALP,
-            "ru" => RU_ALP,
-            "ru_with_yo" => RU_ALP_WITH_YO,
-            _ => unreachable!(),
+        let (alp, _, _, reg) = match lang {
+            SupportedLanguage::En => EN_ALP,
+            SupportedLanguage::Ru => RU_ALP,
+            SupportedLanguage::RuAlpWithYo => RU_ALP_WITH_YO,
         };
 
-        let mut map = std::collections::HashMap::new();
-        for (k, v) in alp.chars().enumerate() {
-            map.insert(v, k);
-        }
+        let map: HashMap<char, usize> =
+            HashMap::from_iter(alp.chars().enumerate().map(|(idx, elem)| (elem, idx)));
 
-        let key = &params[0].to_lowercase();
+        let key = key.to_lowercase();
         let rg = Regex::new(reg).unwrap();
         let mut index = 0usize;
         let mut cipher_text = String::new();
@@ -39,7 +38,7 @@ pub trait VigenereCipher {
             }
 
             let key_idx = map
-                .get(&get_char_by_index(key, index % key_len))
+                .get(&get_char_by_index(&key, index % key_len))
                 .unwrap()
                 .to_owned() as i16;
 
@@ -51,53 +50,30 @@ pub trait VigenereCipher {
 
             let idx = f(text_idx, key_idx);
 
+            let plain_char = get_char_by_index(alp, modulus(idx, alp_len));
             cipher_text.push(match c.is_lowercase() {
-                true => get_char_by_index(alp, modulus(idx, alp_len)),
-                false => get_char_by_index(alp, modulus(idx, alp_len)).to_upper_case(),
+                true => plain_char,
+                false => plain_char.to_upper_case(),
             });
 
             index += 1;
         }
-
         Ok(cipher_text)
     }
 
-    fn validate_language(lang: &str, params: &Vec<String>, input: &str) -> Result<(), Error> {
+    fn validate_language(lang: &SupportedLanguage, key: &str, input: &str) -> Result<(), String> {
         if input.is_empty() {
-            return Err(Error::InvalidInputError {
-                error: "Input is empty".to_string(),
-            });
-        }
-
-        let langs = ["en", "ru", "ru_with_yo"];
-
-        if !langs.contains(&lang) {
-            return Err(Error::UnsupportedLanguageError {
-                error: "Unsupported language.".to_string(),
-            });
-        }
-
-        if params.len() != 1 {
-            return Err(Error::InvalidNumberOfParamsError {
-                error: "Invalid number of params error.".to_string(),
-            });
-        }
-
-        let reg = match lang {
-            "en" => Regex::new(EN_ALP.1).unwrap(),
-            "ru" => Regex::new(RU_ALP.1).unwrap(),
-            "ru_with_yo" => Regex::new(RU_ALP_WITH_YO.1).unwrap(),
-            _ => {
-                return Err(Error::UnsupportedLanguageError {
-                    error: "Unsupported language.".to_string(),
-                })
-            }
+            return Err("Input is empty".to_string());
         };
 
-        if !reg.is_match(&params[0]) {
-            return Err(Error::IvalidKeyError {
-                error: "invalid key.".to_string(),
-            });
+        let reg = match lang {
+            SupportedLanguage::En => Regex::new(EN_ALP.3).unwrap(),
+            SupportedLanguage::Ru => Regex::new(RU_ALP.3).unwrap(),
+            SupportedLanguage::RuAlpWithYo => Regex::new(RU_ALP_WITH_YO.3).unwrap(),
+        };
+
+        if !reg.is_match(key) {
+            return Err("Invalid key.".to_string());
         }
 
         Ok(())

@@ -1,1 +1,1 @@
-// pub mod vigenere_trait;
+pub mod vigenere_trait;

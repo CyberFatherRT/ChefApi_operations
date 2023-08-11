@@ -1,8 +1,7 @@
-use crate::utils::modulus;
 use crate::{
     create_info_struct, lang_me_daddy,
     traits::CharTrait,
-    utils::{get_alphabet, get_char_by_index, get_index_by_char, mod_inv, validate_lang},
+    utils::{get_alphabet, get_char_by_index, get_index_by_char, mod_inv, modulus, validate_lang},
     Operation, DOCS_URL,
 };
 use num::Integer;

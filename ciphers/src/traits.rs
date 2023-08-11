@@ -17,7 +17,7 @@ impl CharTrait for char {
 
     fn to_upper_case(&self) -> char {
         match self {
-            'a'..='z' => self.to_ascii_lowercase(),
+            'a'..='z' => self.to_ascii_uppercase(),
             'а'..='я' => char::from_u32(*self as u32 - 32).unwrap(),
             'ё' => char::from_u32(*self as u32 - 80).unwrap(),
             _ => *self,

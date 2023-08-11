@@ -2,9 +2,20 @@ use crate::{map, regex_check, traits::StringTrait};
 use encoding_rs::UTF_8_INIT;
 use itertools::Itertools;
 use num::{FromPrimitive, Integer, ToPrimitive};
+use serde::Deserialize;
 use unicode_segmentation::UnicodeSegmentation;
 
 // region constants
+
+#[derive(Deserialize)]
+pub enum SupportedLanguage {
+    #[serde(alias = "en")]
+    En,
+    #[serde(alias = "ru")]
+    Ru,
+    #[serde(alias = "ru_with_yo")]
+    RuAlpWithYo,
+}
 
 struct _AlphabetOptions {
     name: &'static str,

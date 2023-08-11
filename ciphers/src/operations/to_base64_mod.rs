@@ -1,5 +1,4 @@
-use crate::utils::to_base64;
-use crate::{create_me_daddy, Operation};
+use crate::{create_me_daddy, utils::to_base64, Operation};
 use serde::Deserialize;
 
 impl Operation<'_, DeserializeMeDaddy, String> for ToBase64 {
