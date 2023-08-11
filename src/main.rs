@@ -15,6 +15,7 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
     let response = match name.into_inner() {
         Operations::Argon2 => Argon2::new(body).run(),
         Operations::A1Z26CipherDecode => A1Z26CipherDecode::new(body).run(),
+        Operations::A1Z26CipherEncode => A1Z26CipherEncode::new(body).run(),
     };
 
     let status_code = if response.is_ok() {
@@ -32,6 +33,7 @@ async fn ciphers_info_handler(name: Path<Operations>) -> HttpResponse {
     let response = match name.into_inner() {
         Operations::Argon2 => Argon2Info::info(),
         Operations::A1Z26CipherDecode => A1Z26CipherDecodeInfo::info(),
+        Operations::A1Z26CipherEncode => A1Z26CipherEncodeInfo::info(),
     };
 
     HttpResponse::build(StatusCode::OK)

@@ -117,7 +117,6 @@ create_me_daddy!();
 /// #### №1
 /// ``` http
 /// POST /api/Argon2
-/// content_type: application/json; charset=utf-8
 ///
 /// {
 ///     "input": "hello",
@@ -141,7 +140,6 @@ create_me_daddy!();
 /// #### №2
 /// ``` http
 /// POST /api/Argon2
-/// content_type: application/json; charset=utf-8
 ///
 /// {
 ///     "input": "Привет, Мир!",

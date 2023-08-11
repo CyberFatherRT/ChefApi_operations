@@ -75,7 +75,7 @@ create_me_daddy!();
 /// <br/><br/>
 /// ### How to use
 /// \
-/// Send POST requests to /api/Argon2 with your data using json payload with this structure
+/// Send POST requests to /api/A1Z26CipherDecode with your data using json payload with this structure
 /// ``` json
 /// {
 ///     "input": string,
@@ -103,7 +103,6 @@ create_me_daddy!();
 /// #### №1
 /// ``` http
 /// POST /api/A1Z26CipherDecode
-/// content_type: application/json; charset=utf-8
 ///
 /// {
 ///     "input": "8 5 12 12 15",
@@ -121,7 +120,6 @@ create_me_daddy!();
 /// #### №2
 /// ``` http
 /// POST /api/A1Z26CipherDecode
-/// content_type: application/json; charset=utf-8
 ///
 /// {
 ///     "input": "18;9;3;11;18;15;12;12",
@@ -138,7 +136,6 @@ create_me_daddy!();
 /// #### №3
 /// ``` http
 /// POST /api/A1Z26CipherDecode
-/// content_type: application/json; charset=utf-8
 ///
 /// {
 ///     "input": "4 1 21 15 3",
@@ -160,7 +157,7 @@ pub struct A1Z26CipherDecode {
 
 const NAME: &str = "A1Z26CipherDecode";
 const DESCRIPTION_EN: &str =
-    "Converts alphabet order numbers into their corresponding  alphabet character.";
+    "Converts alphabet order numbers into their corresponding alphabet character.";
 const DESCRIPTION_RU: &str =
     "Преобразует порядковые номера алфавита в соответствующие им символы алфавита.";
 

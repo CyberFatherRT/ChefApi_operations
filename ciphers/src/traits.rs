@@ -1,9 +1,9 @@
-pub trait SwitchCase {
+pub trait CharTrait {
     fn to_lower_case(&self) -> Self;
     fn to_upper_case(&self) -> Self;
 }
 
-impl SwitchCase for char {
+impl CharTrait for char {
     fn to_lower_case(&self) -> char {
         match self {
             'A'..='Z' => self.to_ascii_lowercase(),
@@ -23,12 +23,14 @@ impl SwitchCase for char {
     }
 }
 
-pub trait RegexReplace {
+pub trait StringTrait {
     fn regex_replace_all(&self, regex: &str, replacement: &str) -> Result<String, String>;
     fn regex_replace(&self, regex: &str, replacement: &str) -> Result<String, String>;
+
+    fn capitalize(&self) -> String;
 }
 
-impl RegexReplace for String {
+impl StringTrait for String {
     fn regex_replace_all(&self, regex_str: &str, replacement: &str) -> Result<String, String> {
         let Ok(re) = regex::Regex::new(regex_str) else {
             return Err(String::from("wrong regex"));
@@ -44,5 +46,12 @@ impl RegexReplace for String {
 
         let output: String = re.replace(regex_str, replacement).to_string();
         Ok(output)
+    }
+    fn capitalize(&self) -> String {
+        let mut c = self.chars();
+        match c.next() {
+            None => String::new(),
+            Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
+        }
     }
 }

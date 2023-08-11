@@ -1,54 +1,135 @@
-use crate::error::Error;
-use crate::utils::char_repr;
-use common::{create_operation_struct, Operation};
+use crate::{create_info_struct, create_me_daddy, utils::char_repr, Operation, DOCS_URL};
+use serde::{Deserialize, Serialize};
 
-create_operation_struct!(A1Z26CipherEncode);
-
-impl Operation for A1Z26CipherEncode {
-    fn new(lang: String, params: Vec<String>, input: String) -> Self {
-        A1Z26CipherEncode {
-            name: "A1Z26 Cipher Encode",
-            module: "Cipher",
-            description_en: Some("Converts alphabet characters into their corresponding alphabet order number.<br><br>e.g. <code>a</code> becomes <code>1</code> and <code>b</code> becomes <code>2</code>.<br><br>Non-alphabet characters are dropped."),
-            description_ru: Some("Преобразует символы алфавита в соответствующие им порядковые номера алфавита.<br><br>Например: <code>a</code> становиться <code>1</code> и <code>b</code> становиться <code>2</code>.<br><br>Неалфавитные символы отбрасываются."),
-            info_url: None,
-            lang,
-            params,
-            input,
-        }
+impl Operation<'_, DeserializeMeDaddy> for A1Z26CipherEncode {
+    fn new(request: String) -> Self {
+        Self { request }
     }
 
-    fn run(&self) -> Result<String, Error> {
-        self.validate()?;
-
-        if self.input.is_empty() {
-            return Ok(String::new());
-        }
+    fn run(&self) -> Result<String, String> {
+        let request = self.validate(&self.request)?;
 
         let mut result = String::new();
-        let delimiter = char_repr(&self.params[0]);
+        let delimiter = char_repr(&request.params.delimiter);
 
-        for character in self.input.chars() {
-            result.push_str(&format!(
-                "{}{}",
-                match character {
-                    'a'..='z' => character as u8 - 96,
-                    'A'..='Z' => character as u8 - 64,
-                    _ => continue,
-                },
-                delimiter
-            ));
+        for character in request.input.chars() {
+            result.push_str(&match character {
+                'a'..='z' => format!("{}{}", character as u8 - 96, delimiter),
+                'A'..='Z' => format!("{}{}", character as u8 - 64, delimiter),
+                _ => "".to_string(),
+            });
+        }
+        if result.is_empty() {
+            return Ok(String::new());
         }
         Ok(result[..result.len() - 1].to_string())
     }
-
-    fn validate(&self) -> Result<(), Error> {
-        if self.params.len() != 1 {
-            return Err(Error::InvalidNumberOfParamsError {
-                error: "Invalid number of params.".to_string(),
-            });
-        }
-
-        Ok(())
-    }
 }
+
+#[derive(Deserialize)]
+struct Params {
+    delimiter: String,
+}
+
+create_me_daddy!();
+
+/// A1Z26 is a simple substitution cipher where each letter is replaced by its serial number in the alphabet.
+/// <br/><br/>
+/// ### How to use
+/// \
+/// Send POST requests to /api/A1Z26CipherEncode with your data using json payload with this structure
+/// ``` json
+/// {
+///     "input": string,
+///     "params": {
+///         "delimiter": string
+///     }
+/// }
+/// ```
+/// #### where
+///     - delimiter is one of "Space", "Comma", "Semi-colon", "Colon", "Line feed", "CRLF"
+/// <br/><br/>
+///
+/// ### Server response have two possible formats
+///
+/// #### &nbsp;&nbsp;&nbsp;&nbsp; Ok variant
+/// ``` json
+/// { "Ok": `some answer` }
+/// ```
+/// #### &nbsp;&nbsp;&nbsp;&nbsp; Error variant
+/// ``` json
+/// { "Err": `error message` }
+/// ```
+/// ### Examples
+/// <br><br/>
+/// #### №1
+/// ``` http
+/// POST /api/A1Z26CipherEncode
+///
+/// {
+///     "input": "hello",
+///     "params": {
+///         "delimiter": "Space"
+///     }
+/// }
+/// ```
+/// ```http
+/// HTTP/1.1 200 Ok
+/// {
+///   "Ok": "8 5 12 12 15"
+/// }
+/// ```
+/// #### №2
+/// ``` http
+/// POST /api/A1Z26CipherDecode
+///
+/// {
+///     "input": "18;9;3;11;18;15;12;12",
+///     "params": {
+///         "delimiter": "Semi-colon"
+///     }
+/// }
+/// ```
+/// ```http
+/// {
+///   "Ok": "rickroll"
+/// }
+/// ```
+/// #### №3
+/// ``` http
+/// POST /api/A1Z26CipherDecode
+///
+/// {
+///     "input": "4 1 21 15 3",
+///     "params": {
+///         "delimiter": "Unsupported delimiter"
+///     }
+/// }
+/// ```
+/// ```http
+/// HTTP/1.1 400 Bad Request
+/// {
+///   "Err": "Invalid delimiter: `Unsupported delimiter`."
+/// }
+/// ```
+
+pub struct A1Z26CipherEncode {
+    request: String,
+}
+
+const NAME: &str = "A1Z26CipherEncode";
+const DESCRIPTION_EN: &str =
+    "Converts alphabet characters into their corresponding alphabet order number.";
+const DESCRIPTION_RU: &str =
+    "Преобразует символы алфавита в соответствующие им порядковые номера алфавита.";
+
+const INFO_URL: Option<&str> = None;
+
+create_info_struct!(
+    A1Z26CipherEncodeInfo,
+    NAME,
+    DOCS_URL,
+    DESCRIPTION_EN,
+    DESCRIPTION_RU,
+    INFO_URL
+);
