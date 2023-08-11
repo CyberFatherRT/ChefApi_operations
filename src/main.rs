@@ -14,7 +14,6 @@ use ciphers::*;
 async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
     let response = match name.into_inner() {
         Operations::Argon2 => Argon2::new(body).run(),
-        _ => unreachable!(),
     };
 
     let status_code = if response.is_ok() {
