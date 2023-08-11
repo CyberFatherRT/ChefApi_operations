@@ -23,7 +23,7 @@ create_me_daddy!();
 ///
 /// # How to use
 /// \
-/// Send POST requests to /api/Base64 with your data using json payload with this structure.
+/// Send POST requests to /api/ToBase64 with your data using json payload with this structure.
 /// ``` json
 /// {
 ///     "input": string,

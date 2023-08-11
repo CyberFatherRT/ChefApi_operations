@@ -34,6 +34,7 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
         Operations::FromBase64 => http_response(FromBase64, body),
         Operations::ToBase64 => http_response(ToBase64, body),
         Operations::VigenereCipherDecode => http_response(VigenereCipherDecode, body),
+        Operations::VigenereCipherEncode => http_response(VigenereCipherEncode, body),
     }
 }
 

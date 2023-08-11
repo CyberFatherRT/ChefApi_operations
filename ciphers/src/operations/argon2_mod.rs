@@ -92,8 +92,8 @@ create_me_daddy!();
 /// ```
 /// #### where
 ///     - u32 is unsigned 32-bit integer
-///     - Argon2Type is one of "Argon2i", "Argon2d", "Argon2id"
-///     - OutputFormat is one of "Encoded", "Hex", "Raw"
+///     - Argon2Type is enum of "Argon2i", "Argon2d", "Argon2id"
+///     - OutputFormat is enum of "Encoded", "Hex", "Raw"
 /// <br/><br/>
 ///
 /// ### Server response have two possible formats

@@ -15,6 +15,7 @@ pub use operations::argon2_mod::Argon2;
 pub use operations::from_base64_mod::FromBase64;
 pub use operations::to_base64_mod::ToBase64;
 pub use operations::vigenere_cipher_decode_mod::VigenereCipherDecode;
+pub use operations::vigenere_cipher_encode_mod::VigenereCipherEncode;
 
 use crate::traits::StringTrait;
 use serde::{Deserialize, Serialize};
@@ -59,4 +60,5 @@ pub enum Operations {
     FromBase64,
     ToBase64,
     VigenereCipherDecode,
+    VigenereCipherEncode,
 }
