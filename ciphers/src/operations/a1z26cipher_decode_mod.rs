@@ -1,5 +1,6 @@
+use crate::error::Error;
+use crate::utils::char_repr;
 use common::{create_operation_struct, regex_check, Operation};
-use common::{error::Error, utils::char_repr};
 
 create_operation_struct!(A1Z26CipherDecode);
 

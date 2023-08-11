@@ -1,4 +1,5 @@
-use common::{create_operation_struct, error::Error, regex_check, Operation};
+use crate::error::Error;
+use common::{create_operation_struct, regex_check, Operation};
 
 create_operation_struct!(AnalyseHash);
 

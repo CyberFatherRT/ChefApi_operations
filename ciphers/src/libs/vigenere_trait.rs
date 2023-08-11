@@ -1,11 +1,9 @@
 use regex::Regex;
 use unicode_segmentation::UnicodeSegmentation;
 
-use common::{
-    error::Error,
-    traits::SwitchCase,
-    utils::{get_char_by_index, modulus, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
-};
+use crate::error::Error;
+use crate::traits::SwitchCase;
+use crate::utils::{get_char_by_index, modulus, EN_ALP, RU_ALP, RU_ALP_WITH_YO};
 
 pub trait VigenereCipher {
     fn cipher<F>(lang: &str, params: &Vec<String>, input: &str, f: F) -> Result<String, Error>

@@ -1,4 +1,5 @@
-use crate::{error::Error, map, regex_check, traits::RegexReplace};
+use crate::traits::RegexReplace;
+use crate::{map, regex_check};
 use encoding_rs::UTF_8_INIT;
 use itertools::Itertools;
 use num::{Integer, ToPrimitive};
@@ -156,6 +157,7 @@ pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<usiz
     result
 }
 
+// FIXME: remake this function
 pub fn byte_array_to_chars<T: Debug>(byte_array: Vec<T>) -> Result<String, String> {
     let mut output = String::new();
     for i in byte_array {
@@ -266,7 +268,7 @@ pub fn from_decimal(data: &str, delim: Option<&str>) -> Result<Vec<usize>, Strin
     Ok(output)
 }
 
-pub fn to_base64(data: &str, mut alphabet: &str) -> Result<String, Error> {
+pub fn to_base64(data: &str, mut alphabet: &str) -> Result<String, String> {
     if data.is_empty() {
         return Ok(String::new());
     }
@@ -279,9 +281,7 @@ pub fn to_base64(data: &str, mut alphabet: &str) -> Result<String, Error> {
     let alphabet_length = alphabet.graphemes(true).count();
 
     if alphabet_length != 64 && alphabet_length != 65 {
-        return Err(Error::Error {
-            error: "Invalid base64 alphabet length".to_string(),
-        });
+        return Err("Invalid base64 alphabet length".to_string());
     }
 
     let mut output = String::new();
@@ -321,7 +321,7 @@ pub fn from_base64(
     return_type: DataRepresentation,
     remove_non_alp_chars: bool,
     strict_mode: bool,
-) -> Result<DataRepresentation, Error> {
+) -> Result<DataRepresentation, String> {
     if data.is_empty() {
         return match return_type {
             DataRepresentation::String(_) => Ok(DataRepresentation::String(String::new())),
@@ -335,9 +335,7 @@ pub fn from_base64(
     {
         let regex = regex::Regex::new(&format!("[{}]", alphabet)).unwrap();
         if !regex.is_match(&data) {
-            return Err(Error::Error {
-                error: "Invalid base64 alphabet".to_string(),
-            });
+            return Err("Invalid base64 alphabet".to_string());
         }
     }
 
@@ -345,9 +343,7 @@ pub fn from_base64(
     let alphabet_length = alphabet.graphemes(true).count();
 
     if alphabet_length != 64 && alphabet_length != 65 {
-        return Err(Error::Error {
-            error: "Invalid base64 alphabet length".to_string(),
-        });
+        return Err("Invalid base64 alphabet length".to_string());
     }
 
     if remove_non_alp_chars {
@@ -360,12 +356,10 @@ pub fn from_base64(
 
     if strict_mode {
         if data.len() % 4 == 1 {
-            return Err(Error::Error {
-                error: format!(
-                    "Invalid Base64 input length ({}) cannot be 4n+1, even without padding chars.",
-                    data.len()
-                ),
-            });
+            return Err(format!(
+                "Invalid Base64 input length ({}) cannot be 4n+1, even without padding chars.",
+                data.len()
+            ));
         }
 
         if alphabet_length == 65 {
@@ -374,18 +368,14 @@ pub fn from_base64(
 
             if let Some(pad_pos) = pad_pos {
                 if pad_pos < data.len() - 2 || get_char_by_index(&data, data.len() - 1) != pad {
-                    return Err(Error::Error {
-                        error: format!(
-                            "Base64 padding character ({}) not used in the correct place.",
-                            pad
-                        ),
-                    });
+                    return Err(
+                        "Base64 padding character ({pad}) not used in the correct place."
+                            .to_string(),
+                    );
                 }
 
                 if data.len() % 4 != 0 {
-                    return Err(Error::Error {
-                        error: "Base64 not padded to a multiple of 4.".to_string(),
-                    });
+                    return Err("Base64 not padded to a multiple of 4.".to_string());
                 }
             }
         }
@@ -459,7 +449,7 @@ pub fn get_index_by_char(text: &str, ch: char) -> usize {
 pub fn char_repr(token: &str) -> &str {
     map!(
         "Space" => " ",
-        "Persent" => "%",
+        "Percent" => "%",
         "Comma" => ",",
         "Semi-colon" => ";",
         "Colon" => ":",

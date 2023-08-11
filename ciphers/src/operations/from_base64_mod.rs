@@ -1,9 +1,6 @@
-use common::{
-    create_operation_struct,
-    error::Error,
-    utils::{from_base64, DataRepresentation},
-    Operation,
-};
+use crate::error::Error;
+use crate::utils::{from_base64, DataRepresentation};
+use common::{create_operation_struct, Operation};
 
 create_operation_struct!(FromBase64);
 

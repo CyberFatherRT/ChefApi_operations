@@ -1,4 +1,6 @@
-use common::{create_operation_struct, error::Error, utils::char_repr, Operation};
+use crate::error::Error;
+use crate::utils::char_repr;
+use common::{create_operation_struct, Operation};
 
 create_operation_struct!(A1Z26CipherEncode);
 

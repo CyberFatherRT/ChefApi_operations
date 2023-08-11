@@ -1,5 +1,4 @@
-use common::{
-    error::Error,
+use crate::{
     regex_check,
     utils::{get_alphabet, get_index_by_char, mod_inv, modulus, validate_lang, NUM},
 };
@@ -31,39 +30,29 @@ pub trait AffineCipher {
         );
     }
 
-    fn validate(lang: &str, params: &Vec<String>, input: &str) -> Result<(), Error> {
+    fn validate(lang: &str, params: &Vec<String>, input: &str) -> Result<(), String> {
         if params.len() != 2 {
-            return Err(Error::InvalidNumberOfParamsError {
-                error: "Invalid number of params.".to_string(),
-            });
+            return Err("Invalid number of params.".to_string());
         }
 
         if input.is_empty() {
-            return Err(Error::InvalidInputError {
-                error: "Input is empty.".to_string(),
-            });
+            return Err("Input is empty.".to_string());
         }
 
         if !validate_lang(input, lang) {
-            return Err(Error::UnsupportedLanguageError {
-                error: "Invalid language.".to_string(),
-            });
+            return Err("Invalid language.".to_string());
         }
 
         let (a, b) = (params.get(0).unwrap(), params.get(1).unwrap());
 
         if !regex_check!(NUM.1 => a) || !regex_check!(NUM.1 => b) {
-            return Err(Error::InvalidParamTypeError {
-                error: "The values of a and b can only be integers.".to_string(),
-            });
+            return Err("The values of a and b can only be integers.".to_string());
         };
 
         match a.parse::<usize>() {
             Ok(a) => a,
             Err(_) => {
-                return Err(Error::InvalidParamTypeError {
-                    error: "The values of a and b can only be integers.".to_string(),
-                });
+                return Err("The values of a and b can only be integers.".to_string());
             }
         };
 

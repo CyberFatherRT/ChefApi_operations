@@ -1,80 +1,17 @@
-use crate::Operation;
+use crate::{
+    utils::{from_base64, to_hex, DataRepresentation},
+    Operation,
+};
 use argon2::{Config, ThreadMode, Variant, Version};
-use common::utils::{from_base64, to_hex, DataRepresentation};
 use serde::Deserialize;
 
-// region info about operation
-
-pub struct Argon2Info {
-    pub name: &'static str,
-    pub module: &'static str,
-    pub description_en: Option<&'static str>,
-    pub description_ru: Option<&'static str>,
-    pub info_url: Option<&'static str>,
-}
-
-impl Argon2Info {
-    pub fn new() -> Self {
-        Self {
-            name: "Argon2",
-            module: "Crypto",
-            description_en: Some("Argon2 is a key derivation function that was selected as the winner of the Password Hashing Competition in July 2015. It was designed by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich from the University of Luxembourg.<br><br>Enter the password in the input to generate its hash."),
-            description_ru: Some("Argon2 – это функция получения ключа, которая была выбрана победителем конкурса хеширования паролей в июле 2015 года. Она была разработана Алексом Бирюковым, Даниэлем Дину и Дмитрием Ховратовичем из Люксембургского университета.<br><br>Введите пароль в ввод для генерации его хэша."),
-            info_url: Some("https://wikipedia.org/wiki/Argon2"),
-        }
-    }
-}
-
-// endregion
-
-// region structs and enums
-
-#[derive(Deserialize)]
-#[serde(remote = "Variant")]
-enum MyVariant {
-    Argon2d = 0,
-    Argon2i = 1,
-    Argon2id = 2,
-}
-
-#[derive(Deserialize)]
-enum OutputFormat {
-    Encoded,
-    Hex,
-    Raw,
-}
-
-#[derive(Deserialize)]
-struct Argon2Params {
-    salt: String,
-    iterations: u32,
-    memory: u32,
-    parallelism: u32,
-    hash_length: u32,
-    #[serde(with = "MyVariant")]
-    argon2_type: Variant,
-    output_format: OutputFormat,
-}
-
-#[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
-    input: String,
-    params: Argon2Params,
-}
-
-pub struct Argon2 {
-    request: String,
-}
-
-// endregion
-
-impl Operation<DeserializeMeDaddy> for Argon2 {
+impl Operation<'_, DeserializeMeDaddy> for Argon2 {
     fn new(request: String) -> Self {
         Self { request }
     }
 
     fn run(&self) -> Result<String, String> {
-        let request = self.validate()?;
+        let request = self.validate(&self.request)?;
 
         let (params, input) = (request.params, request.input);
 
@@ -118,8 +55,179 @@ impl Operation<DeserializeMeDaddy> for Argon2 {
 
         Ok(output)
     }
+}
 
-    fn validate(&self) -> Result<DeserializeMeDaddy, String> {
-        serde_json::from_str(&self.request).map_err(|err| err.to_string())
+// region with structs and enums
+
+#[derive(Deserialize)]
+struct Params {
+    salt: String,
+    iterations: u32,
+    memory: u32,
+    parallelism: u32,
+    hash_length: u32,
+    #[serde(with = "MyVariant")]
+    argon2_type: Variant,
+    output_format: OutputFormat,
+}
+
+#[derive(Deserialize)]
+pub struct DeserializeMeDaddy {
+    input: String,
+    params: Params,
+}
+
+/// Argon2 is a key derivation function that was selected as the winner of the Password Hashing Competition in July 2015. It was designed by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich from the University of Luxembourg.
+/// <br/><br/>
+/// For more information go to this site - https://wikipedia.org/wiki/Argon2
+/// <br/><br/>
+///
+/// ### How to use
+/// \
+/// Send POST requests to /api/Argon2 with your data using json payload with this structure
+/// ``` json
+/// {
+///     "input": string,
+///     "params": {
+///         "salt": string,
+///         "iterations": u32,
+///         "parallelism": u32,
+///         "hash_length": u32,
+///         "argon2_type": Argon2Type,
+///         "output_format": OutputFormat,
+///         "memory": u32
+///     }
+/// }
+/// ```
+/// #### where
+///     - u32 is unsigned 32-bit integer
+///     - Argon2Type is one of "Argon2i", "Argon2d", "Argon2id"
+///     - OutputFormat is one of "Encoded", "Hex", "Raw"
+/// <br/><br/>
+///
+/// ### Server response have two possible formats
+///
+/// #### &nbsp;&nbsp;&nbsp;&nbsp; Ok variant
+/// ``` json
+/// { "Ok": `some answer` }
+/// ```
+/// #### &nbsp;&nbsp;&nbsp;&nbsp; Error variant
+/// ``` json
+/// { "Err": `error message` }
+/// ```
+/// ### Examples
+/// <br><br/>
+/// #### №1
+/// ``` http
+/// POST /api/Argon2
+/// content_type: application/json; charset=utf-8
+///
+/// {
+///     "input": "hello",
+///     "params": {
+///         "salt": "somesalt",
+///         "iterations": 3,
+///         "parallelism": 1,
+///         "hash_length": 32,
+///         "argon2_type": "Argon2i",
+///         "output_format": "Encoded",
+///         "memory": 4096
+///     }
+/// }
+/// ```
+/// ```http
+/// HTTP/1.1 200 Ok
+/// {
+///   "Ok": "$argon2i$v=19$m=4096,t=3,p=1$c29tZXNhbHQ$WVDOfucSPAey3UEzzqLtBwRbGS83pTyIPLXgjhKfgrY"
+/// }
+/// ```
+/// #### №2
+/// ``` http
+/// POST /api/Argon2
+/// content_type: application/json; charset=utf-8
+///
+/// {
+///     "input": "Привет, Мир!",
+///     "params": {
+///         "salt": "новая соль",
+///         "iterations": 6,
+///         "parallelism": 1,
+///         "hash_length": 34,
+///         "argon2_type": "Argon2id",
+///         "output_format": "Hex",
+///         "memory": 8096
+///     }
+/// }
+/// ```
+/// ```http
+/// {
+///   "Ok": "eb4140b78ed1c4fcd736c1b73cdf555ba244371ff53971e53823e411aeefbd60751d"
+/// }
+/// ```
+/// #### №3
+/// ``` http
+/// POST /api/Argon2
+/// content_type: application/json; charset=utf-8
+///
+/// {
+///     "input": "error",
+///     "params": {
+///         "salt": "missing iterations parameter",
+///         "parallelism": 1,
+///         "hash_length": 34,
+///         "argon2_type": "Argon2id",
+///         "output_format": "Hex",
+///         "memory": 8096
+///     }
+/// }
+/// ```
+/// ```http
+/// HTTP/1.1 400 Bad Request
+/// {
+///   "Err": "missing field `iterations`"
+/// }
+/// ```
+pub struct Argon2 {
+    request: String,
+}
+
+#[derive(Deserialize)]
+#[serde(remote = "Variant")]
+enum MyVariant {
+    Argon2d = 0,
+    Argon2i = 1,
+    Argon2id = 2,
+}
+
+#[derive(Deserialize)]
+enum OutputFormat {
+    Encoded,
+    Hex,
+    Raw,
+}
+
+// endregion
+
+// region info about operation
+
+pub struct Argon2Info {
+    pub name: &'static str,
+    pub module: &'static str,
+    pub description_en: Option<&'static str>,
+    pub description_ru: Option<&'static str>,
+    pub info_url: Option<&'static str>,
+}
+
+impl Argon2Info {
+    pub fn new() -> Self {
+        Self {
+            name: "Argon2",
+            module: "Crypto",
+            description_en: Some("Argon2 is a key derivation function that was selected as the winner of the Password Hashing Competition in July 2015. It was designed by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich from the University of Luxembourg.<br><br>Enter the password in the input to generate its hash."),
+            description_ru: Some("Argon2 – это функция получения ключа, которая была выбрана победителем конкурса хеширования паролей в июле 2015 года. Она была разработана Алексом Бирюковым, Даниэлем Дину и Дмитрием Ховратовичем из Люксембургского университета.<br><br>Введите пароль в ввод для генерации его хэша."),
+            info_url: Some("https://wikipedia.org/wiki/Argon2"),
+        }
     }
 }
+
+// endregion

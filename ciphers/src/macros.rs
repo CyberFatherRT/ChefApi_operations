@@ -15,7 +15,7 @@ macro_rules! regex_check {
     }};
 }
 #[macro_export]
-macro_rules! create_operation_struct {
+macro_rules! create_struct {
     ($name:ident) => {
         pub struct $name {
             pub name: &'static str,

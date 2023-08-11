@@ -1,12 +1,14 @@
-#![allow(non_snake_case)]
-
 mod config;
 
+use actix_web::web::post;
 use actix_web::{
-    http::StatusCode, middleware::Logger, post, web::Path, App, HttpResponse, HttpServer,
+    http::StatusCode,
+    middleware::Logger,
+    post,
+    web::{resource, Path},
+    App, HttpResponse, HttpServer,
 };
 use ciphers::*;
-use common::Operations;
 
 #[post("/api/{name}")]
 async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
@@ -15,9 +17,20 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
         _ => unreachable!(),
     };
 
-    HttpResponse::build(StatusCode::OK)
+    let status_code = if response.is_ok() {
+        StatusCode::OK
+    } else {
+        StatusCode::BAD_REQUEST
+    };
+
+    HttpResponse::build(status_code)
         .append_header(("Access-Control-Allow-Origin", "*"))
         .json(response)
+}
+
+// TODO: Make this function return info about operations.
+async fn ciphers_info_handler(name: Path<Operations>) -> HttpResponse {
+    HttpResponse::build(StatusCode::IM_A_TEAPOT).body("")
 }
 
 #[actix_web::main]
@@ -26,7 +39,11 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         let logger = Logger::default();
 
-        App::new().wrap(logger).service(ciphers_handler)
+        App::new().wrap(logger).service(ciphers_handler).service(
+            resource(vec!["/api/{name}/help", "/api/{name}/info"])
+                .route(post().to(ciphers_info_handler))
+                .route(post().to(ciphers_info_handler)),
+        )
     })
     .bind(config::HOSTNAME)?
     .run()

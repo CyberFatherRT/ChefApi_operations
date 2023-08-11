@@ -1,7 +1,8 @@
+use crate::error::Error;
 use crate::libs::affine_trait::AffineCipher;
-use common::{
-    create_operation_struct, error::Error, traits::SwitchCase, utils::get_char_by_index, Operation,
-};
+use crate::traits::SwitchCase;
+use crate::utils::get_char_by_index;
+use common::{create_operation_struct, Operation};
 create_operation_struct!(AffineCipherEncode);
 
 impl AffineCipher for AffineCipherEncode {}
