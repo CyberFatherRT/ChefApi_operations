@@ -2,9 +2,7 @@ use crate::traits::RegexReplace;
 use crate::{map, regex_check};
 use encoding_rs::UTF_8_INIT;
 use itertools::Itertools;
-use num::{Integer, ToPrimitive};
-use std::fmt::Debug;
-use std::str::FromStr;
+use num::{FromPrimitive, Integer, ToPrimitive};
 use unicode_segmentation::UnicodeSegmentation;
 
 // region constants
@@ -157,16 +155,8 @@ pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<usiz
     result
 }
 
-// FIXME: remake this function
-pub fn byte_array_to_chars<T: Debug>(byte_array: Vec<T>) -> Result<String, String> {
-    let mut output = String::new();
-    for i in byte_array {
-        match char::from_str(&format!("{:?}", i)) {
-            Ok(c) => output.push(c),
-            Err(e) => return Err(e.to_string()),
-        }
-    }
-    Ok(output)
+pub fn byte_array_to_chars(byte_array: Vec<u8>) -> Result<String, String> {
+    String::from_utf8(byte_array).map_err(|err| err.to_string())
 }
 
 pub fn convert_to_byte_string(string: &str, convert_type: &str) -> Result<String, String> {
@@ -180,7 +170,16 @@ pub fn convert_to_byte_string(string: &str, convert_type: &str) -> Result<String
             Err(e) => Err(e.to_string()),
         },
         "decimal" => match from_decimal(string, None) {
-            Ok(data) => byte_array_to_chars(data),
+            Ok(data) => {
+                let mut new_data = Vec::with_capacity(data.len());
+                for elem in data.iter() {
+                    match u8::from_usize(*elem) {
+                        Some(val) => new_data.push(val),
+                        None => return Err("a".to_string()),
+                    };
+                }
+                byte_array_to_chars(new_data)
+            }
             Err(e) => Err(e.to_string()),
         },
         "base64" => match from_base64(
@@ -211,7 +210,7 @@ pub fn from_binary(
     data: &str,
     delim: Option<&str>,
     byte_len: Option<usize>,
-) -> Result<Vec<u32>, String> {
+) -> Result<Vec<u8>, String> {
     if byte_len.unwrap_or(8) < 1 {
         return Err("Byte length must be a positive integer".to_string());
     };
@@ -219,9 +218,9 @@ pub fn from_binary(
     let delim = char_repr(delim.unwrap_or("Space"));
     let data = data.replace(delim, " ");
 
-    let mut output: Vec<u32> = Vec::new();
+    let mut output: Vec<u8> = Vec::new();
     for i in data.split_whitespace() {
-        match u32::from_str_radix(i, 2) {
+        match u8::from_str_radix(i, 2) {
             Ok(data) => output.push(data),
             Err(e) => return Err(e.to_string()),
         }
