@@ -9,6 +9,8 @@ pub use operations::argon2_mod::{Argon2, Argon2Info};
 
 use serde::{Deserialize, Serialize};
 
+const DOCS_URL: &str = "soon I transfer all documentation to somewhere :/";
+
 pub trait Operation<'a, O>
 where
     O: Deserialize<'a>,

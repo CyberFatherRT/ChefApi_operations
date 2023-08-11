@@ -1,4 +1,6 @@
-use crate::{regex_check, utils::char_repr, Operation};
+use crate::{
+    create_info_struct, create_me_daddy, regex_check, utils::char_repr, Operation, DOCS_URL,
+};
 use serde::{Deserialize, Serialize};
 
 impl Operation<'_, DeserializeMeDaddy> for A1Z26CipherDecode {
@@ -67,11 +69,7 @@ struct Params {
     delimiter: String,
 }
 
-#[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
-    input: String,
-    params: Params,
-}
+create_me_daddy!();
 
 /// A1Z26 is a simple substitution cipher where each letter is replaced by its serial number in the alphabet.
 /// <br/><br/>
@@ -160,26 +158,19 @@ pub struct A1Z26CipherDecode {
     request: String,
 }
 
-#[derive(Serialize)]
-pub struct A1Z26CipherDecodeInfo {
-    name: &'static str,
-    documentation: &'static str,
-    description_en: &'static str,
-    description_ru: &'static str,
-    info_url: Option<&'static str>,
-}
+const NAME: &str = "A1Z26CipherDecode";
+const DESCRIPTION_EN: &str =
+    "Converts alphabet order numbers into their corresponding  alphabet character.";
+const DESCRIPTION_RU: &str =
+    "Преобразует порядковые номера алфавита в соответствующие им символы алфавита.";
 
-impl A1Z26CipherDecodeInfo {
-    pub fn info() -> String {
-        let structure = Self {
-            name: "A1Z26 Cipher Decode",
-            documentation: "soon I transfer all documentation to somewhere :/",
-            description_en:
-                "Converts alphabet order numbers into their corresponding  alphabet character.",
-            description_ru:
-                "Преобразует порядковые номера алфавита в соответствующие им символы алфавита.",
-            info_url: None,
-        };
-        serde_json::to_string(&structure).unwrap()
-    }
-}
+const INFO_URL: Option<&str> = None;
+
+create_info_struct!(
+    A1Z26CipherDecodeInfo,
+    NAME,
+    DOCS_URL,
+    DESCRIPTION_EN,
+    DESCRIPTION_RU,
+    INFO_URL
+);
