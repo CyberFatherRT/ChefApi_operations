@@ -29,7 +29,7 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
 
 async fn ciphers_info_handler(name: Path<Operations>) -> HttpResponse {
     let response = match name.into_inner() {
-        Operations::Argon2 => Argon2Info::new(),
+        Operations::Argon2 => Argon2Info::default(),
     };
 
     HttpResponse::build(StatusCode::OK)

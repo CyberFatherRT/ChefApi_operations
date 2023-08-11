@@ -219,8 +219,8 @@ pub struct Argon2Info {
     pub info_url: Option<&'static str>,
 }
 
-impl Argon2Info {
-    pub fn new() -> Self {
+impl Default for Argon2Info {
+    fn default() -> Self {
         Self {
             name: "Argon2",
             module: "Crypto",
