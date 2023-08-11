@@ -8,7 +8,7 @@ use actix_web::{
     web::{resource, Path},
     App, HttpResponse, HttpServer,
 };
-use ciphers::{self, *};
+use ciphers::*;
 use serde::{Deserialize, Serialize};
 
 // black magic with generic
@@ -36,17 +36,19 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
         Operations::AffineCipherEncode => http_response(AffineCipherEncode, body),
         Operations::AnalyseHash => http_response(AnalyseHash, body),
         Operations::Argon2 => http_response(Argon2, body),
+        Operations::FromBase64 => http_response(FromBase64, body),
     }
 }
 
 async fn ciphers_info_handler(name: Path<Operations>) -> HttpResponse {
     let response = match name.into_inner() {
-        Operations::Argon2 => Argon2Info::info(),
         Operations::A1Z26CipherDecode => A1Z26CipherDecodeInfo::info(),
         Operations::A1Z26CipherEncode => A1Z26CipherEncodeInfo::info(),
         Operations::AffineCipherDecode => AffineCipherDecodeInfo::info(),
         Operations::AffineCipherEncode => AffineCipherEncodeInfo::info(),
         Operations::AnalyseHash => AnalyseHashInfo::info(),
+        Operations::Argon2 => Argon2Info::info(),
+        Operations::FromBase64 => FromBase64Info::info(),
     };
 
     HttpResponse::build(StatusCode::OK)

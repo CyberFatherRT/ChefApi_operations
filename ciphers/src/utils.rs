@@ -93,7 +93,6 @@ pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<usiz
     for (idx, c) in string.chars().enumerate() {
         result[idx] = get_index_by_char(alphabet, c);
     }
-
     result
 }
 
@@ -260,7 +259,7 @@ pub fn from_base64(
     mut data: String,
     mut alphabet: &str,
     return_type: DataRepresentation,
-    remove_non_alp_chars: bool,
+    remove_non_alphabetic_chars: bool,
     strict_mode: bool,
 ) -> Result<DataRepresentation, String> {
     if data.is_empty() {
@@ -269,14 +268,15 @@ pub fn from_base64(
             DataRepresentation::ByteArray(_) => Ok(DataRepresentation::ByteArray(Vec::new())),
         };
     }
+
     if alphabet.is_empty() {
         alphabet = "A-Za-z0-9+/=";
     }
 
     {
-        let regex = regex::Regex::new(&format!("[{}]", alphabet)).unwrap();
-        if !regex.is_match(&data) {
-            return Err("Invalid base64 alphabet".to_string());
+        let regex = regex::Regex::new(&format!("[^{}]", alphabet)).unwrap();
+        if regex.is_match(&data) {
+            return Err("Input string isn't correspond to used base64 alphabet.".to_string());
         }
     }
 
@@ -287,7 +287,7 @@ pub fn from_base64(
         return Err("Invalid base64 alphabet length".to_string());
     }
 
-    if remove_non_alp_chars {
+    if remove_non_alphabetic_chars {
         let re = format!(
             "[^{}]",
             alphabet.regex_replace_all(r"[\[\]\\\-^$]", r"\$&").unwrap()
@@ -321,6 +321,7 @@ pub fn from_base64(
             }
         }
     }
+
     if alphabet_length == 65 {
         data = data
             .trim_end_matches(get_char_by_index(&alphabet, 64))

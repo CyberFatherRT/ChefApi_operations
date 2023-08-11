@@ -54,8 +54,6 @@ impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
     }
 }
 
-// region with structs and enums
-
 #[derive(Deserialize)]
 struct Params {
     salt: String,
@@ -193,10 +191,6 @@ enum OutputFormat {
     Hex,
     Raw,
 }
-
-// endregion
-
-// region info about operation
 
 const NAME: &str = "Argon2";
 const DESCRIPTION_EN: &str = "Argon2 is a key derivation function that was selected as the winner of the Password Hashing Competition in July 2015. It was designed by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich from the University of Luxembourg.<br><br>Enter the password in the input to generate its hash.";

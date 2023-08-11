@@ -12,6 +12,7 @@ pub use operations::affine_cipher_decode_mod::{AffineCipherDecode, AffineCipherD
 pub use operations::affine_cipher_encode_mod::{AffineCipherEncode, AffineCipherEncodeInfo};
 pub use operations::analyse_hash_mod::{AnalyseHash, AnalyseHashInfo};
 pub use operations::argon2_mod::{Argon2, Argon2Info};
+pub use operations::from_base64_mod::{FromBase64, FromBase64Info};
 
 use crate::traits::StringTrait;
 use serde::{Deserialize, Serialize};
@@ -53,4 +54,5 @@ pub enum Operations {
     AffineCipherEncode,
     AnalyseHash,
     Argon2,
+    FromBase64,
 }

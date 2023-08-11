@@ -116,7 +116,17 @@ pub struct DeserializeMeDaddy {
 ///
 /// #### &nbsp;&nbsp;&nbsp;&nbsp; Ok variant
 /// ``` json
-/// { "Ok": `some answer` }
+/// {
+///     "Ok": {
+///         "hash_length": int,
+///         "byte_length": float,
+///         "bit_length": float,
+///         "possible_hash_functions": [string]
+///     }
+/// }
+/// #### where
+///     - [string] is array of string
+///
 /// ```
 /// #### &nbsp;&nbsp;&nbsp;&nbsp; Error variant
 /// ``` json
