@@ -12,9 +12,24 @@ pub enum DataRepresentation {
     ByteArray(Vec<u8>),
 }
 
-pub const EN_ALP: (&str, &str) = ("abcdefghijklmnopqrstuvwxyz", r"^[a-zA-Z]+$");
-pub const RU_ALP: (&str, &str) = ("абвгдежзийклмнопрстуфхцчшщъыьэюя", "^[а-яА-Я]+$");
-pub const RU_ALP_WITH_YO: (&str, &str) = ("абвгдеёжзийклмнопрстуфхцчшщъыьэюя", r"^[а-яА-ЯёЁ]+$");
+pub const EN_ALP: (&str, &str, u8, &str) = (
+    "abcdefghijklmnopqrstuvwxyz",
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    26,
+    r"^[a-zA-Z]+$",
+);
+pub const RU_ALP: (&str, &str, u8, &str) = (
+    "абвгдежзийклмнопрстуфхцчшщъыьэюя",
+    "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    33,
+    "^[а-яА-Я]+$",
+);
+pub const RU_ALP_WITH_YO: (&str, &str, u8, &str) = (
+    "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
+    "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    33,
+    r"^[а-яА-ЯёЁ]+$",
+);
 pub const NUM: (&str, &str) = ("0123456789", r"^\+?(0|[1-9]\d*)$");
 
 // endregion
@@ -355,7 +370,7 @@ pub fn validate_lang(text: &str, lang: &str) -> bool {
     regex_check!(re => text)
 }
 
-pub fn get_alphabet(lang: &str) -> (&'static str, &'static str) {
+pub fn get_alphabet(lang: &str) -> (&'static str, &'static str, u8, &'static str) {
     match lang {
         "en" => EN_ALP,
         "ru" => RU_ALP,

@@ -21,11 +21,11 @@ impl Operation<'_, DeserializeMeDaddy> for A1Z26CipherDecode {
         let mut plain_text = String::new();
 
         for c in cipher_text {
-            let c = c.parse::<u32>().unwrap();
+            let c = c.parse::<u8>().unwrap();
             if !(1..=26).contains(&c) {
                 return Err("All numbers must be between 1 and 26.".to_string());
             }
-            plain_text.push(char::from_u32(c + 96).unwrap());
+            plain_text.push((c + 96) as char);
         }
         Ok(plain_text)
     }

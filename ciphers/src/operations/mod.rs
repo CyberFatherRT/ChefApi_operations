@@ -1,6 +1,6 @@
 pub mod a1z26cipher_decode_mod;
 pub mod a1z26cipher_encode_mod;
-// pub mod affine_cipher_decode_mod;
+pub mod affine_cipher_decode_mod;
 // pub mod affine_cipher_encode_mod;
 // pub mod analyse_hash_mod;
 pub mod argon2_mod;

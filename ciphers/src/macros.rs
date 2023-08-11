@@ -27,6 +27,18 @@ macro_rules! create_me_daddy {
 }
 
 #[macro_export]
+macro_rules! lang_me_daddy {
+    () => {
+        #[derive(Deserialize)]
+        pub struct DeserializeMeDaddy {
+            input: String,
+            lang: String,
+            params: Params,
+        }
+    };
+}
+
+#[macro_export]
 macro_rules! create_info_struct {
     ($struct_name:ident, $name:ident, $doc:ident, $description_en:ident, $description_ru:ident, $info_url:ident) => {
         #[derive(Serialize)]
