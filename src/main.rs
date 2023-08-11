@@ -1,12 +1,7 @@
 mod config;
 
-use actix_web::web::post;
 use actix_web::{
-    http::StatusCode,
-    middleware::Logger,
-    post,
-    web::{resource, Path},
-    App, HttpResponse, HttpServer,
+    http::StatusCode, middleware::Logger, post, web::Path, App, HttpResponse, HttpServer,
 };
 use ciphers::*;
 use serde::{Deserialize, Serialize};
@@ -37,24 +32,8 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
         Operations::AnalyseHash => http_response(AnalyseHash, body),
         Operations::Argon2 => http_response(Argon2, body),
         Operations::FromBase64 => http_response(FromBase64, body),
+        Operations::ToBase64 => http_response(ToBase64, body),
     }
-}
-
-async fn ciphers_info_handler(name: Path<Operations>) -> HttpResponse {
-    let response = match name.into_inner() {
-        Operations::A1Z26CipherDecode => A1Z26CipherDecodeInfo::info(),
-        Operations::A1Z26CipherEncode => A1Z26CipherEncodeInfo::info(),
-        Operations::AffineCipherDecode => AffineCipherDecodeInfo::info(),
-        Operations::AffineCipherEncode => AffineCipherEncodeInfo::info(),
-        Operations::AnalyseHash => AnalyseHashInfo::info(),
-        Operations::Argon2 => Argon2Info::info(),
-        Operations::FromBase64 => FromBase64Info::info(),
-    };
-
-    HttpResponse::build(StatusCode::OK)
-        .append_header(("Access-Control-Allow-Origin", "*"))
-        .content_type("application/json")
-        .body(response)
 }
 
 #[actix_web::main]
@@ -63,11 +42,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         let logger = Logger::default();
 
-        App::new().wrap(logger).service(ciphers_handler).service(
-            resource(vec!["/api/{name}/help", "/api/{name}/info"])
-                .route(post().to(ciphers_info_handler))
-                .route(post().to(ciphers_info_handler)),
-        )
+        App::new().wrap(logger).service(ciphers_handler)
     })
     .bind(config::HOSTNAME)?
     .run()

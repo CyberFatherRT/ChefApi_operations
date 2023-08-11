@@ -1,4 +1,4 @@
-extern crate core;
+#![allow(dead_code)]
 
 pub mod libs;
 mod macros;
@@ -6,13 +6,14 @@ mod operations;
 pub mod traits;
 pub mod utils;
 
-pub use operations::a1z26cipher_decode_mod::{A1Z26CipherDecode, A1Z26CipherDecodeInfo};
-pub use operations::a1z26cipher_encode_mod::{A1Z26CipherEncode, A1Z26CipherEncodeInfo};
-pub use operations::affine_cipher_decode_mod::{AffineCipherDecode, AffineCipherDecodeInfo};
-pub use operations::affine_cipher_encode_mod::{AffineCipherEncode, AffineCipherEncodeInfo};
-pub use operations::analyse_hash_mod::{AnalyseHash, AnalyseHashInfo};
-pub use operations::argon2_mod::{Argon2, Argon2Info};
-pub use operations::from_base64_mod::{FromBase64, FromBase64Info};
+pub use operations::a1z26cipher_decode_mod::A1Z26CipherDecode;
+pub use operations::a1z26cipher_encode_mod::A1Z26CipherEncode;
+pub use operations::affine_cipher_decode_mod::AffineCipherDecode;
+pub use operations::affine_cipher_encode_mod::AffineCipherEncode;
+pub use operations::analyse_hash_mod::AnalyseHash;
+pub use operations::argon2_mod::Argon2;
+pub use operations::from_base64_mod::FromBase64;
+pub use operations::to_base64_mod::ToBase64;
 
 use crate::traits::StringTrait;
 use serde::{Deserialize, Serialize};
@@ -55,4 +56,5 @@ pub enum Operations {
     AnalyseHash,
     Argon2,
     FromBase64,
+    ToBase64,
 }

@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 pub trait CharTrait {
     fn to_lower_case(&self) -> Self;
     fn to_upper_case(&self) -> Self;
@@ -24,6 +26,8 @@ impl CharTrait for char {
 }
 
 pub trait StringTrait {
+    fn replace_by_alphabet(&self, alphabet: &str) -> String;
+
     fn regex_replace_all(&self, regex: &str, replacement: &str) -> Result<String, String>;
     fn regex_replace(&self, regex: &str, replacement: &str) -> Result<String, String>;
 
@@ -31,6 +35,14 @@ pub trait StringTrait {
 }
 
 impl StringTrait for String {
+    fn replace_by_alphabet(&self, alphabet: &str) -> String {
+        let alphabet: HashSet<char> = HashSet::from_iter(alphabet.chars());
+
+        self.chars()
+            .filter(|c| alphabet.contains(c))
+            .collect::<String>()
+    }
+
     fn regex_replace_all(&self, regex_str: &str, replacement: &str) -> Result<String, String> {
         let Ok(re) = regex::Regex::new(regex_str) else {
             return Err(String::from("wrong regex"));

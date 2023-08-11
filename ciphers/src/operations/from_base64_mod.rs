@@ -16,7 +16,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for FromBase64 {
             request.params.strict_mode,
         );
 
-        let alphabet = alphabet.unwrap_or(String::from(""));
+        let alphabet = alphabet.unwrap_or(String::new());
 
         match from_base64(
             input,
@@ -52,7 +52,7 @@ create_me_daddy!();
 ///
 /// # How to use
 /// \
-/// Send POST requests to /api/Base64 with your data using json payload with this structure.
+/// Send POST requests to /api/FromBase64 with your data using json payload with this structure.
 /// ``` json
 /// {
 ///     "input": string,
@@ -103,7 +103,7 @@ create_me_daddy!();
 /// ```
 /// ## №2
 /// ``` http
-/// POST /api/Base64
+/// POST /api/FromBase64
 ///
 /// {
 ///     "input": "Привет, Мир!",
@@ -125,7 +125,7 @@ create_me_daddy!();
 /// ```
 /// ## №3
 /// ``` http
-/// POST /api/Base64
+/// POST /api/FromBase64
 /// content_type: application/json; charset=utf-8
 ///
 /// {
@@ -162,75 +162,3 @@ create_info_struct!(
     DESCRIPTION_RU,
     INFO_URL
 );
-
-struct _AlphabetOptions {
-    name: &'static str,
-    value: &'static str,
-}
-
-const _ALPHABET_OPTIONS: &[_AlphabetOptions] = &[
-    _AlphabetOptions {
-        name: "Standard (RFC 4648): A-Za-z0-9+/=",
-        value: "A-Za-z0-9+/=",
-    },
-    _AlphabetOptions {
-        name: "URL safe (RFC 4648 §5): A-Za-z0-9-_",
-        value: "A-Za-z0-9-_",
-    },
-    _AlphabetOptions {
-        name: "Filename safe: A-Za-z0-9+-=",
-        value: "A-Za-z0-9+\\-=",
-    },
-    _AlphabetOptions {
-        name: "itoa64: ./0-9A-Za-z=",
-        value: "./0-9A-Za-z=",
-    },
-    _AlphabetOptions {
-        name: "y64: A-Za-z0-9._-",
-        value: "A-Za-z0-9._-",
-    },
-    _AlphabetOptions {
-        name: "z64: 0-9a-zA-Z+/=",
-        value: "0-9a-zA-Z+/=",
-    },
-    _AlphabetOptions {
-        name: "Radix-64 (RFC 4880): 0-9A-Za-z+/=",
-        value: "0-9A-Za-z+/=",
-    },
-    _AlphabetOptions {
-        name: "Uuencoding: [space]-_",
-        value: " -_",
-    },
-    _AlphabetOptions {
-        name: "Xxencoding: +-0-9A-Za-z",
-        value: "+\\-0-9A-Za-z",
-    },
-    _AlphabetOptions {
-        name: "BinHex: !-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
-        value: "!-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
-    },
-    _AlphabetOptions {
-        name: "ROT13: N-ZA-Mn-za-m0-9+/=",
-        value: "N-ZA-Mn-za-m0-9+/=",
-    },
-    _AlphabetOptions {
-        name: "UNIX crypt: ./0-9A-Za-z",
-        value: "./0-9A-Za-z",
-    },
-    _AlphabetOptions {
-        name: "Atom128: /128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
-        value: "/128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
-    },
-    _AlphabetOptions {
-        name: "Megan35: 3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
-        value: "3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
-    },
-    _AlphabetOptions {
-        name: "Zong22: ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
-        value: "ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
-    },
-    _AlphabetOptions {
-        name: "Hazz15: HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
-        value: "HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
-    },
-];

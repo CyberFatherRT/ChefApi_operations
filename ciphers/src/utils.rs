@@ -6,6 +6,78 @@ use unicode_segmentation::UnicodeSegmentation;
 
 // region constants
 
+struct _AlphabetOptions {
+    name: &'static str,
+    value: &'static str,
+}
+
+const _ALPHABET_OPTIONS: &[_AlphabetOptions] = &[
+    _AlphabetOptions {
+        name: "Standard (RFC 4648): A-Za-z0-9+/=",
+        value: "A-Za-z0-9+/=",
+    },
+    _AlphabetOptions {
+        name: "URL safe (RFC 4648 §5): A-Za-z0-9-_",
+        value: "A-Za-z0-9-_",
+    },
+    _AlphabetOptions {
+        name: "Filename safe: A-Za-z0-9+-=",
+        value: "A-Za-z0-9+\\-=",
+    },
+    _AlphabetOptions {
+        name: "itoa64: ./0-9A-Za-z=",
+        value: "./0-9A-Za-z=",
+    },
+    _AlphabetOptions {
+        name: "y64: A-Za-z0-9._-",
+        value: "A-Za-z0-9._-",
+    },
+    _AlphabetOptions {
+        name: "z64: 0-9a-zA-Z+/=",
+        value: "0-9a-zA-Z+/=",
+    },
+    _AlphabetOptions {
+        name: "Radix-64 (RFC 4880): 0-9A-Za-z+/=",
+        value: "0-9A-Za-z+/=",
+    },
+    _AlphabetOptions {
+        name: "Uuencoding: [space]-_",
+        value: " -_",
+    },
+    _AlphabetOptions {
+        name: "Xxencoding: +-0-9A-Za-z",
+        value: "+\\-0-9A-Za-z",
+    },
+    _AlphabetOptions {
+        name: "BinHex: !-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
+        value: "!-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
+    },
+    _AlphabetOptions {
+        name: "ROT13: N-ZA-Mn-za-m0-9+/=",
+        value: "N-ZA-Mn-za-m0-9+/=",
+    },
+    _AlphabetOptions {
+        name: "UNIX crypt: ./0-9A-Za-z",
+        value: "./0-9A-Za-z",
+    },
+    _AlphabetOptions {
+        name: "Atom128: /128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
+        value: "/128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
+    },
+    _AlphabetOptions {
+        name: "Megan35: 3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
+        value: "3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
+    },
+    _AlphabetOptions {
+        name: "Zong22: ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
+        value: "ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
+    },
+    _AlphabetOptions {
+        name: "Hazz15: HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
+        value: "HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
+    },
+];
+
 #[derive(Eq, PartialEq)]
 pub enum DataRepresentation {
     String(String),
@@ -208,15 +280,14 @@ pub fn from_decimal(data: &str, delim: Option<&str>) -> Result<Vec<usize>, Strin
     Ok(output)
 }
 
-pub fn to_base64(data: &str, mut alphabet: &str) -> Result<String, String> {
+pub fn to_base64(data: &str, alphabet: Option<String>) -> Result<String, String> {
     if data.is_empty() {
         return Ok(String::new());
     }
-    if alphabet.is_empty() {
-        alphabet = "A-Za-z0-9+/=";
-    }
 
-    let alphabet = expand_alphabet_range(alphabet).iter().collect::<String>();
+    let alphabet = alphabet.unwrap_or("A-Za-z0-9+/=".to_string());
+
+    let alphabet = expand_alphabet_range(&alphabet).iter().collect::<String>();
 
     let alphabet_length = alphabet.graphemes(true).count();
 
@@ -273,7 +344,7 @@ pub fn from_base64(
         alphabet = "A-Za-z0-9+/=";
     }
 
-    {
+    if !remove_non_alphabetic_chars {
         let regex = regex::Regex::new(&format!("[^{}]", alphabet)).unwrap();
         if regex.is_match(&data) {
             return Err("Input string isn't correspond to used base64 alphabet.".to_string());
@@ -288,11 +359,7 @@ pub fn from_base64(
     }
 
     if remove_non_alphabetic_chars {
-        let re = format!(
-            "[^{}]",
-            alphabet.regex_replace_all(r"[\[\]\\\-^$]", r"\$&").unwrap()
-        );
-        data = data.regex_replace_all(&re, "").unwrap();
+        data = data.replace_by_alphabet(&alphabet)
     }
 
     if strict_mode {
