@@ -122,15 +122,16 @@ lang_me_daddy!();
 /// POST /api/AffineCipherDecode
 ///
 /// {
-///     "input": "18;9;3;11;18;15;12;12",
+///     "input": "Мскньы, Юкс!",
 ///     "params": {
-///         "delimiter": "Semi-colon"
+///         "a": 5,
+///         "b" 3,
 ///     }
 /// }
 /// ```
 /// ```http
 /// {
-///   "Ok": "rickroll"
+///   "Ok": "Привет, Мир!"
 /// }
 /// ```
 /// #### №3
@@ -149,7 +150,7 @@ lang_me_daddy!();
 /// ```http
 /// HTTP/1.1 400 Bad Request
 /// {
-///   "Err": "Invalid delimiter: `Unsupported delimiter`"
+///   "Err": "Invalid value: integer `-5`, expected u8."
 /// }
 /// ```
 pub struct AffineCipherDecode {

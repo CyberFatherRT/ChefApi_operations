@@ -9,6 +9,7 @@ pub mod utils;
 pub use operations::a1z26cipher_decode_mod::{A1Z26CipherDecode, A1Z26CipherDecodeInfo};
 pub use operations::a1z26cipher_encode_mod::{A1Z26CipherEncode, A1Z26CipherEncodeInfo};
 pub use operations::affine_cipher_decode_mod::{AffineCipherDecode, AffineCipherDecodeInfo};
+pub use operations::affine_cipher_encode_mod::{AffineCipherEncode, AffineCipherEncodeInfo};
 pub use operations::argon2_mod::{Argon2, Argon2Info};
 
 use crate::traits::StringTrait;
@@ -49,5 +50,6 @@ pub enum Operations {
     A1Z26CipherDecode,
     A1Z26CipherEncode,
     AffineCipherDecode,
+    AffineCipherEncode,
     Argon2,
 }
