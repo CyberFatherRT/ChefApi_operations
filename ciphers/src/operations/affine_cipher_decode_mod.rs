@@ -8,13 +8,9 @@ use crate::{
 use num::Integer;
 use serde::{Deserialize, Serialize};
 
-impl Operation<'_, DeserializeMeDaddy> for AffineCipherDecode {
-    fn new(request: String) -> Self {
-        Self { request }
-    }
-
-    fn run(&self) -> Result<String, String> {
-        let request = self.validate(&self.request)?;
+impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherDecode {
+    fn run(&self, request: &str) -> Result<String, String> {
+        let request = self.validate(request)?;
 
         let (input, lang, params) = (request.input, request.lang, request.params);
         if !validate_lang(&input, &lang) {
@@ -70,7 +66,7 @@ lang_me_daddy!();
 /// <br><br/>
 /// For more information go [here](https://wikipedia.org/wiki/Argon2)
 /// <br><br/>
-/// ### How to use
+/// # How to use
 /// \
 /// Send POST requests to /api/AffineCipherDecode with your data using json payload with this structure
 /// ``` json
@@ -96,9 +92,9 @@ lang_me_daddy!();
 /// ``` json
 /// { "Err": `error message` }
 /// ```
-/// ### Examples
+/// # Examples
 /// <br><br/>
-/// #### №1
+/// ## №1
 /// ``` http
 /// POST /api/AffineCipherDecode
 ///
@@ -117,7 +113,7 @@ lang_me_daddy!();
 ///   "Ok": "Hello, World!"
 /// }
 /// ```
-/// #### №2
+/// ## №2
 /// ``` http
 /// POST /api/AffineCipherDecode
 ///
@@ -134,7 +130,7 @@ lang_me_daddy!();
 ///   "Ok": "Привет, Мир!"
 /// }
 /// ```
-/// #### №3
+/// ## №3
 /// ``` http
 /// POST /api/AffineCipherDecode
 ///
@@ -153,9 +149,7 @@ lang_me_daddy!();
 ///   "Err": "Invalid value: integer `-5`, expected u8."
 /// }
 /// ```
-pub struct AffineCipherDecode {
-    request: String,
-}
+pub struct AffineCipherDecode;
 
 const NAME: &str = "AffineCipherDecode";
 const DESCRIPTION_EN: &str = "The Affine cipher is a type of monoalphabetic substitution cipher. To decrypt, each letter in an alphabet is mapped to its numeric equivalent, decrypted by a mathematical function, and converted back to a letter.";

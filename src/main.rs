@@ -8,27 +8,35 @@ use actix_web::{
     web::{resource, Path},
     App, HttpResponse, HttpServer,
 };
-use ciphers::*;
+use ciphers::{self, *};
+use serde::{Deserialize, Serialize};
 
-#[post("/api/{name}")]
-async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
-    let response = match name.into_inner() {
-        Operations::Argon2 => Argon2::new(body).run(),
-        Operations::A1Z26CipherDecode => A1Z26CipherDecode::new(body).run(),
-        Operations::A1Z26CipherEncode => A1Z26CipherEncode::new(body).run(),
-        Operations::AffineCipherDecode => AffineCipherDecode::new(body).run(),
-        Operations::AffineCipherEncode => AffineCipherEncode::new(body).run(),
-    };
-
-    let status_code = if response.is_ok() {
+// black magic with generic
+fn http_response<'a, I, O, T: Operation<'a, I, O>>(structure: T, body: String) -> HttpResponse
+where
+    I: Deserialize<'a>,
+    O: Serialize,
+{
+    let data = structure.run(&body);
+    HttpResponse::build(if data.is_ok() {
         StatusCode::OK
     } else {
         StatusCode::BAD_REQUEST
-    };
+    })
+    .append_header(("Access-Control-Allow-Origin", "*"))
+    .json(data)
+}
 
-    HttpResponse::build(status_code)
-        .append_header(("Access-Control-Allow-Origin", "*"))
-        .json(response)
+#[post("/api/{name}")]
+async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
+    match name.into_inner() {
+        Operations::A1Z26CipherDecode => http_response(A1Z26CipherDecode, body),
+        Operations::A1Z26CipherEncode => http_response(A1Z26CipherEncode, body),
+        Operations::AffineCipherDecode => http_response(AffineCipherDecode, body),
+        Operations::AffineCipherEncode => http_response(AffineCipherEncode, body),
+        Operations::AnalyseHash => http_response(AnalyseHash, body),
+        Operations::Argon2 => http_response(Argon2, body),
+    }
 }
 
 async fn ciphers_info_handler(name: Path<Operations>) -> HttpResponse {
@@ -38,6 +46,7 @@ async fn ciphers_info_handler(name: Path<Operations>) -> HttpResponse {
         Operations::A1Z26CipherEncode => A1Z26CipherEncodeInfo::info(),
         Operations::AffineCipherDecode => AffineCipherDecodeInfo::info(),
         Operations::AffineCipherEncode => AffineCipherEncodeInfo::info(),
+        Operations::AnalyseHash => AnalyseHashInfo::info(),
     };
 
     HttpResponse::build(StatusCode::OK)

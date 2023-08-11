@@ -6,13 +6,9 @@ use crate::{
 use argon2::{Config, ThreadMode, Variant, Version};
 use serde::{Deserialize, Serialize};
 
-impl Operation<'_, DeserializeMeDaddy> for Argon2 {
-    fn new(request: String) -> Self {
-        Self { request }
-    }
-
-    fn run(&self) -> Result<String, String> {
-        let request = self.validate(&self.request)?;
+impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
+    fn run(&self, request: &str) -> Result<String, String> {
+        let request = self.validate(request)?;
 
         let (params, input) = (request.params, request.input);
 
@@ -75,11 +71,11 @@ struct Params {
 create_me_daddy!();
 
 /// Argon2 is a key derivation function that was selected as the winner of the Password Hashing Competition in July 2015. It was designed by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich from the University of Luxembourg.
-/// <br/>
+/// <br><br/>
 /// For more information go [here](https://wikipedia.org/wiki/Argon2)
-/// <br/><br/>
+/// <br><br/>
 ///
-/// ### How to use
+/// # How to use
 /// \
 /// Send POST requests to /api/Argon2 with your data using json payload with this structure
 /// ``` json
@@ -112,9 +108,8 @@ create_me_daddy!();
 /// ``` json
 /// { "Err": `error message` }
 /// ```
-/// ### Examples
-/// <br><br/>
-/// #### №1
+/// # Examples
+/// ## №1
 /// ``` http
 /// POST /api/Argon2
 ///
@@ -137,7 +132,7 @@ create_me_daddy!();
 ///   "Ok": "$argon2i$v=19$m=4096,t=3,p=1$c29tZXNhbHQ$WVDOfucSPAey3UEzzqLtBwRbGS83pTyIPLXgjhKfgrY"
 /// }
 /// ```
-/// #### №2
+/// ## №2
 /// ``` http
 /// POST /api/Argon2
 ///
@@ -159,7 +154,7 @@ create_me_daddy!();
 ///   "Ok": "eb4140b78ed1c4fcd736c1b73cdf555ba244371ff53971e53823e411aeefbd60751d"
 /// }
 /// ```
-/// #### №3
+/// ## №3
 /// ``` http
 /// POST /api/Argon2
 /// content_type: application/json; charset=utf-8
@@ -182,9 +177,7 @@ create_me_daddy!();
 ///   "Err": "missing field `iterations`"
 /// }
 /// ```
-pub struct Argon2 {
-    request: String,
-}
+pub struct Argon2;
 
 #[derive(Deserialize)]
 #[serde(remote = "Variant")]

@@ -3,13 +3,9 @@ use crate::{
 };
 use serde::{Deserialize, Serialize};
 
-impl Operation<'_, DeserializeMeDaddy> for A1Z26CipherDecode {
-    fn new(request: String) -> Self {
-        Self { request }
-    }
-
-    fn run(&self) -> Result<String, String> {
-        let request = self.validate(&self.request)?;
+impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
+    fn run(&self, request: &str) -> Result<String, String> {
+        let request = self.validate(request)?;
 
         let delimiter = char_repr(&request.params.delimiter);
 
@@ -73,7 +69,7 @@ create_me_daddy!();
 
 /// A1Z26 is a simple substitution cipher where each letter is replaced by its serial number in the alphabet.
 /// <br/><br/>
-/// ### How to use
+/// # How to use
 /// \
 /// Send POST requests to /api/A1Z26CipherDecode with your data using json payload with this structure
 /// ``` json
@@ -98,9 +94,9 @@ create_me_daddy!();
 /// ``` json
 /// { "Err": `error message` }
 /// ```
-/// ### Examples
+/// # Examples
 /// <br><br/>
-/// #### №1
+/// ## №1
 /// ``` http
 /// POST /api/A1Z26CipherDecode
 ///
@@ -117,7 +113,7 @@ create_me_daddy!();
 ///   "Ok": "hello"
 /// }
 /// ```
-/// #### №2
+/// ## №2
 /// ``` http
 /// POST /api/A1Z26CipherDecode
 ///
@@ -133,7 +129,7 @@ create_me_daddy!();
 ///   "Ok": "rickroll"
 /// }
 /// ```
-/// #### №3
+/// ## №3
 /// ``` http
 /// POST /api/A1Z26CipherDecode
 ///
@@ -151,9 +147,7 @@ create_me_daddy!();
 /// }
 /// ```
 
-pub struct A1Z26CipherDecode {
-    request: String,
-}
+pub struct A1Z26CipherDecode;
 
 const NAME: &str = "A1Z26CipherDecode";
 const DESCRIPTION_EN: &str =

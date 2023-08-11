@@ -10,6 +10,7 @@ pub use operations::a1z26cipher_decode_mod::{A1Z26CipherDecode, A1Z26CipherDecod
 pub use operations::a1z26cipher_encode_mod::{A1Z26CipherEncode, A1Z26CipherEncodeInfo};
 pub use operations::affine_cipher_decode_mod::{AffineCipherDecode, AffineCipherDecodeInfo};
 pub use operations::affine_cipher_encode_mod::{AffineCipherEncode, AffineCipherEncodeInfo};
+pub use operations::analyse_hash_mod::{AnalyseHash, AnalyseHashInfo};
 pub use operations::argon2_mod::{Argon2, Argon2Info};
 
 use crate::traits::StringTrait;
@@ -17,17 +18,16 @@ use serde::{Deserialize, Serialize};
 
 const DOCS_URL: &str = "soon I transfer all documentation to somewhere :/";
 
-pub trait Operation<'a, O>
+pub trait Operation<'a, I, O>
 where
-    O: Deserialize<'a>,
+    I: Deserialize<'a>,
 {
-    fn new(request: String) -> Self;
-    fn run(&self) -> Result<String, String>;
-    fn validate(&self, request: &'a str) -> Result<O, String> {
+    fn run(&self, request: &str) -> Result<O, String>;
+    fn validate(&self, request: &'a str) -> Result<I, String> {
         self.deserialize(request)
     }
 
-    fn deserialize(&self, request: &'a str) -> Result<O, String> {
+    fn deserialize(&self, request: &'a str) -> Result<I, String> {
         serde_json::from_str(request).map_err(|err| match err.to_string() {
             err if err.starts_with("unknown")
                 || err.starts_with("missing")
@@ -51,5 +51,6 @@ pub enum Operations {
     A1Z26CipherEncode,
     AffineCipherDecode,
     AffineCipherEncode,
+    AnalyseHash,
     Argon2,
 }
