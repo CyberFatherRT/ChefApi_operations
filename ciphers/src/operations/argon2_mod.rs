@@ -219,15 +219,17 @@ pub struct Argon2Info {
     info_url: Option<&'static str>,
 }
 
-impl Default for Argon2Info {
-    fn default() -> Self {
-        Self {
+impl Argon2Info {
+    pub fn info() -> String {
+        let structure = Self {
             name: "Argon2",
             documentation: "soon I transfer all documentation to somewhere :/",
             description_en: "Argon2 is a key derivation function that was selected as the winner of the Password Hashing Competition in July 2015. It was designed by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich from the University of Luxembourg.<br><br>Enter the password in the input to generate its hash.",
             description_ru: "Argon2 – это функция получения ключа, которая была выбрана победителем конкурса хеширования паролей в июле 2015 года. Она была разработана Алексом Бирюковым, Даниэлем Дину и Дмитрием Ховратовичем из Люксембургского университета.<br><br>Введите пароль в ввод для генерации его хэша.",
             info_url: Some("https://wikipedia.org/wiki/Argon2"),
-        }
+        };
+
+        serde_json::to_string(&structure).unwrap()
     }
 }
 

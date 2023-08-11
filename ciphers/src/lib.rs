@@ -1,9 +1,10 @@
-// pub mod libs;
+pub mod libs;
 mod macros;
 mod operations;
 pub mod traits;
 pub mod utils;
 
+pub use operations::a1z26cipher_decode_mod::{A1Z26CipherDecode, A1Z26CipherDecodeInfo};
 pub use operations::argon2_mod::{Argon2, Argon2Info};
 
 use serde::{Deserialize, Serialize};
@@ -30,6 +31,7 @@ where
 
 #[derive(Serialize, Deserialize)]
 pub enum Operations {
+    A1Z26CipherDecode,
     /// Argon2 is a key derivation function that was selected as the winner of the Password Hashing Competition in July 2015. It was designed by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich from the University of Luxembourg.
     /// <br/><br/>
     /// For more information go to this site - https://wikipedia.org/wiki/Argon2
