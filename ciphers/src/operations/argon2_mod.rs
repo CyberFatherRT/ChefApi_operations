@@ -3,7 +3,7 @@ use crate::{
     Operation,
 };
 use argon2::{Config, ThreadMode, Variant, Version};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 impl Operation<'_, DeserializeMeDaddy> for Argon2 {
     fn new(request: String) -> Self {
@@ -210,6 +210,7 @@ enum OutputFormat {
 
 // region info about operation
 
+#[derive(Serialize)]
 pub struct Argon2Info {
     pub name: &'static str,
     pub module: &'static str,

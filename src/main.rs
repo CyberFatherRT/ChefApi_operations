@@ -28,9 +28,14 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
         .json(response)
 }
 
-// TODO: Make this function return info about operations.
 async fn ciphers_info_handler(name: Path<Operations>) -> HttpResponse {
-    HttpResponse::build(StatusCode::IM_A_TEAPOT).body("")
+    let response = match name.into_inner() {
+        Operations::Argon2 => Argon2Info::new(),
+    };
+
+    HttpResponse::build(StatusCode::OK)
+        .append_header(("Access-Control-Allow-Origin", "*"))
+        .json(response)
 }
 
 #[actix_web::main]

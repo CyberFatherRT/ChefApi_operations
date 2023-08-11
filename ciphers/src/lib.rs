@@ -4,7 +4,7 @@ mod operations;
 pub mod traits;
 pub mod utils;
 
-pub use operations::argon2_mod::Argon2;
+pub use operations::argon2_mod::{Argon2, Argon2Info};
 
 use serde::{Deserialize, Serialize};
 
