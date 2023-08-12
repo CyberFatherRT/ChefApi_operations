@@ -30,6 +30,7 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
         Operations::AffineCipherDecode => http_response(AffineCipherDecode, body),
         Operations::AffineCipherEncode => http_response(AffineCipherEncode, body),
         Operations::AnalyseHash => http_response(AnalyseHash, body),
+        Operations::Argon2Compare => http_response(Argon2Compare, body),
         Operations::Argon2 => http_response(Argon2, body),
         Operations::FromBase64 => http_response(FromBase64, body),
         Operations::ToBase64 => http_response(ToBase64, body),

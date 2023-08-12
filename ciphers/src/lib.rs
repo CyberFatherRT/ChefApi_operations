@@ -11,6 +11,7 @@ pub use operations::a1z26cipher_encode_mod::A1Z26CipherEncode;
 pub use operations::affine_cipher_decode_mod::AffineCipherDecode;
 pub use operations::affine_cipher_encode_mod::AffineCipherEncode;
 pub use operations::analyse_hash_mod::AnalyseHash;
+pub use operations::argon2_compare_mod::Argon2Compare;
 pub use operations::argon2_mod::Argon2;
 pub use operations::from_base64_mod::FromBase64;
 pub use operations::to_base64_mod::ToBase64;
@@ -25,6 +26,7 @@ const DOCS_URL: &str = "soon I transfer all documentation to somewhere :/";
 pub trait Operation<'a, I, O>
 where
     I: Deserialize<'a>,
+    O: Serialize,
 {
     fn run(&self, request: &str) -> Result<O, String>;
     fn validate(&self, request: &'a str) -> Result<I, String> {
@@ -56,6 +58,7 @@ pub enum Operations {
     AffineCipherDecode,
     AffineCipherEncode,
     AnalyseHash,
+    Argon2Compare,
     Argon2,
     FromBase64,
     ToBase64,

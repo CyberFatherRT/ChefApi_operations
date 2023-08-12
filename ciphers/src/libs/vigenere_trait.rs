@@ -17,7 +17,7 @@ pub trait VigenereCipher {
         let (alp, _, _, reg) = match lang {
             SupportedLanguage::En => EN_ALP,
             SupportedLanguage::Ru => RU_ALP,
-            SupportedLanguage::RuAlpWithYo => RU_ALP_WITH_YO,
+            SupportedLanguage::RuWithYo => RU_ALP_WITH_YO,
         };
 
         let map: HashMap<char, usize> =
@@ -69,7 +69,7 @@ pub trait VigenereCipher {
         let reg = match lang {
             SupportedLanguage::En => Regex::new(EN_ALP.3).unwrap(),
             SupportedLanguage::Ru => Regex::new(RU_ALP.3).unwrap(),
-            SupportedLanguage::RuAlpWithYo => Regex::new(RU_ALP_WITH_YO.3).unwrap(),
+            SupportedLanguage::RuWithYo => Regex::new(RU_ALP_WITH_YO.3).unwrap(),
         };
 
         if !reg.is_match(key) {

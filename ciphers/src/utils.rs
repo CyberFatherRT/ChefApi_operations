@@ -8,13 +8,11 @@ use unicode_segmentation::UnicodeSegmentation;
 // region constants
 
 #[derive(Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub enum SupportedLanguage {
-    #[serde(alias = "en")]
     En,
-    #[serde(alias = "ru")]
     Ru,
-    #[serde(alias = "ru_with_yo")]
-    RuAlpWithYo,
+    RuWithYo,
 }
 
 struct _AlphabetOptions {
@@ -443,7 +441,7 @@ pub fn validate_lang(text: &str, lang: &SupportedLanguage) -> bool {
     let re = match lang {
         SupportedLanguage::En => r"^[a-zA-Z\p{P}\s\d]+$",
         SupportedLanguage::Ru => r"^[а-яА-Я\p{P}\s\d]+$",
-        SupportedLanguage::RuAlpWithYo => r"^[а-яА-ЯёЁ\p{P}\s\d]+$",
+        SupportedLanguage::RuWithYo => r"^[а-яА-ЯёЁ\p{P}\s\d]+$",
     };
     regex_check!(re => text)
 }
@@ -452,7 +450,7 @@ pub fn get_alphabet(lang: &SupportedLanguage) -> (&'static str, &'static str, u8
     match lang {
         SupportedLanguage::En => EN_ALP,
         SupportedLanguage::Ru => RU_ALP,
-        SupportedLanguage::RuAlpWithYo => RU_ALP_WITH_YO,
+        SupportedLanguage::RuWithYo => RU_ALP_WITH_YO,
     }
 }
 

@@ -55,6 +55,22 @@ impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
 }
 
 #[derive(Deserialize)]
+#[serde(remote = "Variant")]
+enum MyVariant {
+    Argon2d = 0,
+    Argon2i = 1,
+    Argon2id = 2,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "snake_case")]
+enum OutputFormat {
+    Encoded,
+    Hex,
+    Raw,
+}
+
+#[derive(Deserialize)]
 struct Params {
     salt: String,
     iterations: u32,
@@ -93,7 +109,7 @@ create_me_daddy!();
 /// #### where
 ///     - u32 is unsigned 32-bit integer
 ///     - Argon2Type is enum of "Argon2i", "Argon2d", "Argon2id"
-///     - OutputFormat is enum of "Encoded", "Hex", "Raw"
+///     - OutputFormat is enum of "encoded", "hex", "raw"
 /// <br/><br/>
 ///
 /// ### Server response have two possible formats
@@ -175,21 +191,6 @@ create_me_daddy!();
 /// }
 /// ```
 pub struct Argon2;
-
-#[derive(Deserialize)]
-#[serde(remote = "Variant")]
-enum MyVariant {
-    Argon2d = 0,
-    Argon2i = 1,
-    Argon2id = 2,
-}
-
-#[derive(Deserialize)]
-enum OutputFormat {
-    Encoded,
-    Hex,
-    Raw,
-}
 
 const NAME: &str = "Argon2";
 const DESCRIPTION_EN: &str = "Argon2 is a key derivation function that was selected as the winner of the Password Hashing Competition in July 2015. It was designed by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich from the University of Luxembourg.<br><br>Enter the password in the input to generate its hash.";
