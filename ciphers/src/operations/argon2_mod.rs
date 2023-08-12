@@ -34,7 +34,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
         };
 
         let hash = argon2::hash_encoded(input.as_bytes(), salt.as_bytes(), &config)
-            .map_err(|err| format!("{}.", err.to_string()))?;
+            .map_err(|err| format!("{}.", err))?;
 
         let output = match params.output_format {
             OutputFormat::Encoded => hash,
