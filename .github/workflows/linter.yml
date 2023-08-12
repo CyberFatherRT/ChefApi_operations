@@ -5,18 +5,14 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
 jobs:
-  run-lint:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Lint Code Base
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: "master"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
+      - name: lint
+        run: cargo clippy --all -- -D warnings
