@@ -1,6 +1,7 @@
 use crate::{
     create_info_struct, create_me_daddy,
-    utils::{from_base64, to_hex, DataRepresentation},
+    libs::base64::from_base64,
+    utils::{to_hex, DataRepresentation},
     Operation, DOCS_URL,
 };
 use argon2::{Config, ThreadMode, Variant, Version};

@@ -18,7 +18,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for VigenereCipherDecode {
 
 /// The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar common based on the letters of a keyword. It is a simple form of polyalphabetic substitution.
 /// <br><br/>
-/// For more information go [here](https://wikipedia.org/wiki/Base64).
+/// For more information go [here](https://wikipedia.org/wiki/Vigenère_cipher).
 /// <br><br/>
 ///
 /// # How to use

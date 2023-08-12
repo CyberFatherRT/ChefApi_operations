@@ -1,11 +1,10 @@
-use crate::{create_me_daddy, utils::to_base64, Operation};
+use crate::{create_me_daddy, libs::base64::to_base64, Operation};
 use serde::Deserialize;
 
 impl Operation<'_, DeserializeMeDaddy, String> for ToBase64 {
     fn run(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, alphabet) = (request.input, request.params.alphabet);
-        println!("{alphabet:?}");
         to_base64(&input, alphabet)
     }
 }

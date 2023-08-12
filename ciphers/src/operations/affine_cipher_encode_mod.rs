@@ -1,56 +1,21 @@
 use crate::{
-    create_info_struct, create_me_daddy,
-    traits::CharTrait,
-    utils::{
-        get_alphabet, get_char_by_index, get_index_by_char, modulus, validate_lang,
-        SupportedLanguage,
-    },
-    Operation, DOCS_URL,
+    create_info_struct, create_me_daddy, libs::ciphers::affine_cipher_encode,
+    utils::SupportedLanguage, Operation, DOCS_URL,
 };
-use num::Integer;
 use serde::{Deserialize, Serialize};
 
 impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherEncode {
     fn run(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 
-        let (input, params) = (request.input, request.params);
-        if !validate_lang(&input, &params.lang) {
-            return Err("Wrong language.".to_string());
-        };
+        let (input, lang, a, b) = (
+            request.input,
+            request.params.lang,
+            request.params.a as i16,
+            request.params.b as i16,
+        );
 
-        let (a, b) = (params.a as i16, params.b as i16);
-
-        let (alp_lower, alp_upper, alp_length, _) = get_alphabet(&params.lang);
-        if a.gcd(&(alp_length as i16)) != 1 {
-            return Err(format!(
-                "The value of `a` must be coprime to alphabet length({}).",
-                alp_length
-            ));
-        }
-
-        let mut output = String::with_capacity(alp_length as usize);
-
-        for c in input.chars() {
-            if !c.is_alphabetic() {
-                output.push(c);
-                continue;
-            }
-
-            let x = match c.is_lowercase() {
-                true => get_index_by_char(alp_lower, c),
-                false => get_index_by_char(alp_upper, c),
-            } as i16;
-
-            let x = modulus(a * x + b, alp_length as i16);
-
-            output.push(match c.is_lowercase() {
-                true => get_char_by_index(alp_lower, x),
-                false => get_char_by_index(alp_upper, x).to_upper_case(),
-            });
-        }
-
-        Ok(output)
+        affine_cipher_encode(&input, lang, a, b)
     }
 }
 
@@ -65,7 +30,7 @@ create_me_daddy!();
 
 /// The Affine cipher is a type of monoalphabetic substitution cipher. To decrypt, each letter in an alphabet is mapped to its numeric equivalent, decrypted by a mathematical function, and converted back to a letter.
 /// <br><br/>
-/// For more information go [here](https://wikipedia.org/wiki/Argon2)
+/// For more information go [here](https://wikipedia.org/wiki/Affine_cipher)
 /// <br><br/>
 /// # How to use
 /// \

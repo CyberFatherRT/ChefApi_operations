@@ -65,7 +65,7 @@ create_me_daddy!();
 
 /// The Affine cipher is a type of monoalphabetic substitution cipher. To decrypt, each letter in an alphabet is mapped to its numeric equivalent, decrypted by a mathematical function, and converted back to a letter.
 /// <br><br/>
-/// For more information go [here](https://wikipedia.org/wiki/Argon2)
+/// For more information go [here](https://wikipedia.org/wiki/Affine_cipher)
 /// <br><br/>
 /// # How to use
 /// \
