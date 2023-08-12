@@ -2,14 +2,14 @@ use crate::{
     traits::CharTrait,
     utils::{
         get_alphabet, get_char_by_index, get_index_by_char, modulus, validate_lang,
-        SupportedLanguage,
+        SupportedLanguages,
     },
 };
 use num::Integer;
 
 pub fn affine_cipher_encode(
     input: &str,
-    lang: SupportedLanguage,
+    lang: SupportedLanguages,
     a: i16,
     b: i16,
 ) -> Result<String, String> {

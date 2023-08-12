@@ -1,4 +1,4 @@
-use crate::utils::SupportedLanguage;
+use crate::utils::SupportedLanguages;
 use crate::{
     create_info_struct, create_me_daddy,
     traits::CharTrait,
@@ -56,7 +56,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherDecode {
 
 #[derive(Deserialize)]
 struct Params {
-    lang: SupportedLanguage,
+    lang: SupportedLanguages,
     a: u8,
     b: u8,
 }

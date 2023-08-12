@@ -12,20 +12,29 @@ impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
         let request = self.validate(request)?;
 
         let (params, input) = (request.params, request.input);
+        let (salt, variant, mem_cost, time_cost, lanes, hash_length) = (
+            params.salt,
+            params.argon2_type,
+            params.memory,
+            params.iterations,
+            params.parallelism,
+            params.hash_length,
+        );
 
         let config = Config {
-            variant: params.argon2_type,
+            variant,
             version: Version::Version13,
-            mem_cost: params.memory,
-            time_cost: params.iterations,
-            lanes: params.parallelism,
+            mem_cost,
+            time_cost,
+            lanes,
             thread_mode: ThreadMode::Parallel,
             secret: &[],
             ad: &[],
-            hash_length: params.hash_length,
+            hash_length,
         };
 
-        let hash = argon2::hash_encoded(input.as_bytes(), params.salt.as_bytes(), &config).unwrap();
+        let hash = argon2::hash_encoded(input.as_bytes(), salt.as_bytes(), &config)
+            .map_err(|err| format!("{}.", err.to_string()))?;
 
         let output = match params.output_format {
             OutputFormat::Encoded => hash,
@@ -109,6 +118,7 @@ create_me_daddy!();
 /// ```
 /// #### where
 ///     - u32 is unsigned 32-bit integer
+///     - SaltFormat is enum of "utf8", "hex", "base64", "latin1"
 ///     - Argon2Type is enum of "Argon2i", "Argon2d", "Argon2id"
 ///     - OutputFormat is enum of "encoded", "hex", "raw"
 /// <br/><br/>
@@ -136,7 +146,7 @@ create_me_daddy!();
 ///         "parallelism": 1,
 ///         "hash_length": 32,
 ///         "argon2_type": "Argon2i",
-///         "output_format": "Encoded",
+///         "output_format": "encoded",
 ///         "memory": 4096
 ///     }
 /// }
@@ -154,19 +164,19 @@ create_me_daddy!();
 /// {
 ///     "input": "Привет, Мир!",
 ///     "params": {
-///         "salt": "новая соль",
+///         "salt": "123456789",
 ///         "iterations": 6,
 ///         "parallelism": 1,
 ///         "hash_length": 34,
 ///         "argon2_type": "Argon2id",
-///         "output_format": "Hex",
+///         "output_format": "hex",
 ///         "memory": 8096
 ///     }
 /// }
 /// ```
 /// ```http
 /// {
-///   "Ok": "eb4140b78ed1c4fcd736c1b73cdf555ba244371ff53971e53823e411aeefbd60751d"
+///   "Ok": "hex"
 /// }
 /// ```
 /// ## №3
@@ -180,7 +190,7 @@ create_me_daddy!();
 ///         "parallelism": 1,
 ///         "hash_length": 34,
 ///         "argon2_type": "Argon2id",
-///         "output_format": "Hex",
+///         "output_format": "hex",
 ///         "memory": 8096
 ///     }
 /// }

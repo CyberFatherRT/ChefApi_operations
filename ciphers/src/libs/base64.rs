@@ -65,7 +65,7 @@ pub fn from_base64(
             DataRepresentation::ByteArray(_) => Ok(DataRepresentation::ByteArray(Vec::new())),
         };
     }
-
+    println!("here?");
     if alphabet.is_empty() {
         alphabet = "A-Za-z0-9+/=";
     }

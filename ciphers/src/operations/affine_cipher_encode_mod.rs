@@ -1,6 +1,6 @@
 use crate::{
     create_info_struct, create_me_daddy, libs::ciphers::affine_cipher_encode,
-    utils::SupportedLanguage, Operation, DOCS_URL,
+    utils::SupportedLanguages, Operation, DOCS_URL,
 };
 use serde::{Deserialize, Serialize};
 
@@ -21,7 +21,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherEncode {
 
 #[derive(Deserialize)]
 struct Params {
-    lang: SupportedLanguage,
+    lang: SupportedLanguages,
     a: u8,
     b: u8,
 }

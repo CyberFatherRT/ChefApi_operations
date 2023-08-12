@@ -1,7 +1,7 @@
 use crate::{
     create_me_daddy,
     libs::vigenere_trait::VigenereCipher,
-    utils::{sub, SupportedLanguage},
+    utils::{sub, SupportedLanguages},
     Operation,
 };
 use serde::Deserialize;
@@ -105,7 +105,7 @@ pub struct VigenereCipherDecode;
 
 #[derive(Deserialize)]
 struct Params {
-    lang: SupportedLanguage,
+    lang: SupportedLanguages,
     key: String,
 }
 

@@ -1,7 +1,7 @@
 use crate::{
     create_info_struct, create_me_daddy,
     libs::vigenere_trait::VigenereCipher,
-    utils::{add, SupportedLanguage},
+    utils::{add, SupportedLanguages},
     Operation, DOCS_URL,
 };
 use serde::{Deserialize, Serialize};
@@ -18,7 +18,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for VigenereCipherEncode {
 
 #[derive(Deserialize)]
 struct Params {
-    lang: SupportedLanguage,
+    lang: SupportedLanguages,
     key: String,
 }
 create_me_daddy!();

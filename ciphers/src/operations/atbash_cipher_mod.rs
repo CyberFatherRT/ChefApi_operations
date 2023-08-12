@@ -1,6 +1,6 @@
 use crate::{
     create_info_struct, create_me_daddy, libs::ciphers::affine_cipher_encode,
-    utils::SupportedLanguage, Operation, DOCS_URL,
+    utils::SupportedLanguages, Operation, DOCS_URL,
 };
 use serde::{Deserialize, Serialize};
 
@@ -11,16 +11,16 @@ impl Operation<'_, DeserializeMeDaddy, String> for AtbashCipher {
         let (input, lang) = (request.input, request.params.lang);
 
         match lang {
-            SupportedLanguage::En => affine_cipher_encode(&input, lang, 25, 25),
-            SupportedLanguage::Ru => affine_cipher_encode(&input, lang, 31, 31),
-            SupportedLanguage::RuWithYo => affine_cipher_encode(&input, lang, 32, 32),
+            SupportedLanguages::En => affine_cipher_encode(&input, lang, 25, 25),
+            SupportedLanguages::Ru => affine_cipher_encode(&input, lang, 31, 31),
+            SupportedLanguages::RuWithYo => affine_cipher_encode(&input, lang, 32, 32),
         }
     }
 }
 
 #[derive(Deserialize)]
 struct Params {
-    lang: SupportedLanguage,
+    lang: SupportedLanguages,
 }
 
 create_me_daddy!();

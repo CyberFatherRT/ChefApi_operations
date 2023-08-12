@@ -4,20 +4,20 @@ use unicode_segmentation::UnicodeSegmentation;
 
 use crate::{
     traits::CharTrait,
-    utils::{get_char_by_index, modulus, SupportedLanguage, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
+    utils::{get_char_by_index, modulus, SupportedLanguages, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
 };
 
 pub trait VigenereCipher {
-    fn cipher<F>(lang: SupportedLanguage, key: &str, input: &str, f: F) -> Result<String, String>
+    fn cipher<F>(lang: SupportedLanguages, key: &str, input: &str, f: F) -> Result<String, String>
     where
         F: Fn(i16, i16) -> i16,
     {
         <Self as VigenereCipher>::validate_language(&lang, key, input)?;
 
         let (alp, _, _, reg) = match lang {
-            SupportedLanguage::En => EN_ALP,
-            SupportedLanguage::Ru => RU_ALP,
-            SupportedLanguage::RuWithYo => RU_ALP_WITH_YO,
+            SupportedLanguages::En => EN_ALP,
+            SupportedLanguages::Ru => RU_ALP,
+            SupportedLanguages::RuWithYo => RU_ALP_WITH_YO,
         };
 
         let map: HashMap<char, usize> =
@@ -61,15 +61,15 @@ pub trait VigenereCipher {
         Ok(cipher_text)
     }
 
-    fn validate_language(lang: &SupportedLanguage, key: &str, input: &str) -> Result<(), String> {
+    fn validate_language(lang: &SupportedLanguages, key: &str, input: &str) -> Result<(), String> {
         if input.is_empty() {
             return Err("Input is empty".to_string());
         };
 
         let reg = match lang {
-            SupportedLanguage::En => Regex::new(EN_ALP.3).unwrap(),
-            SupportedLanguage::Ru => Regex::new(RU_ALP.3).unwrap(),
-            SupportedLanguage::RuWithYo => Regex::new(RU_ALP_WITH_YO.3).unwrap(),
+            SupportedLanguages::En => Regex::new(EN_ALP.3).unwrap(),
+            SupportedLanguages::Ru => Regex::new(RU_ALP.3).unwrap(),
+            SupportedLanguages::RuWithYo => Regex::new(RU_ALP_WITH_YO.3).unwrap(),
         };
 
         if !reg.is_match(key) {
