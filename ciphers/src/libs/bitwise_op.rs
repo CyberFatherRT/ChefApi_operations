@@ -1,47 +1,49 @@
 use num::Integer;
 use std::ops::{Add, BitAnd, BitOr, BitXor, Not, Rem, Sub};
 
-pub fn xor<T>(operand: T, key: T) -> T
+pub fn xor<T, V, R>(operand: T, key: V) -> R
 where
-    T: Integer + BitXor<Output = T>,
+    T: BitXor<V, Output = R>,
 {
     operand ^ key
 }
 
-pub fn not<T>(operand: T, _: T) -> T
+pub fn not<T, V, R>(operand: T, _: V) -> R
 where
-    T: Integer + Not<Output = T> + BitAnd<u16, Output = T>,
+    T: Not<Output = T> + BitAnd<isize, Output = R>,
 {
     !operand & 0xff
 }
 
-pub fn and<T>(operand: T, key: T) -> T
+pub fn and<T, V, R>(operand: T, key: V) -> R
 where
-    T: Integer + BitAnd<Output = T>,
+    T: BitAnd<V, Output = R>,
 {
     operand & key
 }
 
 pub fn or<T>(operand: T, key: T) -> T
 where
-    T: Integer + BitOr<Output = T>,
+    T: BitOr<Output = T>,
 {
     operand | key
 }
 
-pub fn add<T>(operand: T, key: T) -> T
+pub fn add<T, V, R>(operand: T, key: V) -> R
 where
-    T: Integer + Add<Output = T> + Rem<u16, Output = T>,
+    T: Add<V, Output = R>,
+    R: Rem<isize, Output = R>,
 {
     (operand + key) % 256
 }
 
-pub fn sub<T>(operand: T, key: T) -> T
+pub fn sub<T, V, R>(operand: T, key: V) -> R
 where
-    T: Sub + Add<u16, Output = T> + Integer,
+    T: Sub<V, Output = R>,
+    R: Integer + Add<u16, Output = R>,
 {
     let result = operand - key;
-    if result < T::zero() {
+    if result < R::zero() {
         result + 256
     } else {
         result
