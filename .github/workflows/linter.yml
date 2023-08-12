@@ -1,22 +1,17 @@
-name: Lint Code Base
+name: Clippy check
 
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 env:
   CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-Dwarnings"
 
 jobs:
-  build:
+  clippy_check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Clippy Linting
-        run: cargo clippy --all -- -D warnings
-
-      - name: Formatting
-        run: cargo fmt
+      - name: Run Clippy
+        run: cargo clippy --all-targets --all-features
