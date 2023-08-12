@@ -86,7 +86,6 @@ impl Operation<'_, DeserializeMeDaddy, String> for VigenereCipherDecode {
 /// ## №3
 /// ``` http
 /// POST /api/VigenereCipherDecode
-/// content_type: application/json; charset=utf-8
 ///
 /// {
 ///     "input": "hrbtr lntrunmp",

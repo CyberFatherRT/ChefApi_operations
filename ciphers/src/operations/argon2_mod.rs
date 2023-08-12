@@ -155,7 +155,6 @@ create_me_daddy!();
 /// ## №3
 /// ``` http
 /// POST /api/Argon2
-/// content_type: application/json; charset=utf-8
 ///
 /// {
 ///     "input": "error",

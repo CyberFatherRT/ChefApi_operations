@@ -5,6 +5,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for ToBase64 {
     fn run(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, alphabet) = (request.input, request.params.alphabet);
+        println!("{alphabet:?}");
         to_base64(&input, alphabet)
     }
 }
@@ -54,14 +55,14 @@ create_me_daddy!();
 /// {
 ///     "input": "hello",
 ///     "params": {
-///         "alphabet": "",
+///         "alphabet": "A-Za-z0-9+/=",
 ///     }
 /// }
 /// ```
 /// ```http
 /// HTTP/1.1 200 Ok
 /// {
-///   "Ok": "$argon2i$v=19$m=4096,t=3,p=1$c29tZXNhbHQ$WVDOfucSPAey3UEzzqLtBwRbGS83pTyIPLXgjhKfgrY"
+///   "Ok": aGVsbG8="
 /// }
 /// ```
 /// ## №2
@@ -69,44 +70,31 @@ create_me_daddy!();
 /// POST /api/ToBase64
 ///
 /// {
-///     "input": "Привет, Мир!",
+///     "input": "hello",
 ///     "params": {
-///         "salt": "новая соль",
-///         "iterations": 6,
-///         "parallelism": 1,
-///         "hash_length": 34,
-///         "argon2_type": "Argon2id",
-///         "output_format": "Hex",
-///         "memory": 8096
+///         "alphabet": " -_",
 ///     }
 /// }
 /// ```
 /// ```http
 /// {
-///   "Ok": "eb4140b78ed1c4fcd736c1b73cdf555ba244371ff53971e53823e411aeefbd60751d"
+///   "Ok": ":&5L;&\"
 /// }
 /// ```
 /// ## №3
 /// ``` http
 /// POST /api/ToBase64
-/// content_type: application/json; charset=utf-8
 ///
 /// {
-///     "input": "error",
 ///     "params": {
-///         "salt": "missing iterations parameter",
-///         "parallelism": 1,
-///         "hash_length": 34,
-///         "argon2_type": "Argon2id",
-///         "output_format": "Hex",
-///         "memory": 8096
+///         "alphabet": "t/RPURZbnkPVD="
 ///     }
 /// }
 /// ```
 /// ```http
 /// HTTP/1.1 400 Bad Request
 /// {
-///   "Err": "missing field `iterations`"
+///   "Err": "missing field `input`"
 /// }
 /// ```
 

@@ -93,7 +93,6 @@ create_me_daddy!();
 /// ## №3
 /// ``` http
 /// POST /api/VigenereCipherEncode
-/// content_type: application/json; charset=utf-8
 ///
 /// {
 ///     "input": "wrong language",

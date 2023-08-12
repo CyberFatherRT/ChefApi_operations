@@ -80,25 +80,21 @@ create_me_daddy!();
 /// # Examples
 /// ## №1
 /// ``` http
-/// POST /api/Base64
+/// POST /api/FromBase64
 ///
 /// {
-///     "input": "hello",
+///     "input": "aGVsbG8=",
 ///     "params": {
-///         "salt": "somesalt",
-///         "iterations": 3,
-///         "parallelism": 1,
-///         "hash_length": 32,
-///         "argon2_type": "Argon2i",
-///         "output_format": "Encoded",
-///         "memory": 4096
+///         "alphabet": "A-Za-z0-9+/=",
+///         "remove_non_alphabetic_chars": false,
+///         "strict_mode": false
 ///     }
 /// }
 /// ```
 /// ```http
 /// HTTP/1.1 200 Ok
 /// {
-///   "Ok": "$argon2i$v=19$m=4096,t=3,p=1$c29tZXNhbHQ$WVDOfucSPAey3UEzzqLtBwRbGS83pTyIPLXgjhKfgrY"
+///   "Ok": "hello"
 /// }
 /// ```
 /// ## №2
@@ -106,21 +102,18 @@ create_me_daddy!();
 /// POST /api/FromBase64
 ///
 /// {
-///     "input": "Привет, Мир!",
+///     "input": ":&5L;&\",
 ///     "params": {
-///         "salt": "новая соль",
-///         "iterations": 6,
-///         "parallelism": 1,
-///         "hash_length": 34,
-///         "argon2_type": "Argon2id",
-///         "output_format": "Hex",
-///         "memory": 8096
+///         "alphabet": " -_",
+///         "remove_non_alphabetic_chars": false,
+///         "strict_mode": false
 ///     }
 /// }
+/// ``
 /// ```
 /// ```http
 /// {
-///   "Ok": "eb4140b78ed1c4fcd736c1b73cdf555ba244371ff53971e53823e411aeefbd60751d"
+///   "Ok": "hello"
 /// }
 /// ```
 /// ## №3
@@ -129,21 +122,17 @@ create_me_daddy!();
 /// content_type: application/json; charset=utf-8
 ///
 /// {
-///     "input": "error",
+///     "input": ":&5L;&\",
 ///     "params": {
-///         "salt": "missing iterations parameter",
-///         "parallelism": 1,
-///         "hash_length": 34,
-///         "argon2_type": "Argon2id",
-///         "output_format": "Hex",
-///         "memory": 8096
+///         "alphabet": " -_",
+///         "remove_non_alphabetic_chars": false
 ///     }
 /// }
 /// ```
 /// ```http
 /// HTTP/1.1 400 Bad Request
 /// {
-///   "Err": "missing field `iterations`"
+///   "Err": "Missing field `strict_mode`."
 /// }
 /// ```
 pub struct FromBase64;
