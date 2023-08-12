@@ -14,5 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Clippy Linting
         run: cargo clippy --all -- -D warnings
+
+      - name: Formatting
+        run: cargo fmt
