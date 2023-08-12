@@ -14,6 +14,7 @@ pub use operations::analyse_hash_mod::AnalyseHash;
 pub use operations::argon2_compare_mod::Argon2Compare;
 pub use operations::argon2_mod::Argon2;
 pub use operations::atbash_cipher_mod::AtbashCipher;
+pub use operations::bcrypt::Bcrypt;
 pub use operations::from_base64_mod::FromBase64;
 pub use operations::to_base64_mod::ToBase64;
 pub use operations::vigenere_cipher_decode_mod::VigenereCipherDecode;
@@ -62,6 +63,7 @@ pub enum Operations {
     Argon2Compare,
     Argon2,
     AtbashCipher,
+    Bcrypt,
     FromBase64,
     ToBase64,
     VigenereCipherDecode,

@@ -1,8 +1,6 @@
 mod config;
 
-use actix_web::{
-    http::StatusCode, middleware::Logger, post, web::Path, App, HttpResponse, HttpServer,
-};
+use actix_web::{http::StatusCode, middleware::Logger, post, web, App, HttpResponse, HttpServer};
 use ciphers::*;
 use serde::{Deserialize, Serialize};
 
@@ -23,7 +21,7 @@ where
 }
 
 #[post("/api/{name}")]
-async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
+async fn ciphers_handler(body: String, name: web::Path<Operations>) -> HttpResponse {
     match name.into_inner() {
         Operations::A1Z26CipherDecode => http_response(A1Z26CipherDecode, body),
         Operations::A1Z26CipherEncode => http_response(A1Z26CipherEncode, body),
@@ -33,6 +31,7 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
         Operations::Argon2Compare => http_response(Argon2Compare, body),
         Operations::Argon2 => http_response(Argon2, body),
         Operations::AtbashCipher => http_response(AtbashCipher, body),
+        Operations::Bcrypt => http_response(Bcrypt, body),
         Operations::FromBase64 => http_response(FromBase64, body),
         Operations::ToBase64 => http_response(ToBase64, body),
         Operations::VigenereCipherDecode => http_response(VigenereCipherDecode, body),
