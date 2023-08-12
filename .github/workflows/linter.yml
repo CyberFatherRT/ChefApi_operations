@@ -14,5 +14,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: lint
+      - name: Clippy Linting
         run: cargo clippy --all -- -D warnings
