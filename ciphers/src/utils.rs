@@ -439,22 +439,20 @@ pub fn from_base64(
     };
 }
 
-pub fn validate_lang(text: &str, lang: &str) -> bool {
+pub fn validate_lang(text: &str, lang: &SupportedLanguage) -> bool {
     let re = match lang {
-        "en" => r"^[a-zA-Z\p{P}\s\d]+$",
-        "ru" => r"^[а-яА-Я\p{P}\s\d]+$",
-        "ru_with_yo" => r"^[а-яА-ЯёЁ\p{P}\s\d]+$",
-        _ => return false,
+        SupportedLanguage::En => r"^[a-zA-Z\p{P}\s\d]+$",
+        SupportedLanguage::Ru => r"^[а-яА-Я\p{P}\s\d]+$",
+        SupportedLanguage::RuAlpWithYo => r"^[а-яА-ЯёЁ\p{P}\s\d]+$",
     };
     regex_check!(re => text)
 }
 
-pub fn get_alphabet(lang: &str) -> (&'static str, &'static str, u8, &'static str) {
+pub fn get_alphabet(lang: &SupportedLanguage) -> (&'static str, &'static str, u8, &'static str) {
     match lang {
-        "en" => EN_ALP,
-        "ru" => RU_ALP,
-        "ru_with_yo" => RU_ALP_WITH_YO,
-        _ => EN_ALP,
+        SupportedLanguage::En => EN_ALP,
+        SupportedLanguage::Ru => RU_ALP,
+        SupportedLanguage::RuAlpWithYo => RU_ALP_WITH_YO,
     }
 }
 

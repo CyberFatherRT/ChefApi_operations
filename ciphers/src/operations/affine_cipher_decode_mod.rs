@@ -1,5 +1,6 @@
+use crate::utils::SupportedLanguage;
 use crate::{
-    create_info_struct, lang_me_daddy,
+    create_info_struct, create_me_daddy,
     traits::CharTrait,
     utils::{get_alphabet, get_char_by_index, get_index_by_char, mod_inv, modulus, validate_lang},
     Operation, DOCS_URL,
@@ -11,14 +12,14 @@ impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherDecode {
     fn run(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 
-        let (input, lang, params) = (request.input, request.lang, request.params);
-        if !validate_lang(&input, &lang) {
+        let (input, params) = (request.input, request.params);
+        if !validate_lang(&input, &params.lang) {
             return Err("Wrong language.".to_string());
         };
 
         let (a, b) = (params.a as i16, params.b as i16);
 
-        let (alp_lower, alp_upper, alp_length, _) = get_alphabet(&lang);
+        let (alp_lower, alp_upper, alp_length, _) = get_alphabet(&params.lang);
         if a.gcd(&(alp_length as i16)) != 1 {
             return Err(format!(
                 "The value of `a` must be coprime to alphabet length({}).",
@@ -55,11 +56,12 @@ impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherDecode {
 
 #[derive(Deserialize)]
 struct Params {
+    lang: SupportedLanguage,
     a: u8,
     b: u8,
 }
 
-lang_me_daddy!();
+create_me_daddy!();
 
 /// The Affine cipher is a type of monoalphabetic substitution cipher. To decrypt, each letter in an alphabet is mapped to its numeric equivalent, decrypted by a mathematical function, and converted back to a letter.
 /// <br><br/>
