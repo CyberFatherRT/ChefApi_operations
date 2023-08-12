@@ -22,9 +22,10 @@ struct Params {
 
 create_me_daddy!();
 
-/// Argon2 is a key derivation function that was selected as the winner of the Password Hashing Competition in July 2015. It was designed by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich from the University of Luxembourg.
+/// Tests whether the input matches the given bcrypt hash. To test multiple possible passwords, use the 'Fork' operation.
 /// <br><br/>
-/// For more information go [here](https://wikipedia.org/wiki/Bcrypt)
+/// For more information about cipher/hash_function go [here](https://wikipedia.org/wiki/Bcrypt)\
+/// For more information about this function go [here](DOCS_URL)
 /// <br><br/>
 ///
 /// # How to use
@@ -104,8 +105,8 @@ create_me_daddy!();
 pub struct BcryptCompare;
 
 const NAME: &str = "BcryptCompare";
-const DESCRIPTION_EN: &str = "bcrypt is a password hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher, and presented at USENIX in 1999. Besides incorporating a salt to protect against rainbow table attacks, bcrypt is an adaptive function: over time, the iteration count (rounds) can be increased to make it slower, so it remains resistant to brute-force search attacks even with increasing computation power.";
-const DESCRIPTION_RU: &str = "bcrypt — это функция хеширования паролей, разработанная Нильсом Провосом и Давидом Мазьером на основе шифра Blowfish и представленная на USENIX в 1999 году. Помимо включения соли для защиты от RainbowTableAttack, bcrypt является адаптивной функцией: со временем количество итераций (раундов) может быть увеличено, чтобы сделать его медленнее, поэтому он остается устойчивым к поисковым атакам методом грубой силы даже при увеличении вычислительной мощности.";
+const DESCRIPTION_EN: &str = "Tests whether the input matches the given bcrypt hash. To test multiple possible passwords, use the 'Fork' operation.";
+const DESCRIPTION_RU: &str = "Проверяет, соответствует ли ввод заданному хешу bcrypt. Чтобы протестировать несколько возможных паролей, используйте операцию `Fork`.";
 
 const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/Bcrypt");
 

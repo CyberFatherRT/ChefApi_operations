@@ -49,9 +49,10 @@ struct Params {
 
 create_me_daddy!();
 
-/// Argon2 is a key derivation function that was selected as the winner of the Password Hashing Competition in July 2015. It was designed by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich from the University of Luxembourg.
+/// bcrypt is a password hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher, and presented at USENIX in 1999. Besides incorporating a salt to protect against rainbow table attacks, bcrypt is an adaptive function: over time, the iteration count (rounds) can be increased to make it slower, so it remains resistant to brute-force search attacks even with increasing computation power.
 /// <br><br/>
-/// For more information go [here](https://wikipedia.org/wiki/Bcrypt)
+/// For more information about cipher/hash_function go [here](https://wikipedia.org/wiki/Bcrypt)
+/// For more information about this function go [here](DOCS_URL)
 /// <br><br/>
 ///
 /// # How to use
@@ -131,7 +132,7 @@ create_me_daddy!();
 /// ```http
 /// HTTP/1.1 400 Bad Request
 /// {
-///   "Err": "missing field `version`"
+///   "Err": "Missing field `version`."
 /// }
 /// ```
 pub struct Bcrypt;

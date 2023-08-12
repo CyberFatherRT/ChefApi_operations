@@ -33,6 +33,7 @@ async fn ciphers_handler(body: String, name: web::Path<Operations>) -> HttpRespo
         Operations::AtbashCipher => http_response(AtbashCipher, body),
         Operations::Bcrypt => http_response(Bcrypt, body),
         Operations::BcryptCompare => http_response(BcryptCompare, body),
+        Operations::BcryptParse => http_response(BcryptParse, body),
         Operations::FromBase64 => http_response(FromBase64, body),
         Operations::ToBase64 => http_response(ToBase64, body),
         Operations::VigenereCipherDecode => http_response(VigenereCipherDecode, body),
