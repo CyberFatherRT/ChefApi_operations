@@ -1,6 +1,6 @@
 .idea
 
-target
+#target
 node_modules
 
 src/config.rs
@@ -9,7 +9,7 @@ src/config.rs
 **/node_modules
 frontend/package-lock.json
 
-Cargo.lock
+#Cargo.lock
 
 *.http
 *.js
