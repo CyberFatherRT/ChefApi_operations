@@ -153,3 +153,75 @@ pub fn from_base64(
         }
     };
 }
+
+pub struct AlphabetOptions {
+    name: &'static str,
+    value: &'static str,
+}
+
+pub const ALPHABET_OPTIONS: &[AlphabetOptions] = &[
+    AlphabetOptions {
+        name: "Standard (RFC 4648): A-Za-z0-9+/=",
+        value: "A-Za-z0-9+/=",
+    },
+    AlphabetOptions {
+        name: "URL safe (RFC 4648 §5): A-Za-z0-9-_",
+        value: "A-Za-z0-9-_",
+    },
+    AlphabetOptions {
+        name: "Filename safe: A-Za-z0-9+-=",
+        value: "A-Za-z0-9+\\-=",
+    },
+    AlphabetOptions {
+        name: "itoa64: ./0-9A-Za-z=",
+        value: "./0-9A-Za-z=",
+    },
+    AlphabetOptions {
+        name: "y64: A-Za-z0-9._-",
+        value: "A-Za-z0-9._-",
+    },
+    AlphabetOptions {
+        name: "z64: 0-9a-zA-Z+/=",
+        value: "0-9a-zA-Z+/=",
+    },
+    AlphabetOptions {
+        name: "Radix-64 (RFC 4880): 0-9A-Za-z+/=",
+        value: "0-9A-Za-z+/=",
+    },
+    AlphabetOptions {
+        name: "Uuencoding: [space]-_",
+        value: " -_",
+    },
+    AlphabetOptions {
+        name: "Xxencoding: +-0-9A-Za-z",
+        value: "+\\-0-9A-Za-z",
+    },
+    AlphabetOptions {
+        name: "BinHex: !-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
+        value: "!-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
+    },
+    AlphabetOptions {
+        name: "ROT13: N-ZA-Mn-za-m0-9+/=",
+        value: "N-ZA-Mn-za-m0-9+/=",
+    },
+    AlphabetOptions {
+        name: "UNIX crypt: ./0-9A-Za-z",
+        value: "./0-9A-Za-z",
+    },
+    AlphabetOptions {
+        name: "Atom128: /128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
+        value: "/128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
+    },
+    AlphabetOptions {
+        name: "Megan35: 3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
+        value: "3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
+    },
+    AlphabetOptions {
+        name: "Zong22: ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
+        value: "ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
+    },
+    AlphabetOptions {
+        name: "Hazz15: HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
+        value: "HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
+    },
+];
