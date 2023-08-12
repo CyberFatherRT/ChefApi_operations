@@ -4,7 +4,7 @@ use crate::{
 };
 use serde::{Deserialize, Serialize};
 
-impl Operation<'_, DeserializeMeDaddy, String> for AtbashCipherEncode {
+impl Operation<'_, DeserializeMeDaddy, String> for AtbashCipher {
     fn run(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 
@@ -58,7 +58,7 @@ create_me_daddy!();
 /// # Examples
 /// ## №1
 /// ``` http
-/// POST /api/AtbashCipherEncode
+/// POST /api/AtbashCipher
 ///
 /// {
 ///     "input": "hello",
@@ -75,7 +75,7 @@ create_me_daddy!();
 /// ```
 /// ## №2
 /// ``` http
-/// POST /api/AtbashCipherEncode
+/// POST /api/AtbashCipher
 ///
 /// {
 ///     "input": "Привет!",
@@ -91,7 +91,7 @@ create_me_daddy!();
 /// ```
 /// ## №3
 /// ``` http
-/// POST /api/AtbashCipherEncode
+/// POST /api/AtbashCipher
 ///
 /// {
 ///     "input": "no lang?",
@@ -105,7 +105,7 @@ create_me_daddy!();
 ///   "Err": "missing field `lang`"
 /// }
 /// ```
-pub struct AtbashCipherEncode;
+pub struct AtbashCipher;
 
 const NAME: &str = "AtbashCipher";
 const DESCRIPTION_EN: &str = "Atbash is a mono-alphabetic substitution cipher originally used to encode the Hebrew alphabet. It has been modified here for use with the Latin alphabet and Cyrillic.";

@@ -27,8 +27,6 @@ pub fn affine_cipher_encode(
 
     let mut output = String::with_capacity(alp_length as usize);
 
-    println!("{}", alp_lower);
-
     for c in input.chars() {
         if !c.is_alphabetic() {
             output.push(c);
@@ -41,8 +39,6 @@ pub fn affine_cipher_encode(
         } as i16;
 
         let x = modulus(a * x + b, alp_length as i16);
-
-        println!("{c} {x}");
 
         output.push(match c.is_lowercase() {
             true => get_char_by_index(alp_lower, x),

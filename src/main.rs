@@ -32,11 +32,11 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
         Operations::AnalyseHash => http_response(AnalyseHash, body),
         Operations::Argon2Compare => http_response(Argon2Compare, body),
         Operations::Argon2 => http_response(Argon2, body),
+        Operations::AtbashCipher => http_response(AtbashCipher, body),
         Operations::FromBase64 => http_response(FromBase64, body),
         Operations::ToBase64 => http_response(ToBase64, body),
         Operations::VigenereCipherDecode => http_response(VigenereCipherDecode, body),
         Operations::VigenereCipherEncode => http_response(VigenereCipherEncode, body),
-        Operations::AtbashCipherEncode => http_response(AtbashCipherEncode, body),
     }
 }
 
