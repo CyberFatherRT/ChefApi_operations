@@ -11,8 +11,8 @@ impl Operation<'_, DeserializeMeDaddy, String> for Argon2Compare {
             .map_err(|err| err.to_string())?;
 
         match res {
-            true => Ok(format!("Match `{}`", input)),
-            false => Err("No match".to_string()),
+            true => Ok(format!("Match `{}`.", input)),
+            false => Err("No match.".to_string()),
         }
     }
 }
@@ -69,7 +69,7 @@ create_me_daddy!();
 /// ```http
 /// HTTP/1.1 200 Ok
 /// {
-///   "Ok": "Match `hello`"
+///   "Ok": "Match `hello`."
 /// }
 /// ```
 /// ## №2
@@ -85,7 +85,7 @@ create_me_daddy!();
 /// ```
 /// ```http
 /// {
-///   "Ok": "Match `Привет, Мир!`"
+///   "Ok": "Match `Привет, Мир!`."
 /// }
 /// ```
 /// ## №3
@@ -101,7 +101,7 @@ create_me_daddy!();
 /// ```http
 /// HTTP/1.1 400 Bad Request
 /// {
-///   "Err": "missing field `encoded_hash`"
+///   "Err": "Missing field `encoded_hash`"
 /// }
 /// ```
 pub struct Argon2Compare;

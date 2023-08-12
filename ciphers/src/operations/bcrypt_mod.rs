@@ -1,6 +1,6 @@
-use crate::{create_me_daddy, Operation};
+use crate::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
 use bcrypt::Version;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 // TODO: Are you remember about ME????
 fn delete_me_after_you_make_pay_system() -> u32 {
@@ -135,3 +135,18 @@ create_me_daddy!();
 /// }
 /// ```
 pub struct Bcrypt;
+
+const NAME: &str = "Bcrypt";
+const DESCRIPTION_EN: &str = "bcrypt is a password hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher, and presented at USENIX in 1999. Besides incorporating a salt to protect against rainbow table attacks, bcrypt is an adaptive function: over time, the iteration count (rounds) can be increased to make it slower, so it remains resistant to brute-force search attacks even with increasing computation power.";
+const DESCRIPTION_RU: &str = "bcrypt — это функция хеширования паролей, разработанная Нильсом Провосом и Давидом Мазьером на основе шифра Blowfish и представленная на USENIX в 1999 году. Помимо включения соли для защиты от RainbowTableAttack, bcrypt является адаптивной функцией: со временем количество итераций (раундов) может быть увеличено, чтобы сделать его медленнее, поэтому он остается устойчивым к поисковым атакам методом грубой силы даже при увеличении вычислительной мощности.";
+
+const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/Bcrypt");
+
+create_info_struct!(
+    BcryptInfo,
+    NAME,
+    DOCS_URL,
+    DESCRIPTION_EN,
+    DESCRIPTION_RU,
+    INFO_URL
+);

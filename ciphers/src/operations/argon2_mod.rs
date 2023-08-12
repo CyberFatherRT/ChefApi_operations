@@ -188,7 +188,7 @@ create_me_daddy!();
 /// ```http
 /// HTTP/1.1 400 Bad Request
 /// {
-///   "Err": "missing field `iterations`"
+///   "Err": "Missing field `iterations`"
 /// }
 /// ```
 pub struct Argon2;

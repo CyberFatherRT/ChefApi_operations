@@ -102,7 +102,7 @@ create_me_daddy!();
 /// ```http
 /// HTTP/1.1 400 Bad Request
 /// {
-///   "Err": "missing field `lang`"
+///   "Err": "Missing field `lang`"
 /// }
 /// ```
 pub struct AtbashCipher;
