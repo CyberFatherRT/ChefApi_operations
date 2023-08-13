@@ -1,5 +1,5 @@
-use crate::{create_me_daddy, libs::base64::to_base64, Operation};
-use serde::Deserialize;
+use crate::{create_info_struct, create_me_daddy, libs::base64::to_base64, Operation, DOCS_URL};
+use serde::{Deserialize, Serialize};
 
 impl Operation<'_, DeserializeMeDaddy, String> for ToBase64 {
     fn run(&self, request: &str) -> Result<String, String> {
@@ -96,5 +96,19 @@ create_me_daddy!();
 ///   "Err": "Missing field `input`"
 /// }
 /// ```
-
 pub struct ToBase64;
+
+const NAME: &str = "FromBase64";
+const DESCRIPTION_EN: &str = "Base64 is a notation for encoding arbitrary byte data using a restricted set of symbols that can be conveniently used by humans and processed by computers.<br><br>This operation decodes raw data into an ASCII Base64 string.";
+const DESCRIPTION_RU: &str = "Base64 — это нотация для кодирования произвольных байтовых данных с использованием ограниченного набора символов, которые могут удобно использоваться людьми и обрабатываться компьютерами.<br><br>Эта операция декодирует необработанные данные в строку ASCII Base64.";
+
+const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/Base64");
+
+create_info_struct!(
+    ToBase64Info,
+    NAME,
+    DOCS_URL,
+    DESCRIPTION_EN,
+    DESCRIPTION_RU,
+    INFO_URL
+);

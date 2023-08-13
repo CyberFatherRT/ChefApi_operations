@@ -1,10 +1,10 @@
 use crate::{
-    create_me_daddy,
+    create_info_struct, create_me_daddy,
     libs::vigenere_trait::VigenereCipher,
     utils::{sub, SupportedLanguages},
-    Operation,
+    Operation, DOCS_URL,
 };
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 impl VigenereCipher for VigenereCipherDecode {}
 
@@ -15,6 +15,14 @@ impl Operation<'_, DeserializeMeDaddy, String> for VigenereCipherDecode {
         <Self as VigenereCipher>::cipher(lang, &key, &input, sub)
     }
 }
+
+#[derive(Deserialize)]
+struct Params {
+    lang: SupportedLanguages,
+    key: String,
+}
+
+create_me_daddy!();
 
 /// The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar common based on the letters of a keyword. It is a simple form of polyalphabetic substitution.
 /// <br><br/>
@@ -103,10 +111,16 @@ impl Operation<'_, DeserializeMeDaddy, String> for VigenereCipherDecode {
 /// ```
 pub struct VigenereCipherDecode;
 
-#[derive(Deserialize)]
-struct Params {
-    lang: SupportedLanguages,
-    key: String,
-}
+const NAME: &str = "VigenereDecode";
+const DESCRIPTION_EN: &str = "The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar common based on the letters of a keyword. It is a simple form of polyalphabetic substitution.";
+const DESCRIPTION_RU: &str = "Шифр Виженера — это метод шифрования алфавитного текста с использованием ряда различных общих символов Цезаря, основанных на буквах ключевого слова. Это простая форма полиалфавитной замены.";
+const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/Vigenère_cipher");
 
-create_me_daddy!();
+create_info_struct!(
+    VigenereCipherDecodeInfo,
+    NAME,
+    DOCS_URL,
+    DESCRIPTION_EN,
+    DESCRIPTION_RU,
+    INFO_URL
+);

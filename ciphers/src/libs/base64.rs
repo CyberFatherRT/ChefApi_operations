@@ -155,7 +155,9 @@ pub fn from_base64(
 }
 
 pub struct AlphabetOptions {
+    #[allow(dead_code)]
     name: &'static str,
+    #[allow(dead_code)]
     value: &'static str,
 }
 

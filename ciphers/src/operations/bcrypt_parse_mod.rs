@@ -150,7 +150,7 @@ const DESCRIPTION_RU: &str =
 const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/Bcrypt");
 
 create_info_struct!(
-    BcryptCompareInfo,
+    BcryptParseInfo,
     NAME,
     DOCS_URL,
     DESCRIPTION_EN,

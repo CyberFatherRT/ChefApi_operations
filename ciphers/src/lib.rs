@@ -1,26 +1,24 @@
-#![allow(dead_code)]
-
 pub mod libs;
 mod macros;
 mod operations;
 pub mod traits;
 pub mod utils;
 
-pub use operations::a1z26_cipher_decode_mod::A1Z26CipherDecode;
-pub use operations::a1z26_cipher_encode_mod::A1Z26CipherEncode;
-pub use operations::affine_cipher_decode_mod::AffineCipherDecode;
-pub use operations::affine_cipher_encode_mod::AffineCipherEncode;
-pub use operations::analyse_hash_mod::AnalyseHash;
-pub use operations::argon2_compare_mod::Argon2Compare;
-pub use operations::argon2_mod::Argon2;
-pub use operations::atbash_cipher_mod::AtbashCipher;
-pub use operations::bcrypt_compare_mod::BcryptCompare;
-pub use operations::bcrypt_mod::Bcrypt;
-pub use operations::bcrypt_parse_mod::BcryptParse;
-pub use operations::from_base64_mod::FromBase64;
-pub use operations::to_base64_mod::ToBase64;
-pub use operations::vigenere_cipher_decode_mod::VigenereCipherDecode;
-pub use operations::vigenere_cipher_encode_mod::VigenereCipherEncode;
+pub use operations::a1z26_cipher_decode_mod::{A1Z26CipherDecode, A1Z26CipherDecodeInfo};
+pub use operations::a1z26_cipher_encode_mod::{A1Z26CipherEncode, A1Z26CipherEncodeInfo};
+pub use operations::affine_cipher_decode_mod::{AffineCipherDecode, AffineCipherDecodeInfo};
+pub use operations::affine_cipher_encode_mod::{AffineCipherEncode, AffineCipherEncodeInfo};
+pub use operations::analyse_hash_mod::{AnalyseHash, AnalyseHashInfo};
+pub use operations::argon2_compare_mod::{Argon2Compare, Argon2CompareInfo};
+pub use operations::argon2_mod::{Argon2, Argon2Info};
+pub use operations::atbash_cipher_mod::{AtbashCipher, AtbashCipherInfo};
+pub use operations::bcrypt_compare_mod::{BcryptCompare, BcryptCompareInfo};
+pub use operations::bcrypt_mod::{Bcrypt, BcryptInfo};
+pub use operations::bcrypt_parse_mod::{BcryptParse, BcryptParseInfo};
+pub use operations::from_base64_mod::{FromBase64, FromBase64Info};
+pub use operations::to_base64_mod::{ToBase64, ToBase64Info};
+pub use operations::vigenere_cipher_decode_mod::{VigenereCipherDecode, VigenereCipherDecodeInfo};
+pub use operations::vigenere_cipher_encode_mod::{VigenereCipherEncode, VigenereCipherEncodeInfo};
 
 use crate::traits::StringTrait;
 use serde::{Deserialize, Serialize};

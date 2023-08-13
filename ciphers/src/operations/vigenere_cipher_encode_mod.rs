@@ -116,7 +116,7 @@ const DESCRIPTION_RU: &str = "Шифр Виженера — это метод ш
 const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/Vigenère_cipher");
 
 create_info_struct!(
-    VigenereCipherInfo,
+    VigenereCipherEncodeInfo,
     NAME,
     DOCS_URL,
     DESCRIPTION_EN,
