@@ -1,5 +1,4 @@
-use crate::libs::base64::from_base64;
-use crate::{map, regex_check};
+use crate::{libs::base64::from_base64, map, regex_check};
 use num::{Integer, ToPrimitive};
 use serde::Deserialize;
 use unicode_segmentation::UnicodeSegmentation;
@@ -114,7 +113,7 @@ pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<usiz
     result
 }
 
-pub fn byte_array_to_chars(byte_array: Vec<u8>) -> Result<String, String> {
+pub fn byte_array_to_string(byte_array: Vec<u8>) -> Result<String, String> {
     String::from_utf8(byte_array).map_err(|err| err.to_string())
 }
 

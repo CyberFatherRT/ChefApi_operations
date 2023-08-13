@@ -8,3 +8,4 @@ edition = "2021"
 leptos = { version = "0.4.8", features = ["csr", "nightly"] }
 serde_json = "1.0.103"
 reqwasm = "0.5.0"
+leptos-use = "0.6.3"

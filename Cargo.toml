@@ -14,7 +14,7 @@ ciphers = { path = "ciphers" }
 
 [workspace]
 members = [
-#    "frontend",
+    "frontend",
     "ciphers"
 ]
 

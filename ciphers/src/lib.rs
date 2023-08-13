@@ -16,6 +16,7 @@ pub use operations::bcrypt_compare_mod::{BcryptCompare, BcryptCompareInfo};
 pub use operations::bcrypt_mod::{Bcrypt, BcryptInfo};
 pub use operations::bcrypt_parse_mod::{BcryptParse, BcryptParseInfo};
 pub use operations::from_base64_mod::{FromBase64, FromBase64Info};
+pub use operations::rsa_encode_mod::RSAEncrypt;
 pub use operations::to_base64_mod::{ToBase64, ToBase64Info};
 pub use operations::vigenere_cipher_decode_mod::{VigenereCipherDecode, VigenereCipherDecodeInfo};
 pub use operations::vigenere_cipher_encode_mod::{VigenereCipherEncode, VigenereCipherEncodeInfo};
