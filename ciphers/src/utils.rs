@@ -42,8 +42,8 @@ pub const EN_ALP: (&str, &str, &str, &str, u8, &str) = (
 pub const RU_ALP: (&str, &str, &str, &str, u8, &str) = (
     "абвгдежзийклмнопрстуфхцчшщъыьэюя",
     "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
-    "абвгдежзийклмнопрстуфхцчшщъыьэюя,.- ",
-    "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ,.- ",
+    "абвгдежзийклмнопрстуфхцчшщъыьэюя,.-=",
+    "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ,.-=",
     32,
     "^[а-яА-Я]+$",
 );
@@ -271,8 +271,8 @@ pub fn char_repr(token: &str) -> &str {
     .unwrap_or(&" ")
 }
 
-pub fn chr(code: u32) -> char {
-    char::from_u32(code).unwrap()
+pub fn chr<T: ToPrimitive>(code: T) -> char {
+    char::from_u32(code.to_u32().unwrap()).unwrap()
 }
 
 pub fn ord(chr: char) -> u32 {

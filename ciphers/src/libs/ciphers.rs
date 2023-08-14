@@ -50,21 +50,22 @@ pub fn affine_cipher_encode(
     Ok(output)
 }
 
-pub fn gen_polybius_square(alphabet: SupportedLanguages, keyword: String) -> String {
-    let (_, _, _, alpha, _, _) = get_alphabet(&alphabet);
+pub fn gen_polybius_square(alphabet: &SupportedLanguages, keyword: &str) -> Vec<char> {
+    let (_, _, _, alpha, _, _) = get_alphabet(alphabet);
     let pol_array = format!("{}{}", keyword, alpha)
         .chars()
-        .dedup()
+        .unique()
         .collect::<Vec<_>>();
-    let mut polybius: Vec<String> = Vec::new();
+
     let size = match alphabet {
         SupportedLanguages::EN => 5,
         SupportedLanguages::RU | SupportedLanguages::RU_WITH_YO => 6,
     };
+    let mut polybius: Vec<char> = Vec::new();
 
     for i in 0..size {
-        polybius[i] = pol_array[i * size..i * size + size].iter().collect();
+        polybius.extend(pol_array[i * size..i * size + size].iter());
     }
 
-    polybius.join("")
+    polybius
 }

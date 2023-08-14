@@ -16,6 +16,7 @@ pub use operations::atbash_cipher_mod::{AtbashCipher, AtbashCipherInfo};
 pub use operations::bcrypt_compare_mod::{BcryptCompare, BcryptCompareInfo};
 pub use operations::bcrypt_mod::{Bcrypt, BcryptInfo};
 pub use operations::bcrypt_parse_mod::{BcryptParse, BcryptParseInfo};
+pub use operations::bifid_cipher_encode_mod::{BifidCipherEncode, BifidCipherEncodeInfo};
 pub use operations::from_base64_mod::{FromBase64, FromBase64Info};
 pub use operations::rsa_encode_mod::{RSAEncrypt, RSAEncryptInfo};
 pub use operations::to_base64_mod::{ToBase64, ToBase64Info};
@@ -69,6 +70,7 @@ pub enum Operations {
     Bcrypt,
     BcryptCompare,
     BcryptParse,
+    BifidCipherEncode,
     FromBase64,
     RSAEncrypt,
     ToBase64,
