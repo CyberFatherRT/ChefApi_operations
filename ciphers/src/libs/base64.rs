@@ -1,12 +1,11 @@
 use crate::traits::StringTrait;
 use crate::utils::{
-    expand_alphabet_range, get_char_by_index, str_to_array_buffer, str_to_array_buffer_by_alphabet,
-    DataRepresentation,
+    expand_alphabet_range, get_char_by_index, str_to_array_buffer_by_alphabet, DataRepresentation,
 };
 use itertools::Itertools;
 use unicode_segmentation::UnicodeSegmentation;
 
-pub fn to_base64(data: &str, alphabet: Option<String>) -> Result<String, String> {
+pub fn to_base64(data: &[u8], alphabet: Option<String>) -> Result<String, String> {
     if data.is_empty() {
         return Ok(String::new());
     }
@@ -24,8 +23,7 @@ pub fn to_base64(data: &str, alphabet: Option<String>) -> Result<String, String>
     let mut output = String::new();
     let mut padding = 0;
 
-    str_to_array_buffer(data)
-        .iter()
+    data.iter()
         .fold(String::new(), |acc, x| acc + &format!("{:08b}", x))
         .chars()
         .chunks(6)

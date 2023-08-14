@@ -5,7 +5,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for ToBase64 {
     fn run(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, alphabet) = (request.input, request.params.alphabet);
-        to_base64(&input, alphabet)
+        to_base64(input.as_bytes(), alphabet)
     }
 }
 

@@ -56,10 +56,10 @@ async fn cipher_help_handler(name: Path<Operations>) -> HttpResponse {
         Operations::BcryptCompare => BcryptCompareInfo::info(),
         Operations::BcryptParse => BcryptParseInfo::info(),
         Operations::FromBase64 => FromBase64Info::info(),
+        Operations::RSAEncrypt => RSAEncryptInfo::info(),
         Operations::ToBase64 => ToBase64Info::info(),
         Operations::VigenereCipherDecode => VigenereCipherDecodeInfo::info(),
         Operations::VigenereCipherEncode => VigenereCipherEncodeInfo::info(),
-        _ => "write me about it, i forgot implement it".to_string(),
     };
     HttpResponse::build(StatusCode::OK)
         .append_header(("Access-Control-Allow-Origin", "*"))

@@ -62,7 +62,7 @@ pub trait VigenereCipher {
             return Err("Input is empty".to_string());
         };
 
-        if !validate_lang(key, &lang) {
+        if !validate_lang(key, lang) {
             return Err("Invalid key".to_string());
         };
 

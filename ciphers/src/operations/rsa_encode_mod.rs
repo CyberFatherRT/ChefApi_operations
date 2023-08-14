@@ -1,5 +1,7 @@
-use crate::utils::to_hex;
-use crate::{create_me_daddy, Operation};
+use crate::{
+    create_info_struct, create_me_daddy, libs::base64::to_base64, utils::to_hex, Operation,
+    DOCS_URL,
+};
 use rsa::{pkcs1::DecodeRsaPublicKey, Oaep, Pkcs1v15Encrypt, RsaPublicKey};
 use serde::{Deserialize, Serialize};
 use sha1::Sha1;
@@ -49,7 +51,9 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSAEncrypt {
 
         Ok(match output_format {
             SupportedOutputFormat::Hex => OutputFormat::Hex(to_hex(&encrypted_text)),
-            SupportedOutputFormat::Base64 => unimplemented!(),
+            SupportedOutputFormat::Base64 => {
+                OutputFormat::Base64(to_base64(&encrypted_text, None).unwrap())
+            }
             SupportedOutputFormat::Uint8Array => OutputFormat::Uint8Array(encrypted_text),
         })
     }
@@ -158,7 +162,7 @@ create_me_daddy!();
 ///     "params": {
 ///         "pub_key": {PEM encoded key},
 ///         "scheme": "oaep",
-///         "digest_alg": "sha1",
+///         "digest_alg": "sha2_256",
 ///         "output_format": "hex"
 ///     }
 /// }
@@ -176,21 +180,19 @@ create_me_daddy!();
 /// POST /api/RSAEncrypt
 ///
 /// {
-///     "input": "Привет, Мир!",
+///     "input": "hello",
 ///     "params": {
-///         "salt": "123456789",
-///         "iterations": 6,
-///         "parallelism": 1,
-///         "hash_length": 34,
-///         "argon2_type": "Argon2id",
-///         "output_format": "hex",
-///         "memory": 8096
+///         "pub_key": {PEM encoded key},
+///         "scheme": "pkcs1_v15",
+///         "output_format": "base64"
 ///     }
 /// }
 /// ```
 /// ```http
 /// {
-///   "Ok": "hex"
+///   "Ok": {
+///     "base64": "kip548Yss3HwbrlOJHwtVhRn6tOfEyFcO5UQ4Otgx4HLI2m89mOTEgeo6qH8tkgPfZsno8aTHXaXH+UUoV3WnNF5Q5Y0/Fql2APQYQ3dsaU3sdnzDR/dX4yaGhfOZ3hhbalo509mbqR5kz27VcAhgmXPZIKHGTwjra/hjYhyP3uWqxw/svsxPyIZqOz8Y0qb84GIjNk0+5cFRAJMuV6+fpme5UyApHpaw4GVY9XxiNKECkQ+etK0jr/aclLjiU7I60Qayrhstlf10l8SYgRtmvs6TTVmYYGbRDwLNe9CqPCaqGUsPQpLtP8GVVEKE7M/RNemQgKfvZIfj/N6b3W58g="
+///   }
 /// }
 /// ```
 /// ## №3
@@ -200,19 +202,30 @@ create_me_daddy!();
 /// {
 ///     "input": "error",
 ///     "params": {
-///         "salt": "missing iterations parameter",
-///         "parallelism": 1,
-///         "hash_length": 34,
-///         "argon2_type": "Argon2id",
-///         "output_format": "hex",
-///         "memory": 8096
+///         "scheme": "pkcs1_v15",
+///         "output_format": "uint8array"
 ///     }
 /// }
 /// ```
 /// ```http
 /// HTTP/1.1 400 Bad Request
 /// {
-///   "Err": "Missing field `iterations`"
+///   "Err": "Missing field `pub_key`"
 /// }
 /// ```
 pub struct RSAEncrypt;
+
+const NAME: &str = "RSAEncrypt";
+const DESCRIPTION_EN: &str = "Encrypt a message with a PEM encoded RSA public key.";
+const DESCRIPTION_RU: &str = "Шифрует сообщение с помощью открытого ключа RSA с кодировкой PEM.";
+
+const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/RSA_(cryptosystem)");
+
+create_info_struct!(
+    RSAEncryptInfo,
+    NAME,
+    DOCS_URL,
+    DESCRIPTION_EN,
+    DESCRIPTION_RU,
+    INFO_URL
+);
