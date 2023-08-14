@@ -6,6 +6,7 @@ pub mod utils;
 
 pub use operations::a1z26_cipher_decode_mod::{A1Z26CipherDecode, A1Z26CipherDecodeInfo};
 pub use operations::a1z26_cipher_encode_mod::{A1Z26CipherEncode, A1Z26CipherEncodeInfo};
+pub use operations::adler32_checksum_mod::{Adler32CheckSum, Adler32CheckSumInfo};
 pub use operations::affine_cipher_decode_mod::{AffineCipherDecode, AffineCipherDecodeInfo};
 pub use operations::affine_cipher_encode_mod::{AffineCipherEncode, AffineCipherEncodeInfo};
 pub use operations::analyse_hash_mod::{AnalyseHash, AnalyseHashInfo};
@@ -58,6 +59,7 @@ where
 pub enum Operations {
     A1Z26CipherDecode,
     A1Z26CipherEncode,
+    Adler32CheckSum,
     AffineCipherDecode,
     AffineCipherEncode,
     AnalyseHash,

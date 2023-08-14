@@ -2,6 +2,7 @@ use crate::traits::StringTrait;
 use crate::{libs::base64::from_base64, map, regex_check};
 use num::{Integer, ToPrimitive};
 use serde::Deserialize;
+use std::fmt::{Debug, LowerHex};
 use unicode_segmentation::UnicodeSegmentation;
 
 // region constants
@@ -310,6 +311,10 @@ pub fn add(a: i16, b: i16) -> i16 {
 
 pub fn sub(a: i16, b: i16) -> i16 {
     a - b
+}
+
+pub fn hex<T: Debug + LowerHex>(c: T) -> String {
+    format!("{:08x}", c)
 }
 
 // endregion

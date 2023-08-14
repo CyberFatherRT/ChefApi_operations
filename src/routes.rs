@@ -25,6 +25,7 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
     match name.into_inner() {
         Operations::A1Z26CipherDecode => http_response(A1Z26CipherDecode, body),
         Operations::A1Z26CipherEncode => http_response(A1Z26CipherEncode, body),
+        Operations::Adler32CheckSum => http_response(Adler32CheckSum, body),
         Operations::AffineCipherDecode => http_response(AffineCipherDecode, body),
         Operations::AffineCipherEncode => http_response(AffineCipherEncode, body),
         Operations::AnalyseHash => http_response(AnalyseHash, body),
@@ -46,6 +47,7 @@ async fn cipher_help_handler(name: Path<Operations>) -> HttpResponse {
     let res = match name.into_inner() {
         Operations::A1Z26CipherDecode => A1Z26CipherDecodeInfo::info(),
         Operations::A1Z26CipherEncode => A1Z26CipherEncodeInfo::info(),
+        Operations::Adler32CheckSum => Adler32CheckSumInfo::info(),
         Operations::AffineCipherDecode => AffineCipherDecodeInfo::info(),
         Operations::AffineCipherEncode => AffineCipherEncodeInfo::info(),
         Operations::AnalyseHash => AnalyseHashInfo::info(),
