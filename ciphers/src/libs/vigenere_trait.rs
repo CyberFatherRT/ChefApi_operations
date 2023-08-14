@@ -14,7 +14,7 @@ pub trait VigenereCipher {
     {
         <Self as VigenereCipher>::validate_language(&lang, key, input)?;
 
-        let (alp, _, _, reg) = get_alphabet(&lang);
+        let (alp, _, _, _, _, reg) = get_alphabet(&lang);
 
         let map: HashMap<char, usize> =
             HashMap::from_iter(alp.chars().enumerate().map(|(idx, elem)| (elem, idx)));

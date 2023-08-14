@@ -1,5 +1,4 @@
-use crate::traits::StringTrait;
-use crate::{libs::base64::from_base64, map, regex_check};
+use crate::{libs::base64::from_base64, map, regex_check, traits::StringTrait};
 use num::{Integer, ToPrimitive};
 use serde::Deserialize;
 use std::fmt::{Debug, LowerHex};
@@ -32,21 +31,27 @@ pub enum DataRepresentation {
     ByteArray(Vec<u8>),
 }
 
-pub const EN_ALP: (&str, &str, u8, &str) = (
+pub const EN_ALP: (&str, &str, &str, &str, u8, &str) = (
     "abcdefghijklmnopqrstuvwxyz",
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    "abcdefghiklmnopqrstuvwxyz",
+    "ABCDEFGHIKLMNOPQRSTUVWXYZ",
     26,
     r"^[a-zA-Z]+$",
 );
-pub const RU_ALP: (&str, &str, u8, &str) = (
+pub const RU_ALP: (&str, &str, &str, &str, u8, &str) = (
     "абвгдежзийклмнопрстуфхцчшщъыьэюя",
     "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "абвгдежзийклмнопрстуфхцчшщъыьэюя,.- ",
+    "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ,.- ",
     32,
     "^[а-яА-Я]+$",
 );
-pub const RU_ALP_WITH_YO: (&str, &str, u8, &str) = (
+pub const RU_ALP_WITH_YO: (&str, &str, &str, &str, u8, &str) = (
     "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
     "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "абвгдеёжзийклмнопрстуфхцчшщъыьэюя,.-",
+    "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ,.-",
     33,
     r"^[а-яА-ЯёЁ]+$",
 );
@@ -220,7 +225,16 @@ pub fn validate_lang(text: &str, lang: &SupportedLanguages) -> bool {
     regex_check!(re => text)
 }
 
-pub fn get_alphabet(lang: &SupportedLanguages) -> (&'static str, &'static str, u8, &'static str) {
+pub fn get_alphabet(
+    lang: &SupportedLanguages,
+) -> (
+    &'static str,
+    &'static str,
+    &'static str,
+    &'static str,
+    u8,
+    &'static str,
+) {
     match lang {
         SupportedLanguages::EN => EN_ALP,
         SupportedLanguages::RU => RU_ALP,

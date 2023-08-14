@@ -19,7 +19,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherDecode {
 
         let (a, b) = (params.a as i16, params.b as i16);
 
-        let (alp_lower, alp_upper, alp_length, _) = get_alphabet(&params.lang);
+        let (alp_lower, alp_upper, _, _, alp_length, _) = get_alphabet(&params.lang);
         if a.gcd(&(alp_length as i16)) != 1 {
             return Err(format!(
                 "The value of `a` must be coprime to alphabet length({}).",
