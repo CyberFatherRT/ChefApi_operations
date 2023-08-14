@@ -1,3 +1,4 @@
+use crate::traits::StringTrait;
 use crate::{libs::base64::from_base64, map, regex_check};
 use num::{Integer, ToPrimitive};
 use serde::Deserialize;
@@ -6,21 +7,22 @@ use unicode_segmentation::UnicodeSegmentation;
 // region constants
 
 #[derive(Deserialize)]
-#[serde(rename_all = "snake_case")]
+#[serde(rename_all = "lowercase")]
 pub enum SupportedLanguages {
-    En,
-    Ru,
-    RuWithYo,
+    EN,
+    RU,
+    #[allow(non_camel_case_types)]
+    RU_WITH_YO,
 }
 
 #[derive(Deserialize, Debug)]
-#[serde(rename_all = "snake_case")]
+#[serde(rename_all = "lowercase")]
 pub enum SupportedFormats {
-    Binary,
-    Utf8,
-    Hex,
-    Base64,
-    Latin1,
+    BINARY,
+    UTF8,
+    HEX,
+    BASE64,
+    LATIN1,
 }
 
 #[derive(Eq, PartialEq, Debug)]
@@ -114,7 +116,7 @@ pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<usiz
 }
 
 pub fn byte_array_to_string(byte_array: Vec<u8>) -> Result<String, String> {
-    String::from_utf8(byte_array).map_err(|err| err.to_string())
+    String::from_utf8(byte_array).map_err(|err| err.to_string().capitalize() + ".")
 }
 
 pub fn convert_to_byte_string(
@@ -122,9 +124,9 @@ pub fn convert_to_byte_string(
     convert_type: &SupportedFormats,
 ) -> Result<Vec<u8>, String> {
     match convert_type {
-        SupportedFormats::Binary => from_binary(string, None, None).map_err(|err| err.to_string()),
-        SupportedFormats::Hex => from_hex(string, None, None).map_err(|err| err.to_string()),
-        SupportedFormats::Base64 => match from_base64(
+        SupportedFormats::BINARY => from_binary(string, None, None).map_err(|err| err.to_string()),
+        SupportedFormats::HEX => from_hex(string, None, None).map_err(|err| err.to_string()),
+        SupportedFormats::BASE64 => match from_base64(
             string.to_string(),
             "",
             DataRepresentation::ByteArray(Vec::new()),
@@ -141,8 +143,8 @@ pub fn convert_to_byte_string(
             }
             Err(e) => Err(e),
         },
-        SupportedFormats::Utf8 => Ok(string.as_bytes().to_vec()),
-        SupportedFormats::Latin1 => Ok(Vec::new()),
+        SupportedFormats::UTF8 => Ok(string.as_bytes().to_vec()),
+        SupportedFormats::LATIN1 => Ok(Vec::new()),
     }
 }
 
@@ -210,18 +212,18 @@ pub fn from_decimal(data: &str, delim: Option<&str>) -> Result<Vec<usize>, Strin
 
 pub fn validate_lang(text: &str, lang: &SupportedLanguages) -> bool {
     let re = match lang {
-        SupportedLanguages::En => r"^[a-zA-Z\p{P}\s\d]+$",
-        SupportedLanguages::Ru => r"^[а-яА-Я\p{P}\s\d]+$",
-        SupportedLanguages::RuWithYo => r"^[а-яА-ЯёЁ\p{P}\s\d]+$",
+        SupportedLanguages::EN => r"^[a-zA-Z\p{P}\s\d]+$",
+        SupportedLanguages::RU => r"^[а-яА-Я\p{P}\s\d]+$",
+        SupportedLanguages::RU_WITH_YO => r"^[а-яА-ЯёЁ\p{P}\s\d]+$",
     };
     regex_check!(re => text)
 }
 
 pub fn get_alphabet(lang: &SupportedLanguages) -> (&'static str, &'static str, u8, &'static str) {
     match lang {
-        SupportedLanguages::En => EN_ALP,
-        SupportedLanguages::Ru => RU_ALP,
-        SupportedLanguages::RuWithYo => RU_ALP_WITH_YO,
+        SupportedLanguages::EN => EN_ALP,
+        SupportedLanguages::RU => RU_ALP,
+        SupportedLanguages::RU_WITH_YO => RU_ALP_WITH_YO,
     }
 }
 

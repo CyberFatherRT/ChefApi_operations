@@ -24,7 +24,7 @@ pub fn to_base64(data: &str, alphabet: Option<String>) -> Result<String, String>
     let mut output = String::new();
     let mut padding = 0;
 
-    for i in str_to_array_buffer(data)
+    str_to_array_buffer(data)
         .iter()
         .fold(String::new(), |acc, x| acc + &format!("{:08b}", x))
         .chars()
@@ -41,9 +41,7 @@ pub fn to_base64(data: &str, alphabet: Option<String>) -> Result<String, String>
             }
             .unwrap()
         })
-    {
-        output.push(get_char_by_index(&alphabet, i))
-    }
+        .for_each(|x| output.push(get_char_by_index(&alphabet, x)));
 
     output.push_str(&match alphabet_length {
         65 => get_char_by_index(&alphabet, 64).to_string().repeat(padding),

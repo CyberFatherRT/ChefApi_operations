@@ -4,7 +4,7 @@ use unicode_segmentation::UnicodeSegmentation;
 
 use crate::{
     traits::CharTrait,
-    utils::{get_char_by_index, modulus, SupportedLanguages, EN_ALP, RU_ALP, RU_ALP_WITH_YO},
+    utils::{get_alphabet, get_char_by_index, modulus, validate_lang, SupportedLanguages},
 };
 
 pub trait VigenereCipher {
@@ -14,11 +14,7 @@ pub trait VigenereCipher {
     {
         <Self as VigenereCipher>::validate_language(&lang, key, input)?;
 
-        let (alp, _, _, reg) = match lang {
-            SupportedLanguages::En => EN_ALP,
-            SupportedLanguages::Ru => RU_ALP,
-            SupportedLanguages::RuWithYo => RU_ALP_WITH_YO,
-        };
+        let (alp, _, _, reg) = get_alphabet(&lang);
 
         let map: HashMap<char, usize> =
             HashMap::from_iter(alp.chars().enumerate().map(|(idx, elem)| (elem, idx)));
@@ -66,15 +62,9 @@ pub trait VigenereCipher {
             return Err("Input is empty".to_string());
         };
 
-        let reg = match lang {
-            SupportedLanguages::En => Regex::new(EN_ALP.3).unwrap(),
-            SupportedLanguages::Ru => Regex::new(RU_ALP.3).unwrap(),
-            SupportedLanguages::RuWithYo => Regex::new(RU_ALP_WITH_YO.3).unwrap(),
+        if !validate_lang(key, &lang) {
+            return Err("Invalid key".to_string());
         };
-
-        if !reg.is_match(key) {
-            return Err("Invalid key.".to_string());
-        }
 
         Ok(())
     }

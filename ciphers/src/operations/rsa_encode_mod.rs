@@ -1,24 +1,20 @@
-use crate::utils::byte_array_to_string;
+use crate::utils::to_hex;
 use crate::{create_me_daddy, Operation};
-use rsa::{
-    pkcs1::DecodeRsaPublicKey,
-    sha2::{Sha256, Sha384, Sha512},
-    traits::PaddingScheme,
-    Oaep, Pkcs1v15Encrypt, RsaPublicKey,
-};
+use rsa::{pkcs1::DecodeRsaPublicKey, Oaep, Pkcs1v15Encrypt, RsaPublicKey};
 use serde::{Deserialize, Serialize};
 use sha1::Sha1;
+use sha2::{Sha224, Sha256, Sha384, Sha512};
+use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 
-pub struct RSAEncrypt;
-
-impl Operation<'_, DeserializeMeDaddy, String> for RSAEncrypt {
-    fn run(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSAEncrypt {
+    fn run(&self, request: &str) -> Result<OutputFormat, String> {
         let request = self.validate(request)?;
-        let (input, public_key, encrypted_scheme, message_digest_algorithm) = (
+        let (input, public_key, encrypted_scheme, message_digest_algorithm, output_format) = (
             request.input,
             request.params.public_key,
             request.params.encrypted_scheme,
             request.params.message_digest_algorithm,
+            request.params.output_format,
         );
 
         if matches!(encrypted_scheme, SupportedEncryptionSchemes::RSA_OAEP)
@@ -27,55 +23,196 @@ impl Operation<'_, DeserializeMeDaddy, String> for RSAEncrypt {
             return Err("RSA_OAEP must have message digest algorithm".to_string());
         }
 
-        let pubkey = RsaPublicKey::from_pkcs1_pem(&public_key).map_err(|err| err.to_string())?;
+        let pub_key = RsaPublicKey::from_pkcs1_pem(&public_key).map_err(|err| err.to_string())?;
         let mut rng = rand::thread_rng();
+
         let encrypted_text = match encrypted_scheme {
             SupportedEncryptionSchemes::RSA_OAEP => {
                 let padding = match message_digest_algorithm.unwrap() {
-                    SupportedMessageDigestAlgorithm::SHA_1 => Oaep::new::<Sha1>(),
-                    SupportedMessageDigestAlgorithm::SHA_256 => Oaep::new::<Sha256>(),
-                    SupportedMessageDigestAlgorithm::SHA_384 => Oaep::new::<Sha384>(),
-                    SupportedMessageDigestAlgorithm::SHA_512 => Oaep::new::<Sha512>(),
+                    SupportedMessageDigestAlgorithm::SHA1 => Oaep::new::<Sha1>(),
+                    SupportedMessageDigestAlgorithm::SHA2_224 => Oaep::new::<Sha224>(),
+                    SupportedMessageDigestAlgorithm::SHA2_256 => Oaep::new::<Sha256>(),
+                    SupportedMessageDigestAlgorithm::SHA2_384 => Oaep::new::<Sha384>(),
+                    SupportedMessageDigestAlgorithm::SHA2_512 => Oaep::new::<Sha512>(),
+                    SupportedMessageDigestAlgorithm::SHA3_224 => Oaep::new::<Sha3_224>(),
+                    SupportedMessageDigestAlgorithm::SHA3_256 => Oaep::new::<Sha3_256>(),
+                    SupportedMessageDigestAlgorithm::SHA3_384 => Oaep::new::<Sha3_384>(),
+                    SupportedMessageDigestAlgorithm::SHA3_512 => Oaep::new::<Sha3_512>(),
                 };
-                pubkey.encrypt(&mut rng, padding, input.as_bytes())
+                pub_key.encrypt(&mut rng, padding, input.as_bytes())
             }
             SupportedEncryptionSchemes::RSA_AES_PKCS1_V1_5 => {
-                Pkcs1v15Encrypt::encrypt(Pkcs1v15Encrypt, &mut rng, &pubkey, input.as_bytes())
+                pub_key.encrypt(&mut rng, Pkcs1v15Encrypt, input.as_bytes())
             }
         }
         .map_err(|err| err.to_string())?;
 
-        byte_array_to_string(encrypted_text)
+        Ok(match output_format {
+            SupportedOutputFormat::Hex => OutputFormat::Hex(to_hex(&encrypted_text)),
+            SupportedOutputFormat::Base64 => unimplemented!(),
+            SupportedOutputFormat::Uint8Array => OutputFormat::Uint8Array(encrypted_text),
+        })
     }
 }
 
 #[allow(non_camel_case_types)]
 #[derive(Deserialize)]
 enum SupportedEncryptionSchemes {
-    #[serde(rename = "rsa_oaep")]
+    #[serde(rename = "oaep")]
     RSA_OAEP,
-    #[serde(rename = "rsa_aes_pkcs1_v1_5")]
+    #[serde(rename = "pkcs1_v15")]
     RSA_AES_PKCS1_V1_5,
 }
 
 #[allow(non_camel_case_types)]
 #[derive(Deserialize)]
+#[serde(rename_all = "lowercase")]
 enum SupportedMessageDigestAlgorithm {
-    #[serde(rename = "sha1")]
-    SHA_1,
-    #[serde(rename = "sha256")]
-    SHA_256,
-    #[serde(rename = "sha384")]
-    SHA_384,
-    #[serde(rename = "sha512")]
-    SHA_512,
+    SHA1,
+    SHA2_224,
+    SHA2_256,
+    SHA2_384,
+    SHA2_512,
+    SHA3_224,
+    SHA3_256,
+    SHA3_384,
+    SHA3_512,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "lowercase")]
+enum SupportedOutputFormat {
+    Hex,
+    Base64,
+    Uint8Array,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum OutputFormat {
+    Hex(String),
+    Base64(String),
+    Uint8Array(Vec<u8>),
 }
 
 #[derive(Deserialize)]
 struct Params {
+    #[serde(rename = "pub_key")]
     public_key: String,
+    #[serde(rename = "scheme")]
     encrypted_scheme: SupportedEncryptionSchemes,
+    #[serde(rename = "digest_alg")]
     message_digest_algorithm: Option<SupportedMessageDigestAlgorithm>,
+    output_format: SupportedOutputFormat,
 }
 
 create_me_daddy!();
+
+/// Encrypt a message with a PEM encoded RSA public key.
+/// <br><br/>
+/// For more information go [here](https://wikipedia.org/wiki/RSA_(cryptosystem))
+/// <br><br/>
+///
+/// # How to use
+/// \
+/// Send POST requests to /api/RSAEncrypt with your data using json payload with this structure
+/// ``` json
+/// {
+///     "input": string,
+///     "params": {
+///         "pub_key": PEM,
+///         "scheme": SupportedEncryptionSchemes,
+///         "digest_alg": Option<SupportedMessageDigestAlgorithm>
+///         "output_format": SupportedOutputFormat
+///     }
+/// }
+/// ```
+/// #### where
+///     - PEM is pem encoded RSA public key
+///     - SupportedEncryptionSchemes is enum of "oaep" and "pkcs1_v15"
+///     - Option<SupportedMessageDigestAlgorithm> is optional enum of "sha1", "sha2-224", "sha2-256", "sha2-384", "sha2-512", "sha3-224", "sha3-256", "sha3-384", "sha3-512"
+///     - SupportedOutputFormat is enum of "hex", "base64", "uint8array"
+/// <br/><br/>
+///
+/// ### Server response have two possible formats
+///
+/// #### &nbsp;&nbsp;&nbsp;&nbsp; Ok variant
+/// ``` json
+/// {
+///   "Ok": {
+///     "hex|base64|uint8array": "string|uint8array"    
+///   }
+/// }
+/// ```
+/// #### &nbsp;&nbsp;&nbsp;&nbsp; Error variant
+/// ``` json
+/// { "Err": `error message` }
+/// ```
+/// # Examples
+/// ## №1
+/// ``` http
+/// POST /api/RSAEncrypt
+///
+/// {
+///     "input": "hello",
+///     "params": {
+///         "pub_key": {PEM encoded key},
+///         "scheme": "oaep",
+///         "digest_alg": "sha1",
+///         "output_format": "hex"
+///     }
+/// }
+/// ```
+/// ```http
+/// HTTP/1.1 200 Ok
+/// {
+///   "Ok": {
+///     "hex": "66bbd6ab6373e0564c4e7adbbc9dd27a9ca4a0857254c7ea00d62a5cbd21eaeacd9684bbcc7a7922260ea686187f41eb6befe117f09c46343e57260dc1f4b4d80ccc0cfc87f2d0ce836ee6a7326a94f2ace2ca1f76c3139966237fc97c3abe8251ef4733266855f3d5174b1796524ce5f419d25d79b856113517c5c933f2d1dce37bd0d5783b384ee9c17b2562a34da964bff799d6152a163f0e9455f1fe5f488c02c46373be3b4cf388b6a04aa4354fd094918b7d98f3351b6e8d575816e542a72d03085cddd9f7d79f886304934a7474ce2c019382cf217b632e170ed286b9ee0f956ff12f93e64af4c20cae4a69c91a356e4ffbce6531"
+///   }
+/// }
+/// ```
+/// ## №2
+/// ``` http
+/// POST /api/RSAEncrypt
+///
+/// {
+///     "input": "Привет, Мир!",
+///     "params": {
+///         "salt": "123456789",
+///         "iterations": 6,
+///         "parallelism": 1,
+///         "hash_length": 34,
+///         "argon2_type": "Argon2id",
+///         "output_format": "hex",
+///         "memory": 8096
+///     }
+/// }
+/// ```
+/// ```http
+/// {
+///   "Ok": "hex"
+/// }
+/// ```
+/// ## №3
+/// ``` http
+/// POST /api/RSAEncrypt
+///
+/// {
+///     "input": "error",
+///     "params": {
+///         "salt": "missing iterations parameter",
+///         "parallelism": 1,
+///         "hash_length": 34,
+///         "argon2_type": "Argon2id",
+///         "output_format": "hex",
+///         "memory": 8096
+///     }
+/// }
+/// ```
+/// ```http
+/// HTTP/1.1 400 Bad Request
+/// {
+///   "Err": "Missing field `iterations`"
+/// }
+/// ```
+pub struct RSAEncrypt;

@@ -68,6 +68,7 @@ pub enum Operations {
     BcryptCompare,
     BcryptParse,
     FromBase64,
+    RSAEncrypt,
     ToBase64,
     VigenereCipherDecode,
     VigenereCipherEncode,
