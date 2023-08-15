@@ -20,6 +20,7 @@ pub use operations::bifid_cipher_encode_mod::{BifidCipherEncode, BifidCipherEnco
 pub use operations::from_base64_mod::{FromBase64, FromBase64Info};
 pub use operations::md2_mod::{MD2Info, MD2};
 pub use operations::md4_mod::{MD4Info, MD4};
+pub use operations::md5_mod::{MD5Info, MD5};
 pub use operations::rsa_decode_mod::{RSADecrypt, RSADecryptInfo};
 pub use operations::rsa_encode_mod::{RSAEncrypt, RSAEncryptInfo};
 pub use operations::to_base64_mod::{ToBase64, ToBase64Info};
@@ -77,6 +78,7 @@ pub enum Operations {
     FromBase64,
     MD2,
     MD4,
+    MD5,
     RSADecrypt,
     RSAEncrypt,
     ToBase64,
