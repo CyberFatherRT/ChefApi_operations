@@ -48,11 +48,10 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSAEncrypt {
             }
         }
         .map_err(|err| err.to_string())?;
-
         Ok(match output_format {
             SupportedOutputFormat::Hex => OutputFormat::Hex(to_hex(&encrypted_text)),
             SupportedOutputFormat::Base64 => {
-                OutputFormat::Base64(to_base64(&encrypted_text, None).unwrap())
+                OutputFormat::Base64(to_base64(&encrypted_text, None)?)
             }
             SupportedOutputFormat::Uint8Array => OutputFormat::Uint8Array(encrypted_text),
         })

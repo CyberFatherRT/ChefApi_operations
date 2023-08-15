@@ -18,6 +18,7 @@ pub use operations::bcrypt_mod::{Bcrypt, BcryptInfo};
 pub use operations::bcrypt_parse_mod::{BcryptParse, BcryptParseInfo};
 pub use operations::bifid_cipher_encode_mod::{BifidCipherEncode, BifidCipherEncodeInfo};
 pub use operations::from_base64_mod::{FromBase64, FromBase64Info};
+pub use operations::rsa_decode_mod::{RSADecrypt, RSADecryptInfo};
 pub use operations::rsa_encode_mod::{RSAEncrypt, RSAEncryptInfo};
 pub use operations::to_base64_mod::{ToBase64, ToBase64Info};
 pub use operations::vigenere_cipher_decode_mod::{VigenereCipherDecode, VigenereCipherDecodeInfo};
@@ -72,6 +73,7 @@ pub enum Operations {
     BcryptParse,
     BifidCipherEncode,
     FromBase64,
+    RSADecrypt,
     RSAEncrypt,
     ToBase64,
     VigenereCipherDecode,

@@ -61,7 +61,7 @@ pub fn from_base64(
             DataRepresentation::ByteArray(_) => Ok(DataRepresentation::ByteArray(Vec::new())),
         };
     }
-    println!("here?");
+
     if alphabet.is_empty() {
         alphabet = "A-Za-z0-9+/=";
     }
@@ -150,10 +150,9 @@ pub fn from_base64(
     };
 }
 
+#[allow(dead_code)]
 pub struct AlphabetOptions {
-    #[allow(dead_code)]
     name: &'static str,
-    #[allow(dead_code)]
     value: &'static str,
 }
 
