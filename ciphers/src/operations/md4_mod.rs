@@ -27,7 +27,7 @@ pub struct DeserializeMeDaddy {
 ///
 /// # How to use
 /// \
-/// Send POST requests to /api/Md4 with your data using json payload with this structure.
+/// Send POST requests to /api/MD4 with your data using json payload with this structure.
 /// ``` json
 /// {
 ///     "input": string,
@@ -48,7 +48,7 @@ pub struct DeserializeMeDaddy {
 /// # Examples
 /// ## №1
 /// ``` http
-/// POST /api/Md4
+/// POST /api/MD4
 ///
 /// {
 ///     "input": "hello",
@@ -62,7 +62,7 @@ pub struct DeserializeMeDaddy {
 /// ```
 /// ## №2
 /// ``` http
-/// POST /api/Md4
+/// POST /api/MD4
 ///
 /// {
 ///     "input": "hello 123 world",
@@ -75,7 +75,7 @@ pub struct DeserializeMeDaddy {
 /// ```
 /// ## №3
 /// ``` http
-/// POST /api/Md4
+/// POST /api/MD4
 ///
 /// {
 /// }
