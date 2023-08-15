@@ -73,8 +73,13 @@ create_me_daddy!();
 /// ``` json
 /// {
 ///     "input": string,
+///     "params": {
+///         "size": SupportedSHA2Size
+///     }
 /// }
 /// ```
+/// #### where
+///     - SupportedSHA2Size is enum of "sha224", "sha256", "sha384", "sha512", "sha512_224", "sha512_256"
 /// <br/><br/>
 ///
 /// ### Server response have two possible formats
