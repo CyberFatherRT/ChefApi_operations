@@ -22,7 +22,7 @@ pub struct DeserializeMeDaddy {
 
 /// The MD2 (Message-Digest 2) algorithm is a cryptographic hash function developed by Ronald Rivest in 1989. The algorithm is optimized for 8-bit computers. Although MD2 is no longer considered secure, even as of 2014, it remains in use in public key infrastructures as part of certificates generated with MD2 and RSA.
 /// <br><br/>
-/// For more information go [here](https://wikipedia.org/wiki/MD4_(cryptography)).
+/// For more information go [here](https://wikipedia.org/wiki/MD4).
 /// <br><br/>
 ///
 /// # How to use
@@ -92,7 +92,7 @@ const NAME: &str = "Md4";
 const DESCRIPTION_EN: &str = "The MD4 (Message-Digest 4) algorithm is a cryptographic hash function developed by Ronald Rivest in 1990. The digest length is 128 bits. The algorithm has influenced later designs, such as the MD5, SHA-1 and RIPEMD algorithms. The security of MD4 has been severely compromised.";
 const DESCRIPTION_RU: &str = "Алгоритм MD4 (Message-Digest 4) — это криптографическая хэш-функция, разработанная Рональдом Ривестом в 1990 году. Длина дайджеста составляет 128 бит. Алгоритм повлиял на более поздние разработки, такие как алгоритмы MD5, SHA-1 и RIPEMD. Безопасность MD4 была серьезно скомпрометирована».";
 
-const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/MD4_(cryptography)");
+const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/MD4");
 
 create_info_struct!(
     MD4Info,
