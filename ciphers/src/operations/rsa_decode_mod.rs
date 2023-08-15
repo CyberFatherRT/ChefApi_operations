@@ -127,6 +127,108 @@ struct Params {
 
 create_me_daddy!();
 
+/// Decrypt a message with a PEM encoded RSA private key.
+/// <br><br/>
+/// For more information go [here](https://wikipedia.org/wiki/RSA_(cryptosystem))
+/// <br><br/>
+///
+/// # How to use
+/// \
+/// Send POST requests to /api/RSADecrypt with your data using json payload with this structure
+/// ``` json
+/// {
+///     "input": base64,
+///     "params": {
+///         "pem_key": PEM,
+///         "scheme": SupportedEncryptionSchemes,
+///         "digest_alg": Option<SupportedMessageDigestAlgorithm>
+///         "output_format": SupportedOutputFormat
+///     }
+/// }
+/// ```
+/// #### where
+///     - base64 is base64 encoded string
+///     - PEM is pem encoded RSA public key
+///     - SupportedEncryptionSchemes is enum of "oaep" and "pkcs1_v15"
+///     - Option<SupportedMessageDigestAlgorithm> is optional enum of "sha1", "sha2-224", "sha2-256", "sha2-384", "sha2-512", "sha3-224", "sha3-256", "sha3-384", "sha3-512"
+///     - SupportedOutputFormat is enum of "hex", "base64", "uint8array"
+/// <br/><br/>
+///
+/// ### Server response have two possible formats
+///
+/// #### &nbsp;&nbsp;&nbsp;&nbsp; Ok variant
+/// ``` json
+/// {
+///   "Ok": {
+///     "hex|base64|uint8array": "string|uint8array"    
+///   }
+/// }
+/// ```
+/// #### &nbsp;&nbsp;&nbsp;&nbsp; Error variant
+/// ``` json
+/// { "Err": `error message` }
+/// ```
+/// # Examples
+/// ## №1
+/// ``` http
+/// POST /api/RSADecrypt
+///
+/// {
+///     "input": {base64 encoded input},
+///     "params": {
+///         "pub_key": {PEM encoded key},
+///         "scheme": "oaep",
+///         "digest_alg": "sha2_256",
+///         "output_format": "hex"
+///     }
+/// }
+/// ```
+/// ```http
+/// HTTP/1.1 200 Ok
+/// {
+///   "Ok": {
+///     "hex": "6e6576657220676f6e6e612e2e"
+///   }
+/// }
+/// ```
+/// ## №2
+/// ``` http
+/// POST /api/RSADecrypt
+///
+/// {
+///     "input": {base64 encoded input},
+///     "params": {
+///         "pub_key": {PEM encoded key},
+///         "scheme": "pkcs1_v15",
+///         "output_format": "base64"
+///     }
+/// }
+/// ```
+/// ```http
+/// {
+///   "Ok": {
+///     "base64": "aGVsbG8gd29ybGQK"
+///   }
+/// }
+/// ```
+/// ## №3
+/// ``` http
+/// POST /api/RSADecrypt
+///
+/// {
+///     "input": "error",
+///     "params": {
+///         "scheme": "pkcs1_v15",
+///         "output_format": "uint8array"
+///     }
+/// }
+/// ```
+/// ```http
+/// HTTP/1.1 400 Bad Request
+/// {
+///   "Err": "Missing field `pem_key`"
+/// }
+/// ```
 pub struct RSADecrypt;
 
 const NAME: &str = "RSADecrypt";
