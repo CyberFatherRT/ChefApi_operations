@@ -23,6 +23,7 @@ pub use operations::md4_mod::{MD4Info, MD4};
 pub use operations::md5_mod::{MD5Info, MD5};
 pub use operations::rsa_decode_mod::{RSADecrypt, RSADecryptInfo};
 pub use operations::rsa_encode_mod::{RSAEncrypt, RSAEncryptInfo};
+pub use operations::sha1_mod::{SHA1Info, SHA1};
 pub use operations::to_base64_mod::{ToBase64, ToBase64Info};
 pub use operations::vigenere_cipher_decode_mod::{VigenereCipherDecode, VigenereCipherDecodeInfo};
 pub use operations::vigenere_cipher_encode_mod::{VigenereCipherEncode, VigenereCipherEncodeInfo};
@@ -81,6 +82,7 @@ pub enum Operations {
     MD5,
     RSADecrypt,
     RSAEncrypt,
+    SHA1,
     ToBase64,
     VigenereCipherDecode,
     VigenereCipherEncode,

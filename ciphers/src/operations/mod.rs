@@ -17,6 +17,7 @@ pub mod md4_mod;
 pub mod md5_mod;
 pub mod rsa_decode_mod;
 pub mod rsa_encode_mod;
+pub mod sha1_mod;
 pub mod to_base64_mod;
 pub mod vigenere_cipher_decode_mod;
 pub mod vigenere_cipher_encode_mod;
