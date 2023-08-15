@@ -20,7 +20,7 @@ pub struct DeserializeMeDaddy {
     input: String,
 }
 
-/// The MD2 (Message-Digest 2) algorithm is a cryptographic hash function developed by Ronald Rivest in 1989. The algorithm is optimized for 8-bit computers. Although MD2 is no longer considered secure, even as of 2014, it remains in use in public key infrastructures as part of certificates generated with MD2 and RSA.
+/// The MD4 (Message-Digest 4) algorithm is a cryptographic hash function developed by Ronald Rivest in 1990. The digest length is 128 bits. The algorithm has influenced later designs, such as the MD5, SHA-1 and RIPEMD algorithms. The security of MD4 has been severely compromised.
 /// <br><br/>
 /// For more information go [here](https://wikipedia.org/wiki/MD4).
 /// <br><br/>
