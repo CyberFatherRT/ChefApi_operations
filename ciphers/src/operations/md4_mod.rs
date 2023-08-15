@@ -88,7 +88,7 @@ pub struct DeserializeMeDaddy {
 /// ```
 pub struct MD4;
 
-const NAME: &str = "Md4";
+const NAME: &str = "MD4";
 const DESCRIPTION_EN: &str = "The MD4 (Message-Digest 4) algorithm is a cryptographic hash function developed by Ronald Rivest in 1990. The digest length is 128 bits. The algorithm has influenced later designs, such as the MD5, SHA-1 and RIPEMD algorithms. The security of MD4 has been severely compromised.";
 const DESCRIPTION_RU: &str = "Алгоритм MD4 (Message-Digest 4) — это криптографическая хэш-функция, разработанная Рональдом Ривестом в 1990 году. Длина дайджеста составляет 128 бит. Алгоритм повлиял на более поздние разработки, такие как алгоритмы MD5, SHA-1 и RIPEMD. Безопасность MD4 была серьезно скомпрометирована».";
 
