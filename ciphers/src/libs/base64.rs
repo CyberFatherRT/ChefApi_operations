@@ -1,6 +1,9 @@
-use crate::traits::StringTrait;
-use crate::utils::{
-    expand_alphabet_range, get_char_by_index, str_to_array_buffer_by_alphabet, DataRepresentation,
+use crate::{
+    traits::StringTrait,
+    utils::{
+        expand_alphabet_range, get_char_by_index, str_to_array_buffer_by_alphabet,
+        DataRepresentation,
+    },
 };
 use itertools::Itertools;
 use unicode_segmentation::UnicodeSegmentation;
@@ -17,7 +20,7 @@ pub fn to_base64(data: &[u8], alphabet: Option<String>) -> Result<String, String
     let alphabet_length = alphabet.graphemes(true).count();
 
     if alphabet_length != 64 && alphabet_length != 65 {
-        return Err("Invalid base64 alphabet length".to_string());
+        return Err("Invalid base64 alphabet length.".to_string());
     }
 
     let mut output = String::new();
@@ -77,7 +80,7 @@ pub fn from_base64(
     let alphabet_length = alphabet.graphemes(true).count();
 
     if alphabet_length != 64 && alphabet_length != 65 {
-        return Err("Invalid base64 alphabet length".to_string());
+        return Err("Invalid base64 alphabet length.".to_string());
     }
 
     if remove_non_alphabetic_chars {
