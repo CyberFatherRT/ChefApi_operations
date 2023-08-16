@@ -94,7 +94,7 @@ struct Params {
 
 create_me_daddy!();
 
-/// The SHA (Secure Hash Algorithm) hash functions were designed by the NSA. SHA-1 is the most established of the existing SHA hash functions, and it is used in a variety of security applications and protocols. However, SHA-1's collision resistance has been weakening as new attacks are discovered or improved.
+/// BLAKE2b is a flavour of the BLAKE cryptographic hash function that is optimized for 64-bit platforms and produces digests of any size between 1 and 64 bytes.
 /// <br><br/>
 /// For more information go [here](https://wikipedia.org/wiki/BLAKE_(hash_function)#BLAKE2b_algorithm).
 /// <br><br/>
