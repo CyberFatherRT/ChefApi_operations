@@ -125,7 +125,7 @@ pub fn byte_array_to_string(byte_array: Vec<u8>) -> Result<String, String> {
     String::from_utf8(byte_array).map_err(|err| err.to_string().capitalize() + ".")
 }
 
-pub fn convert_to_byte_string(
+pub fn convert_to_byte_array(
     string: &str,
     convert_type: &SupportedFormats,
 ) -> Result<Vec<u8>, String> {
