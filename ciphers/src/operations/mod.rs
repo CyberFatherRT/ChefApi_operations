@@ -11,6 +11,7 @@ pub mod bcrypt_compare_mod;
 pub mod bcrypt_mod;
 pub mod bcrypt_parse_mod;
 pub mod bifid_cipher_encode_mod;
+pub mod blake2b_mod;
 pub mod from_base64_mod;
 pub mod md2_mod;
 pub mod md4_mod;
