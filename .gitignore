@@ -14,5 +14,6 @@ frontend/package-lock.json
 #Cargo.lock
 
 *.http
+*.pem
 *.js
 *.py

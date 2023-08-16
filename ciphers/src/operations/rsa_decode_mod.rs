@@ -41,7 +41,6 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {
         let pem_key: RsaPrivateKey =
             DecodeRsaPrivateKey::from_pkcs1_pem(&pem_key).map_err(|err| err.to_string())?;
 
-        let input = &input[..input.len() - 1];
         let encrypted_text = match encrypted_scheme {
             SupportedEncryptionSchemes::RSA_OAEP => {
                 let padding = match message_digest_algorithm.unwrap() {
