@@ -1,4 +1,6 @@
 use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
+use digest::FixedOutput;
+use md5::*;
 use serde::{Deserialize, Serialize};
 
 impl Operation<'_, DeserializeMeDaddy, String> for MD5 {
@@ -6,9 +8,11 @@ impl Operation<'_, DeserializeMeDaddy, String> for MD5 {
         let request = self.validate(request)?;
         let input = request.input;
 
-        let result = md5::compute(input).0;
+        let mut hasher = Md5::new();
+        hasher.update(input.as_bytes());
+        let result = &hasher.finalize()[..];
 
-        Ok(to_hex(&result))
+        Ok(to_hex(result))
     }
 }
 
