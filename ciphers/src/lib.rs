@@ -18,6 +18,7 @@ pub use operations::bcrypt_mod::{Bcrypt, BcryptInfo};
 pub use operations::bcrypt_parse_mod::{BcryptParse, BcryptParseInfo};
 pub use operations::bifid_cipher_encode_mod::{BifidCipherEncode, BifidCipherEncodeInfo};
 pub use operations::blake2b_mod::{Blake2b, Blake2bInfo};
+pub use operations::blake2s_mod::{Blake2s, Blake2sInfo};
 pub use operations::from_base64_mod::{FromBase64, FromBase64Info};
 pub use operations::md2_mod::{MD2Info, MD2};
 pub use operations::md4_mod::{MD4Info, MD4};
@@ -80,6 +81,7 @@ pub enum Operations {
     BcryptParse,
     BifidCipherEncode,
     Blake2b,
+    Blake2s,
     FromBase64,
     MD2,
     MD4,
