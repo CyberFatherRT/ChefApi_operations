@@ -54,10 +54,10 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {
                     SupportedMessageDigestAlgorithm::SHA3_384 => Oaep::new::<Sha3_384>(),
                     SupportedMessageDigestAlgorithm::SHA3_512 => Oaep::new::<Sha3_512>(),
                 };
-                pem_key.decrypt(padding, input)
+                pem_key.decrypt(padding, &input)
             }
             SupportedEncryptionSchemes::RSA_AES_PKCS1_V1_5 => {
-                pem_key.decrypt(Pkcs1v15Encrypt, input)
+                pem_key.decrypt(Pkcs1v15Encrypt, &input)
             }
         }
         .map_err(|err| err.to_string())?;
