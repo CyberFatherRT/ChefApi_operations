@@ -179,7 +179,7 @@ pub fn from_binary(
 
 pub fn to_hex(data: &[u8]) -> String {
     data.iter()
-        .fold(String::new(), |out, x| format!("{out}{:x}", x))
+        .fold(String::new(), |out, x| format!("{out}{x:02x}"))
 }
 
 pub fn from_hex(
