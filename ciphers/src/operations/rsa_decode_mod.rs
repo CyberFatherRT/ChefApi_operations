@@ -65,7 +65,7 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {
         Ok(match output_format {
             SupportedOutputFormat::Hex => OutputFormat::Hex(to_hex(&encrypted_text)),
             SupportedOutputFormat::Base64 => {
-                OutputFormat::Base64(to_base64(&encrypted_text, None).unwrap())
+                OutputFormat::Base64(to_base64(&encrypted_text, None)?)
             }
             SupportedOutputFormat::Uint8Array => OutputFormat::Uint8Array(encrypted_text),
         })
