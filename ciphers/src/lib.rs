@@ -21,6 +21,7 @@ pub use operations::blake2b_mod::{Blake2b, Blake2bInfo};
 pub use operations::blake2s_mod::{Blake2s, Blake2sInfo};
 pub use operations::from_base64_mod::{FromBase64, FromBase64Info};
 pub use operations::from_base_mod::{FromBase, FromBaseInfo};
+pub use operations::hmac::{HMACInfo, HMAC};
 pub use operations::md2_mod::{MD2Info, MD2};
 pub use operations::md4_mod::{MD4Info, MD4};
 pub use operations::md5_mod::{MD5Info, MD5};
@@ -86,6 +87,7 @@ pub enum Operations {
     Blake2s,
     FromBase64,
     FromBase,
+    HMAC,
     MD2,
     MD4,
     MD5,

@@ -15,6 +15,7 @@ pub mod blake2b_mod;
 pub mod blake2s_mod;
 pub mod from_base64_mod;
 pub mod from_base_mod;
+pub mod hmac;
 pub mod md2_mod;
 pub mod md4_mod;
 pub mod md5_mod;
