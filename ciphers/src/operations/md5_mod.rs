@@ -1,5 +1,4 @@
 use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
-use digest::FixedOutput;
 use md5::*;
 use serde::{Deserialize, Serialize};
 
