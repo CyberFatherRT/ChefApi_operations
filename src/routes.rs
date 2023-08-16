@@ -49,6 +49,7 @@ async fn ciphers_handler(body: String, name: Path<Operations>) -> HttpResponse {
         Operations::SHA2 => http_response(SHA2, body),
         Operations::SHA3 => http_response(SHA3, body),
         Operations::ToBase64 => http_response(ToBase64, body),
+        Operations::ToBase => http_response(ToBase, body),
         Operations::VigenereCipherDecode => http_response(VigenereCipherDecode, body),
         Operations::VigenereCipherEncode => http_response(VigenereCipherEncode, body),
     }
@@ -82,6 +83,7 @@ async fn cipher_help_handler(name: Path<Operations>) -> HttpResponse {
         Operations::SHA2 => SHA2Info::info(),
         Operations::SHA3 => SHA3Info::info(),
         Operations::ToBase64 => ToBase64Info::info(),
+        Operations::ToBase => ToBaseInfo::info(),
         Operations::VigenereCipherDecode => VigenereCipherDecodeInfo::info(),
         Operations::VigenereCipherEncode => VigenereCipherEncodeInfo::info(),
     };
