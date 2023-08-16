@@ -2,15 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    background-color: #1e1e1e
+}
+
 #banner i {
     vertical-align: middle;
     padding-right: 10px;
 }
 
-#banner a {
-    color: #1976d2
+a {
+    color: #3086de
 }
 
-#banner a:hover {
+a:hover {
     text-decoration: underline;
 }
