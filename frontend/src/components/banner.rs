@@ -38,7 +38,7 @@ fn OptionAbout(cx: Scope) -> impl IntoView {
 #[component]
 pub fn Banner(cx: Scope) -> impl IntoView {
     view! {cx,
-         <div id="banner" class="flex flex-nowrap justify-between bg-[#DFF0D8] text-[#468847] absolute w-full h-[30px]">
+         <div id="banner" class="flex flex-nowrap justify-between bg-[#DFF0D8] text-[#468847] w-full h-[30px]">
             <DownloadMeDaddy/>
             <MiddleStuff/>
             <OptionAbout/>
