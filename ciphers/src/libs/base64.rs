@@ -130,7 +130,9 @@ pub fn from_base64(
                 .map(|x| u8::from_str_radix(&x.collect::<String>(), 2).unwrap() as char)
                 .for_each(|x| output.push(x));
 
-            Ok(DataRepresentation::String(output))
+            Ok(DataRepresentation::String(
+                output[..output.len() - 1].to_string(),
+            ))
         }
         DataRepresentation::ByteArray(_) => {
             let mut output = Vec::new();
@@ -145,7 +147,9 @@ pub fn from_base64(
                 .map(|x| u8::from_str_radix(&x.collect::<String>(), 2).unwrap())
                 .for_each(|x| output.push(x));
 
-            Ok(DataRepresentation::ByteArray(output))
+            Ok(DataRepresentation::ByteArray(
+                output[..output.len() - 1].to_vec(),
+            ))
         }
     };
 }
