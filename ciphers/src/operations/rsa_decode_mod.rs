@@ -38,8 +38,6 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {
             unreachable!()
         };
 
-        let input = &input[..input.len() - 1];
-
         let pem_key: RsaPrivateKey =
             DecodeRsaPrivateKey::from_pkcs1_pem(&pem_key).map_err(|err| err.to_string())?;
 
