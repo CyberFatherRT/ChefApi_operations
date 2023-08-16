@@ -1,5 +1,5 @@
 [package]
-name = "cyber_knight"
+name = "cyber_knight_api"
 version = "0.1.0"
 edition = "2021"
 
@@ -13,9 +13,9 @@ ciphers = { path = "ciphers" }
 
 [workspace]
 members = [
-    "frontend",
     "ciphers"
 ]
 
 [profile.release]
-opt-level = "s"
+codegen-units = 1
+lto = true

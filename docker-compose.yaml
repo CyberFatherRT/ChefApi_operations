@@ -2,9 +2,9 @@ services:
   CyberKnight:
     build:
       context: .
-      dockerfile: backend
-    image: cyber_knight
-    container_name: cyber_knight
+      dockerfile: Dockerfile
+    image: cyber_knight_api
+    container_name: cyber_knight_api
     ports:
       - "8081:8081"
     restart: unless-stopped
