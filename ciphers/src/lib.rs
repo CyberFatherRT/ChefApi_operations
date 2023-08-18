@@ -4,36 +4,63 @@ mod operations;
 pub mod traits;
 pub mod utils;
 
-pub use operations::a1z26_cipher_decode_mod::{A1Z26CipherDecode, A1Z26CipherDecodeInfo};
-pub use operations::a1z26_cipher_encode_mod::{A1Z26CipherEncode, A1Z26CipherEncodeInfo};
-pub use operations::adler32_checksum_mod::{Adler32CheckSum, Adler32CheckSumInfo};
-pub use operations::affine_cipher_decode_mod::{AffineCipherDecode, AffineCipherDecodeInfo};
-pub use operations::affine_cipher_encode_mod::{AffineCipherEncode, AffineCipherEncodeInfo};
-pub use operations::analyse_hash_mod::{AnalyseHash, AnalyseHashInfo};
-pub use operations::argon2_compare_mod::{Argon2Compare, Argon2CompareInfo};
-pub use operations::argon2_mod::{Argon2, Argon2Info};
-pub use operations::atbash_cipher_mod::{AtbashCipher, AtbashCipherInfo};
-pub use operations::bcrypt_compare_mod::{BcryptCompare, BcryptCompareInfo};
-pub use operations::bcrypt_mod::{Bcrypt, BcryptInfo};
-pub use operations::bcrypt_parse_mod::{BcryptParse, BcryptParseInfo};
-pub use operations::bifid_cipher_encode_mod::{BifidCipherEncode, BifidCipherEncodeInfo};
-pub use operations::blake2b_mod::{Blake2b, Blake2bInfo};
-pub use operations::blake2s_mod::{Blake2s, Blake2sInfo};
-pub use operations::from_base64_mod::{FromBase64, FromBase64Info};
-pub use operations::from_base_mod::{FromBase, FromBaseInfo};
-pub use operations::hmac::{HMACInfo, HMAC};
-pub use operations::md2_mod::{MD2Info, MD2};
-pub use operations::md4_mod::{MD4Info, MD4};
-pub use operations::md5_mod::{MD5Info, MD5};
-pub use operations::rsa_decode_mod::{RSADecrypt, RSADecryptInfo};
-pub use operations::rsa_encode_mod::{RSAEncrypt, RSAEncryptInfo};
-pub use operations::sha1_mod::{SHA1Info, SHA1};
-pub use operations::sha2_mod::{SHA2Info, SHA2};
-pub use operations::sha3_mod::{SHA3Info, SHA3};
-pub use operations::to_base64_mod::{ToBase64, ToBase64Info};
-pub use operations::to_base_mod::{ToBase, ToBaseInfo};
-pub use operations::vigenere_cipher_decode_mod::{VigenereCipherDecode, VigenereCipherDecodeInfo};
-pub use operations::vigenere_cipher_encode_mod::{VigenereCipherEncode, VigenereCipherEncodeInfo};
+// region ciphers
+
+pub use operations::ciphers::a1z26_cipher_decode_mod::{A1Z26CipherDecode, A1Z26CipherDecodeInfo};
+pub use operations::ciphers::a1z26_cipher_encode_mod::{A1Z26CipherEncode, A1Z26CipherEncodeInfo};
+pub use operations::ciphers::affine_cipher_decode_mod::{
+    AffineCipherDecode, AffineCipherDecodeInfo,
+};
+pub use operations::ciphers::affine_cipher_encode_mod::{
+    AffineCipherEncode, AffineCipherEncodeInfo,
+};
+pub use operations::ciphers::atbash_cipher_mod::{AtbashCipher, AtbashCipherInfo};
+pub use operations::ciphers::bifid_cipher_encode_mod::{BifidCipherEncode, BifidCipherEncodeInfo};
+pub use operations::ciphers::rsa_decode_mod::{RSADecrypt, RSADecryptInfo};
+pub use operations::ciphers::rsa_encode_mod::{RSAEncrypt, RSAEncryptInfo};
+pub use operations::ciphers::vigenere_cipher_decode_mod::{
+    VigenereCipherDecode, VigenereCipherDecodeInfo,
+};
+pub use operations::ciphers::vigenere_cipher_encode_mod::{
+    VigenereCipherEncode, VigenereCipherEncodeInfo,
+};
+
+// endregion
+
+// region crypto
+
+pub use operations::crypto::adler32_checksum_mod::{Adler32CheckSum, Adler32CheckSumInfo};
+pub use operations::crypto::argon2_compare_mod::{Argon2Compare, Argon2CompareInfo};
+pub use operations::crypto::argon2_mod::{Argon2, Argon2Info};
+pub use operations::crypto::bcrypt_compare_mod::{BcryptCompare, BcryptCompareInfo};
+pub use operations::crypto::bcrypt_mod::{Bcrypt, BcryptInfo};
+pub use operations::crypto::bcrypt_parse_mod::{BcryptParse, BcryptParseInfo};
+pub use operations::crypto::hmac::{HMACInfo, HMAC};
+
+// endregion
+
+//  region default
+
+pub use operations::default::from_base64_mod::{FromBase64, FromBase64Info};
+pub use operations::default::from_base_mod::{FromBase, FromBaseInfo};
+pub use operations::default::to_base64_mod::{ToBase64, ToBase64Info};
+pub use operations::default::to_base_mod::{ToBase, ToBaseInfo};
+
+// endregion
+
+// region hashing
+
+pub use operations::hashing::analyse_hash_mod::{AnalyseHash, AnalyseHashInfo};
+pub use operations::hashing::blake2b_mod::{Blake2b, Blake2bInfo};
+pub use operations::hashing::blake2s_mod::{Blake2s, Blake2sInfo};
+pub use operations::hashing::md2_mod::{MD2Info, MD2};
+pub use operations::hashing::md4_mod::{MD4Info, MD4};
+pub use operations::hashing::md5_mod::{MD5Info, MD5};
+pub use operations::hashing::sha1_mod::{SHA1Info, SHA1};
+pub use operations::hashing::sha2_mod::{SHA2Info, SHA2};
+pub use operations::hashing::sha3_mod::{SHA3Info, SHA3};
+
+// endregion
 
 use crate::traits::StringTrait;
 use serde::{Deserialize, Serialize};
