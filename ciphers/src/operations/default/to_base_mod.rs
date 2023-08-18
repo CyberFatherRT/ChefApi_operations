@@ -19,7 +19,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for ToBase {
 }
 
 #[derive(Deserialize)]
-struct Params {
+pub struct Params {
     radix: u32,
 }
 
