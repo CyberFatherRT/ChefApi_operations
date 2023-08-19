@@ -59,8 +59,9 @@ impl Operation<'_, DeserializeMeDaddy, String> for BifidCipherEncode {
         let mut kludge = false;
         let mut i = 0;
         let mut case_idx = 0;
+        let input_len = input.graphemes(true).count();
 
-        while output.graphemes(true).count() != input.graphemes(true).count() {
+        while output.graphemes(true).count() != input_len {
             if let Some(ch) = other.get(&output.graphemes(true).count()) {
                 output.push(match case[case_idx] {
                     true => ch.to_lower_case(),
