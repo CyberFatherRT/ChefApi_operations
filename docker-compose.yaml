@@ -3,8 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: cyber_knight_api
-    container_name: cyber_knight_api
+    image: chef_api
+    container_name: chef_api
     ports:
       - "8081:8081"
     restart: unless-stopped
@@ -12,4 +12,4 @@ services:
 networks:
   default:
     driver: bridge
-    name: cyber_knight
+    name: chef
