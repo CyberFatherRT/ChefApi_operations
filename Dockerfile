@@ -2,7 +2,7 @@ FROM rust:latest AS builder
 
 RUN update-ca-certificates
 
-ENV USER=knight
+ENV USER=chef
 ENV UID=10001
 
 RUN adduser \
@@ -14,11 +14,11 @@ RUN adduser \
     --uid "${UID}" \
     "${USER}"
 
-WORKDIR /cyber_knight_api
+WORKDIR /chef_api
 
 COPY . .
 RUN cargo build --release
-RUN strip -s /cyber_knight_api/target/release/cyber_knight_api
+RUN strip -s /cyber_knight_api/target/release/chef_api
 
 FROM gcr.io/distroless/cc
 
@@ -27,7 +27,7 @@ COPY --from=builder /etc/group /etc/group
 
 WORKDIR /cyber_knight_api
 
-COPY --from=builder /cyber_knight_api/target/release/cyber_knight_api ./
+COPY --from=builder /chef_api/target/release/chef_api ./
 
 USER knight:knight
 
