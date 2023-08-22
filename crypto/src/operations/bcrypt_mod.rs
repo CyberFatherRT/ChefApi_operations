@@ -1,6 +1,6 @@
-use crate::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
 use bcrypt::Version;
 use serde::{Deserialize, Serialize};
+use utils::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
 
 // TODO: Are you remember about ME????
 fn delete_me_after_you_make_pay_system() -> u32 {
