@@ -1,6 +1,6 @@
-use crate::{create_info_struct, Operation, DOCS_URL};
 use bcrypt::BcryptError;
 use serde::{Deserialize, Serialize};
+use utils::{create_info_struct, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, HashParts> for BcryptParse {
     fn run(&self, request: &str) -> Result<HashParts, String> {
