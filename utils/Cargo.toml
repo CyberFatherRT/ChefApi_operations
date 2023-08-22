@@ -7,7 +7,6 @@ edition = "2021"
 
 [dependencies]
 bcrypt = "0.15.0"
-blake2 = "0.9.1"
 digest = { version = "0.10.7", features = ["mac"] }
 has160 = "0.0.0"
 hmac = "0.12.1"

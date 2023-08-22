@@ -1,5 +1,5 @@
-use crate::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
 use serde::{Deserialize, Serialize};
+use utils::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for BcryptCompare {
     fn run(&self, request: &str) -> Result<String, String> {

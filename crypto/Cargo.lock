@@ -157,6 +157,7 @@ dependencies = [
 name = "crypto"
 version = "0.1.0"
 dependencies = [
+ "blake2",
  "rust-argon2",
  "serde",
  "serde_json",
@@ -741,7 +742,6 @@ name = "utils"
 version = "0.1.0"
 dependencies = [
  "bcrypt",
- "blake2",
  "digest 0.10.7",
  "has160",
  "hmac",
