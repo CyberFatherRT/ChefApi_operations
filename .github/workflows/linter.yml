@@ -9,15 +9,27 @@ env:
   RUSTFLAGS: "-Dwarnings"
 
 jobs:
-  clippy_check:
+  clippy_check_ciphers:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Run Clippy on `ciphers`
         run: cd ciphers && cargo clippy --no-deps
+  clippy_check_crypto:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
       - name: Run Clippy on `crypto`
         run: cd crypto && cargo clippy --no-deps
+  clippy_check_hashing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
       - name: Run Clippy on `hashing`
         run: cd hashing && cargo clippy --no-deps
+  clippy_check_default:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
       - name: Run Clippy on `default`
         run: cd default && cargo clippy --no-deps
