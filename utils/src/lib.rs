@@ -11,7 +11,7 @@ pub use ciphers::operations::atbash_cipher_mod::{AtbashCipher, AtbashCipherInfo}
 pub use ciphers::operations::bifid_cipher_encode_mod::{BifidCipherEncode, BifidCipherEncodeInfo};
 pub use ciphers::operations::rsa_decode_mod::{RSADecrypt, RSADecryptInfo};
 pub use ciphers::operations::rsa_encode_mod::{RSAEncrypt, RSAEncryptInfo};
-pub use operations::ciphers::vigenere_cipher_decode_mod::{
+pub use ciphers::operations::vigenere_cipher_decode_mod::{
     VigenereCipherDecode, VigenereCipherDecodeInfo,
 };
 pub use operations::ciphers::vigenere_cipher_encode_mod::{

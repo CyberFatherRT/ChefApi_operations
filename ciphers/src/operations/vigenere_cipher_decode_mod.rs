@@ -1,10 +1,11 @@
-use crate::{
+use serde::{Deserialize, Serialize};
+
+use utils::{
     create_info_struct, create_me_daddy,
     libs::vigenere_trait::VigenereCipher,
     utils::{sub, SupportedLanguages},
     Operation, DOCS_URL,
 };
-use serde::{Deserialize, Serialize};
 
 impl VigenereCipher for VigenereCipherDecode {}
 
