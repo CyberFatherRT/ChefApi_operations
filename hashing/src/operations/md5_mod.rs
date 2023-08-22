@@ -1,6 +1,7 @@
-use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
-use md5::*;
+use md5::Md5;
 use serde::{Deserialize, Serialize};
+
+use utils::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for MD5 {
     fn run(&self, request: &str) -> Result<String, String> {
