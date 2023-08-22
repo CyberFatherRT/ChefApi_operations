@@ -248,6 +248,7 @@ dependencies = [
  "md4",
  "serde",
  "serde_json",
+ "sha1",
  "utils",
 ]
 
