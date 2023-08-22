@@ -123,8 +123,12 @@ version = "0.1.0"
 dependencies = [
  "itertools",
  "regex",
+ "rsa",
  "serde",
  "serde_json",
+ "sha1",
+ "sha2",
+ "sha3",
  "utils",
 ]
 
