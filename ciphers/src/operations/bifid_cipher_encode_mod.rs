@@ -1,4 +1,8 @@
-use crate::{
+use itertools::Itertools;
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+
+use utils::{
     create_info_struct, create_me_daddy,
     libs::ciphers::gen_polybius_square,
     regex_check,
@@ -6,10 +10,6 @@ use crate::{
     utils::{get_alphabet, SupportedLanguages},
     Operation, DOCS_URL,
 };
-use itertools::Itertools;
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use unicode_segmentation::UnicodeSegmentation;
 
 impl Operation<'_, DeserializeMeDaddy, String> for BifidCipherEncode {
     fn run(&self, request: &str) -> Result<String, String> {
@@ -59,10 +59,10 @@ impl Operation<'_, DeserializeMeDaddy, String> for BifidCipherEncode {
         let mut kludge = false;
         let mut i = 0;
         let mut case_idx = 0;
-        let input_len = input.graphemes(true).count();
+        let input_len = input.chars().count();
 
-        while output.graphemes(true).count() != input_len {
-            if let Some(ch) = other.get(&output.graphemes(true).count()) {
+        while output.chars().count() != input_len {
+            if let Some(ch) = other.get(&output.chars().count()) {
                 output.push(match case[case_idx] {
                     true => ch.to_lower_case(),
                     false => *ch,

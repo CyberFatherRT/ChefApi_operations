@@ -8,7 +8,7 @@ pub use ciphers::operations::affine_cipher_encode_mod::{
     AffineCipherEncode, AffineCipherEncodeInfo,
 };
 pub use ciphers::operations::atbash_cipher_mod::{AtbashCipher, AtbashCipherInfo};
-pub use operations::ciphers::bifid_cipher_encode_mod::{BifidCipherEncode, BifidCipherEncodeInfo};
+pub use ciphers::operations::bifid_cipher_encode_mod::{BifidCipherEncode, BifidCipherEncodeInfo};
 pub use operations::ciphers::rsa_decode_mod::{RSADecrypt, RSADecryptInfo};
 pub use operations::ciphers::rsa_encode_mod::{RSAEncrypt, RSAEncryptInfo};
 pub use operations::ciphers::vigenere_cipher_decode_mod::{
