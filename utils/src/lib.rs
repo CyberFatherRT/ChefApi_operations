@@ -14,7 +14,7 @@ pub use ciphers::operations::rsa_encode_mod::{RSAEncrypt, RSAEncryptInfo};
 pub use ciphers::operations::vigenere_cipher_decode_mod::{
     VigenereCipherDecode, VigenereCipherDecodeInfo,
 };
-pub use operations::ciphers::vigenere_cipher_encode_mod::{
+pub use ciphers::operations::vigenere_cipher_encode_mod::{
     VigenereCipherEncode, VigenereCipherEncodeInfo,
 };
 
