@@ -17,3 +17,7 @@ frontend/package-lock.json
 *.pem
 *.js
 *.py
+
+# Added by cargo
+
+/target

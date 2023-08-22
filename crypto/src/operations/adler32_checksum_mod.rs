@@ -1,6 +1,5 @@
-use crate::utils::hex;
-use crate::{create_info_struct, Operation, DOCS_URL};
 use serde::{Deserialize, Serialize};
+use utils::{create_info_struct, utils::hex, Operation, DOCS_URL};
 
 #[derive(Deserialize)]
 pub struct DeserializeMeDaddy {

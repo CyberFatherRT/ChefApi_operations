@@ -65,7 +65,7 @@ pub use operations::hashing::sha3_mod::{SHA3Info, SHA3};
 use crate::traits::StringTrait;
 use serde::{Deserialize, Serialize};
 
-const DOCS_URL: &str = "soon I transfer all documentation to somewhere :/";
+pub const DOCS_URL: &str = "soon I transfer all documentation to somewhere :/";
 
 pub trait Operation<'a, I, O>
 where
