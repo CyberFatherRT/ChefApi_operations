@@ -242,6 +242,7 @@ checksum = "6b63cd603c247c692e0c71a1d017740a4b64c032b8db8ad64b5df45bee8e55cf"
 name = "hashing"
 version = "0.1.0"
 dependencies = [
+ "blake2",
  "serde",
  "serde_json",
  "utils",

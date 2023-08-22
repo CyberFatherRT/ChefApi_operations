@@ -1,14 +1,13 @@
-use crate::{
-    create_info_struct, create_me_daddy,
-    libs::base64::to_base64,
-    utils::{convert_to_byte_array, to_hex, SupportedFormats},
-    Operation, DOCS_URL,
-};
 use blake2::{
     digest::{Update, VariableOutput},
     VarBlake2b,
 };
 use serde::{Deserialize, Serialize};
+use utils::libs::base64::to_base64;
+use utils::utils::to_hex;
+use utils::{
+    create_info_struct, create_me_daddy, utils::convert_to_byte_array, Operation, DOCS_URL,
+};
 
 impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Blake2b {
     fn run(&self, request: &str) -> Result<OutputFormat, String> {
