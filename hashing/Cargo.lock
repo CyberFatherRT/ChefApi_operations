@@ -243,6 +243,7 @@ name = "hashing"
 version = "0.1.0"
 dependencies = [
  "blake2",
+ "md2",
  "serde",
  "serde_json",
  "utils",
