@@ -67,3 +67,26 @@ impl StringTrait for String {
         }
     }
 }
+
+pub trait IntegerTrait {
+    fn gcd(&self, other: &Self) -> Self;
+}
+
+impl IntegerTrait for i16 {
+    fn gcd(&self, other: &Self) -> i16 {
+        if *self == 0 {
+            return *other;
+        }
+        if *other == 0 {
+            return *self;
+        }
+        let mut a = *self;
+        let mut b = *other;
+        while b != 0 {
+            let temp = b;
+            b = a % b;
+            a = temp;
+        }
+        a
+    }
+}
