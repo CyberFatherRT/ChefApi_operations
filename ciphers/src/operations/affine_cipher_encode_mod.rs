@@ -1,9 +1,9 @@
-use crate::{
+use serde::{Deserialize, Serialize};
+
+use utils::{
     create_info_struct, create_me_daddy, libs::ciphers::affine_cipher_encode,
     utils::SupportedLanguages, Operation, DOCS_URL,
 };
-use serde::{Deserialize, Serialize};
-
 impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherEncode {
     fn run(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;

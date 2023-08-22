@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use utils::{
     create_info_struct, create_me_daddy,
-    traits::CharTrait,
+    traits::{CharTrait, IntegerTrait},
     utils::{
         get_alphabet, get_char_by_index, get_index_by_char, mod_inv, modulus, validate_lang,
         SupportedLanguages,

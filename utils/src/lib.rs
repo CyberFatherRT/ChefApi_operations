@@ -4,7 +4,7 @@ mod operations;
 pub mod traits;
 pub mod utils;
 
-pub use operations::ciphers::affine_cipher_encode_mod::{
+pub use ciphers::operations::affine_cipher_encode_mod::{
     AffineCipherEncode, AffineCipherEncodeInfo,
 };
 pub use operations::ciphers::atbash_cipher_mod::{AtbashCipher, AtbashCipherInfo};
