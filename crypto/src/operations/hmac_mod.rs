@@ -1,10 +1,3 @@
-use crate::{
-    create_info_struct, create_me_daddy,
-    libs::base64::to_base64,
-    traits::StringTrait,
-    utils::{convert_to_byte_array, to_hex, SupportedFormats},
-    Operation, DOCS_URL,
-};
 use hmac::{Hmac, Mac};
 use md2::*;
 use md4::*;
@@ -14,6 +7,14 @@ use serde::{Deserialize, Serialize};
 use sha1::Sha1;
 use sha2::*;
 use whirlpool::*;
+
+use utils::{
+    create_info_struct, create_me_daddy,
+    libs::base64::to_base64,
+    traits::StringTrait,
+    utils::{convert_to_byte_array, to_hex, SupportedFormats},
+    Operation, DOCS_URL,
+};
 
 impl Operation<'_, DeserializeMeDaddy, OutputFormat> for HMAC {
     fn run(&self, request: &str) -> Result<OutputFormat, String> {

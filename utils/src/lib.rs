@@ -33,9 +33,9 @@ pub use crypto::operations::argon2_compare_mod::{Argon2Compare, Argon2CompareInf
 pub use crypto::operations::argon2_mod::{Argon2, Argon2Info};
 pub use crypto::operations::bcrypt_compare_mod::{BcryptCompare, BcryptCompareInfo};
 pub use crypto::operations::bcrypt_mod::{Bcrypt, BcryptInfo};
-pub use operations::crypto::adler32_checksum_mod::{Adler32CheckSum, Adler32CheckSumInfo};
 pub use crypto::operations::bcrypt_parse_mod::{BcryptParse, BcryptParseInfo};
-pub use operations::crypto::hmac::{HMACInfo, HMAC};
+pub use crypto::operations::hmac::{HMACInfo, HMAC};
+pub use operations::crypto::adler32_checksum_mod::{Adler32CheckSum, Adler32CheckSumInfo};
 
 // endregion
 
