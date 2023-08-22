@@ -1,4 +1,4 @@
-use md5::Md5;
+use md5::{Md5, Digest};
 use serde::{Deserialize, Serialize};
 
 use utils::{create_info_struct, utils::to_hex, Operation, DOCS_URL};

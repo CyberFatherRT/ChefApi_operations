@@ -16,7 +16,7 @@ use utils::{
     Operation, DOCS_URL,
 };
 
-impl Operation<'_, DeserializeMeDaddy, OutputFormat> for HMAC {
+impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Hmac {
     fn run(&self, request: &str) -> Result<OutputFormat, String> {
         let request = self.validate(request)?;
         let (input, key, key_format, hash_function, output_format) = (
@@ -293,7 +293,7 @@ create_me_daddy!();
 ///   "Err": "Missing field `hash_function`"
 /// }
 /// ```
-pub struct HMAC;
+pub struct Hmac;
 
 const NAME: &str = "HMAC";
 const DESCRIPTION_EN: &str = "Keyed-Hash Message Authentication Codes (HMAC) are a mechanism for message authentication using cryptographic hash functions.";
