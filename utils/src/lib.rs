@@ -7,7 +7,7 @@ pub mod utils;
 // region ciphers
 
 pub use ciphers::operations::a1z26_cipher_decode_mod::{A1Z26CipherDecode, A1Z26CipherDecodeInfo};
-pub use operations::ciphers::a1z26_cipher_encode_mod::{A1Z26CipherEncode, A1Z26CipherEncodeInfo};
+pub use ciphers::operations::a1z26_cipher_encode_mod::{A1Z26CipherEncode, A1Z26CipherEncodeInfo};
 pub use operations::ciphers::affine_cipher_decode_mod::{
     AffineCipherDecode, AffineCipherDecodeInfo,
 };
