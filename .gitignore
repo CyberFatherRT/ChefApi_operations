@@ -1,23 +1,9 @@
 .idea
 
-target
-!target/debug/deps
-!target/debug/incremental
-node_modules
-
-src/config.rs
-
-**/dist
-**/node_modules
-frontend/package-lock.json
-
-#Cargo.lock
+utils
 
 *.http
-*.pem
 *.js
 *.py
 
-# Added by cargo
-
-/target
+**/target
