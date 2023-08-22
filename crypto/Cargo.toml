@@ -5,6 +5,10 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "chef_api_crypto"
+path = "src/main.rs"
+
 [dependencies]
 rust-argon2 = "1.0.1"
 bcrypt = "0.15.0"

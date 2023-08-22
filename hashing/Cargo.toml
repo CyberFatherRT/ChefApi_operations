@@ -5,6 +5,11 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "chef_api_hashing"
+path = "src/main.rs"
+
+
 [dependencies]
 blake2 = "0.9.1"
 digest = { version = "0.10.7", features = ["mac"] }
