@@ -20,6 +20,8 @@ Dockerfile
 **/npm-debug.log
 **/secrets.dev.yaml
 **/values.dev.yaml
+**/.github
+**/.idea
 /bin
 /target
 LICENSE
