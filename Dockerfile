@@ -18,19 +18,19 @@ WORKDIR /chef_api
 
 COPY . .
 RUN cargo build --release
-RUN strip -s /cyber_knight_api/target/release/chef_api
+RUN strip -s /chef_api/target/release/chef_api
 
 FROM gcr.io/distroless/cc
 
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /etc/group /etc/group
 
-WORKDIR /cyber_knight_api
+WORKDIR /chef_api
 
 COPY --from=builder /chef_api/target/release/chef_api ./
 
-USER knight:knight
+USER chef:chef
 
 EXPOSE 8081
 
-CMD ["/cyber_knight_api/cyber_knight_api"]
+CMD ["/chef_api/chef_api"]
