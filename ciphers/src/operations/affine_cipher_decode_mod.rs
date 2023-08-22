@@ -1,12 +1,13 @@
-use crate::utils::SupportedLanguages;
-use crate::{
+use serde::{Deserialize, Serialize};
+use utils::{
     create_info_struct, create_me_daddy,
     traits::CharTrait,
-    utils::{get_alphabet, get_char_by_index, get_index_by_char, mod_inv, modulus, validate_lang},
+    utils::{
+        get_alphabet, get_char_by_index, get_index_by_char, mod_inv, modulus, validate_lang,
+        SupportedLanguages,
+    },
     Operation, DOCS_URL,
 };
-use num::Integer;
-use serde::{Deserialize, Serialize};
 
 impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherDecode {
     fn run(&self, request: &str) -> Result<String, String> {
