@@ -122,6 +122,7 @@ name = "ciphers"
 version = "0.1.0"
 dependencies = [
  "itertools",
+ "rand",
  "regex",
  "rsa",
  "serde",
