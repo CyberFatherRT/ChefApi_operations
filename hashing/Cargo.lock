@@ -746,6 +746,7 @@ checksum = "1dd624098567895118886609431a7c3b8f516e41d30e0643f03d94592a147e36"
 [[package]]
 name = "utils"
 version = "0.1.0"
+source = "git+https://github.com/TheGodfatherru/ChefApi_utils.git?branch=master#42b736278b33e9b73de3bb4e7dbb1822ca8069df"
 dependencies = [
  "bcrypt",
  "blake2",
