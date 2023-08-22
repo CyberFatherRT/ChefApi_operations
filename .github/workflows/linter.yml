@@ -1,17 +1,23 @@
-#name: Clippy check
-#
-#on:
-#  push:
-#    branches: [ "master" ]
-#
-#env:
-#  CARGO_TERM_COLOR: always
-#  RUSTFLAGS: "-Dwarnings"
-#
-#jobs:
-#  clippy_check:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#      - name: Run Clippy
-#        run: cargo clippy --no-deps
+name: Clippy check
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-Dwarnings"
+
+jobs:
+  clippy_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Clippy on `ciphers`
+        run: cd ciphers && cargo clippy --no-deps
+      - name: Run Clippy on `crypto`
+        run: cd crypto && cargo clippy --no-deps
+      - name: Run Clippy on `hashing`
+        run: cd hashing && cargo clippy --no-deps
+      - name: Run Clippy on `default`
+        run: cd default && cargo clippy --no-deps
