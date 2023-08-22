@@ -50,7 +50,7 @@ pub use operations::default::to_base_mod::{ToBase, ToBaseInfo};
 
 // region hashing
 
-pub use operations::hashing::analyse_hash_mod::{AnalyseHash, AnalyseHashInfo};
+pub use hashing::operations::analyse_hash_mod::{AnalyseHash, AnalyseHashInfo};
 pub use operations::hashing::blake2b_mod::{Blake2b, Blake2bInfo};
 pub use operations::hashing::blake2s_mod::{Blake2s, Blake2sInfo};
 pub use operations::hashing::md2_mod::{MD2Info, MD2};
