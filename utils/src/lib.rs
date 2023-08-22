@@ -43,7 +43,7 @@ pub use operations::crypto::adler32_checksum_mod::{Adler32CheckSum, Adler32Check
 
 pub use default::operations::from_base64_mod::{FromBase64, FromBase64Info};
 pub use default::operations::from_base_mod::{FromBase, FromBaseInfo};
-pub use operations::default::to_base64_mod::{ToBase64, ToBase64Info};
+pub use default::operations::to_base64_mod::{ToBase64, ToBase64Info};
 pub use operations::default::to_base_mod::{ToBase, ToBaseInfo};
 
 // endregion

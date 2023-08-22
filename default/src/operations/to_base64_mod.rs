@@ -1,5 +1,6 @@
-use crate::{create_info_struct, create_me_daddy, libs::base64::to_base64, Operation, DOCS_URL};
 use serde::{Deserialize, Serialize};
+
+use utils::{create_info_struct, create_me_daddy, libs::base64::to_base64, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for ToBase64 {
     fn run(&self, request: &str) -> Result<String, String> {
