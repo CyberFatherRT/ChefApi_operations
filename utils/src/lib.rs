@@ -58,7 +58,7 @@ pub use hashing::operations::md4_mod::{MD4Info, MD4};
 pub use hashing::operations::md5_mod::{MD5Info, MD5};
 pub use hashing::operations::sha1_mod::{SHA1Info, SHA1};
 pub use hashing::operations::sha2_mod::{SHA2Info, SHA2};
-pub use operations::hashing::sha3_mod::{SHA3Info, SHA3};
+pub use hashing::operations::sha3_mod::{SHA3Info, SHA3};
 
 // endregion
 
