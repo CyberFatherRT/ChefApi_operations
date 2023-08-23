@@ -302,7 +302,7 @@ const DESCRIPTION_RU: &str = "Keyed-Hash Message Authentication Codes (HMAC) —
 const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/HMAC");
 
 create_info_struct!(
-    HMACInfo,
+    HmacInfo,
     NAME,
     DOCS_URL,
     DESCRIPTION_EN,
