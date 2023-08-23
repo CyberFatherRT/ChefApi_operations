@@ -44,7 +44,7 @@ COPY --from=cacher /usr/local/cargo /usr/local/cargo
 
 RUN cargo build --target x86_64-unknown-linux-musl --release
 
-FROM scratch AS final
+FROM busybox:1.35-musl AS final
 WORKDIR /app
 ENV PORT=$PORT
 

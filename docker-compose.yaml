@@ -18,9 +18,9 @@ services:
     image: chef_api_crypto
     container_name: chef_api_crypto
     environment:
-      - PORT=3001
+      - PORT=3000
     ports:
-      - "3001:3001"
+      - "3001:3000"
     restart: unless-stopped
 
   ChefApiDefault:
@@ -30,9 +30,9 @@ services:
     image: chef_api_default
     container_name: chef_api_default
     environment:
-      - PORT=3002
+      - PORT=3000
     ports:
-      - "3002:3002"
+      - "3002:3000"
     restart: unless-stopped
 
   ChefApiHashing:
@@ -42,9 +42,9 @@ services:
     image: chef_api_hashing
     container_name: chef_api_hashing
     environment:
-      - PORT=3003
+      - PORT=3000
     ports:
-      - "3003:3003"
+      - "3003:3000"
     restart: unless-stopped
 
 networks:
