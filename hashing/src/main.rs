@@ -23,10 +23,11 @@ async fn main() -> std::io::Result<()> {
     .await
 }
 
-fn http_response<'a, I, O, T: Operation<'a, I, O>>(structure: T, body: String) -> HttpResponse
+fn http_response<'a, I, O, T>(structure: T, body: String) -> HttpResponse
 where
     I: serde::Deserialize<'a>,
     O: serde::Serialize,
+    T: Operation<'a, I, O>,
 {
     let response = structure.run(&body);
     let status_code = match response {
