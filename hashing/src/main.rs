@@ -9,6 +9,11 @@ use utils::{Operation, OperationsHashing};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let port = std::env::var("PORT")
+        .expect("PORT variable must be set")
+        .parse::<u16>()
+        .expect("PORT variable must be a number");
+
     HttpServer::new(|| {
         let logger = Logger::default();
 
@@ -18,7 +23,7 @@ async fn main() -> std::io::Result<()> {
             .route("/{name}/help", post().to(cipher_help_handler))
             .route("/{name}/info", post().to(cipher_help_handler))
     })
-    .bind("0.0.0.0:3000")?
+    .bind(("0.0.0.0", port))?
     .run()
     .await
 }
