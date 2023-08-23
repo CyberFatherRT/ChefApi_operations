@@ -96,7 +96,7 @@ const DESCRIPTION_RU: &str = "Алгоритм MD4 (Message-Digest 4) — это
 const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/MD4");
 
 create_info_struct!(
-    MD4Info,
+    Md4Info,
     NAME,
     DOCS_URL,
     DESCRIPTION_EN,

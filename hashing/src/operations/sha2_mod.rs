@@ -150,7 +150,7 @@ const DESCRIPTION_RU: &str = "Хэш-функции SHA-2 (Secure Hash Algorithm
 const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/SHA-2");
 
 create_info_struct!(
-    SHA2Info,
+    Sha2Info,
     NAME,
     DOCS_URL,
     DESCRIPTION_EN,

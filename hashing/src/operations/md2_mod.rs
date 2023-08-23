@@ -96,7 +96,7 @@ const DESCRIPTION_RU: &str = "Алгоритм MD2 (Message-Digest 2) — это
 const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/MD2_(cryptography)");
 
 create_info_struct!(
-    MD2Info,
+    Md2Info,
     NAME,
     DOCS_URL,
     DESCRIPTION_EN,

@@ -1,4 +1,4 @@
-use md5::{Md5, Digest};
+use md5::{Digest, Md5};
 use serde::{Deserialize, Serialize};
 
 use utils::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
@@ -96,7 +96,7 @@ const DESCRIPTION_RU: &str = "MD5 (Message-Digest 5) — широко испол
 const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/MD5");
 
 create_info_struct!(
-    MD5Info,
+    Md5Info,
     NAME,
     DOCS_URL,
     DESCRIPTION_EN,

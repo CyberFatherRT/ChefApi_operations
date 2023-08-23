@@ -11,6 +11,7 @@ path = "src/main.rs"
 
 
 [dependencies]
+actix-web = "4.3.1"
 blake2 = "0.9.1"
 digest = { version = "0.10.7", features = ["mac"] }
 md-5 = "0.10.5"
@@ -23,3 +24,8 @@ sha2 = "0.10.7"
 sha3 = "0.10.8"
 
 utils = { git = "https://github.com/TheGodfatherru/ChefApi_utils.git", branch = "master"}
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
