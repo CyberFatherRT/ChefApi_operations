@@ -18,7 +18,7 @@ async fn main() -> std::io::Result<()> {
             .route("/{name}/help", post().to(cipher_help_handler))
             .route("/{name}/info", post().to(cipher_help_handler))
     })
-    .bind("0.0.0.0:3001")?
+    .bind("0.0.0.0:3000")?
     .run()
     .await
 }
