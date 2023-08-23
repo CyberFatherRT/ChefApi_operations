@@ -51,13 +51,13 @@ async fn cipher_handler(body: String, name: Path<OperationCrypto>) -> HttpRespon
 
 async fn cipher_help_handler(name: Path<OperationCrypto>) -> HttpResponse {
     let res = match name.into_inner() {
-        OperationCrypto::Adler32CheckSum => Adler32CheckSum::help(),
-        OperationCrypto::Argon2Compare => Argon2Compare::help(),
-        OperationCrypto::Argon2 => Argon2::help(),
-        OperationCrypto::Bcrypt => Bcrypt::help(),
-        OperationCrypto::BcryptCompare => BcryptCompare::help(),
-        OperationCrypto::BcryptParse => BcryptParse::help(),
-        OperationCrypto::Hmac => Hmac::help(),
+        OperationCrypto::Adler32CheckSum => Adler32CheckSumInfo::info(),
+        OperationCrypto::Argon2Compare => Argon2CompareInfo::info(),
+        OperationCrypto::Argon2 => Argon2Info::info(),
+        OperationCrypto::Bcrypt => BcryptInfo::info(),
+        OperationCrypto::BcryptCompare => BcryptCompareInfo::info(),
+        OperationCrypto::BcryptParse => BcryptParseInfo::info(),
+        OperationCrypto::Hmac => HmacInfo::info(),
     };
     HttpResponse::build(StatusCode::OK)
         .content_type("application/json; charset=utf-8")
