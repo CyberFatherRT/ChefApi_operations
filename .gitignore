@@ -1,9 +1,8 @@
 .idea
 
-utils
-
 *.http
 *.js
+*.ts
 *.py
 
 **/target
