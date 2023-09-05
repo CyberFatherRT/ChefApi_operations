@@ -1,50 +1,14 @@
 services:
-  ChefApiCiphers:
+  ChefApiOperations:
     build:
       context: ciphers
-      dockerfile: Dockerfile
-    image: chef_api_ciphers
-    container_name: chef_api_ciphers
+      dockerfile: ./Dockerfile
+    image: chef_api_operations
+    container_name: chef_api_operations
     environment:
       - PORT=3000
     ports:
       - "3000:3000"
-    restart: unless-stopped
-
-  ChefApiCrypto:
-    build:
-      context: crypto
-      dockerfile: Dockerfile
-    image: chef_api_crypto
-    container_name: chef_api_crypto
-    environment:
-      - PORT=3000
-    ports:
-      - "3001:3000"
-    restart: unless-stopped
-
-  ChefApiDefault:
-    build:
-      context: default
-      dockerfile: Dockerfile
-    image: chef_api_default
-    container_name: chef_api_default
-    environment:
-      - PORT=3000
-    ports:
-      - "3002:3000"
-    restart: unless-stopped
-
-  ChefApiHashing:
-    build:
-      context: hashing
-      dockerfile: Dockerfile
-    image: chef_api_hashing
-    container_name: chef_api_hashing
-    environment:
-      - PORT=3000
-    ports:
-      - "3003:3000"
     restart: unless-stopped
 
 networks:
