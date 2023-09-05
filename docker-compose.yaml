@@ -1,7 +1,7 @@
 services:
   ChefApiOperations:
     build:
-      context: ciphers
+      context: .
       dockerfile: ./Dockerfile
     image: chef_api_operations
     container_name: chef_api_operations
