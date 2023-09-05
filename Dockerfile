@@ -16,7 +16,7 @@ WORKDIR /app
 RUN cargo install cargo-chef
 COPY --from=planner /app/recipe.json recipe.json
 RUN cargo chef cook --release --recipe-path recipe.json --target x86_64-unknown-linux-musl
-
+WORKDIR /app
 FROM rust:1-slim-bookworm AS builder
 
 RUN rustup target add x86_64-unknown-linux-musl
@@ -51,8 +51,8 @@ ENV PORT=$PORT
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /etc/group /etc/group
 
-COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/chef_api_default .
+COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/chef_api_operations .
 
 USER chef:chef
 
-CMD ["./chef_api_default"]
+CMD ["./chef_api_operations"]

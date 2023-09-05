@@ -4,7 +4,7 @@ use blake2::{
 };
 use serde::{Deserialize, Serialize};
 use utils::libs::base64::to_base64;
-use utils::utils::{SupportedFormats, to_hex};
+use utils::utils::{to_hex, SupportedFormats};
 use utils::{
     create_info_struct, create_me_daddy, utils::convert_to_byte_array, Operation, DOCS_URL,
 };

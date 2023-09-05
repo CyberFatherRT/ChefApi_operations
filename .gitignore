@@ -6,3 +6,7 @@
 *.py
 
 **/target
+
+# Added by cargo
+
+/target
