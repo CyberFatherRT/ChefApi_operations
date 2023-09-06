@@ -5,6 +5,8 @@
 *.ts
 *.py
 
+.env
+
 **/target
 
 # Added by cargo

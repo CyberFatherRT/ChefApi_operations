@@ -1,17 +1,19 @@
+version: "3"
+
 services:
-  ChefApiOperations:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    image: chef_api_operations
-    container_name: chef_api_operations
-    environment:
-      - PORT=3000
-    ports:
-      - "3000:3000"
-    restart: unless-stopped
+    ChefApiOperations:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        image: chef_api_operations
+        container_name: chef_api_operations
+        environment:
+            - PORT=3000
+        ports:
+            - "3000:3000"
+        restart: unless-stopped
 
 networks:
-  default:
-    driver: bridge
-    name: chef_api
+    default:
+        driver: bridge
+        name: chef_api
