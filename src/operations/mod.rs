@@ -29,7 +29,6 @@ mod to_base_mod;
 mod vigenere_cipher_decode_mod;
 mod vigenere_cipher_encode_mod;
 
-
 pub use a1z26_cipher_decode_mod::{A1Z26CipherDecode, A1Z26CipherDecodeInfo};
 pub use a1z26_cipher_encode_mod::{A1Z26CipherEncode, A1Z26CipherEncodeInfo};
 pub use adler32_checksum_mod::{Adler32CheckSum, Adler32CheckSumInfo};
@@ -48,14 +47,14 @@ pub use blake2s_mod::{Blake2s, Blake2sInfo};
 pub use from_base64_mod::{FromBase64, FromBase64Info};
 pub use from_base_mod::{FromBase, FromBaseInfo};
 pub use hmac_mod::{Hmac, HmacInfo};
-pub use md2_mod::{MD2, Md2Info};
-pub use md4_mod::{MD4, Md4Info};
-pub use md5_mod::{MD5, Md5Info};
+pub use md2_mod::{Md2Info, MD2};
+pub use md4_mod::{Md4Info, MD4};
+pub use md5_mod::{Md5Info, MD5};
 pub use rsa_decrypt_mod::{RSADecrypt, RSADecryptInfo};
 pub use rsa_encrypt_mod::{RSAEncrypt, RSAEncryptInfo};
-pub use sha1_mod::{SHA1, Sha1Info};
-pub use sha2_mod::{SHA2, Sha2Info};
-pub use sha3_mod::{SHA3, Sha3Info};
+pub use sha1_mod::{Sha1Info, SHA1};
+pub use sha2_mod::{Sha2Info, SHA2};
+pub use sha3_mod::{Sha3Info, SHA3};
 pub use to_base64_mod::{ToBase64, ToBase64Info};
 pub use to_base_mod::{ToBase, ToBaseInfo};
 pub use vigenere_cipher_decode_mod::{VigenereCipherDecode, VigenereCipherDecodeInfo};
