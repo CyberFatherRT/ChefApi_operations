@@ -108,33 +108,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
-name = "chef_api_operations"
-version = "0.1.0"
-dependencies = [
- "bcrypt",
- "blake2",
- "digest 0.10.7",
- "hmac",
- "itertools",
- "md-5",
- "md2",
- "md4",
- "num",
- "rand",
- "regex",
- "ripemd",
- "rsa",
- "rust-argon2",
- "serde",
- "serde_json",
- "sha1",
- "sha2",
- "sha3",
- "utils",
- "whirlpool",
-]
-
-[[package]]
 name = "cipher"
 version = "0.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -454,6 +427,33 @@ name = "opaque-debug"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "624a8340c38c1b80fd549087862da4ba43e08858af025b236e509b6649fc13d5"
+
+[[package]]
+name = "operations"
+version = "0.1.0"
+dependencies = [
+ "bcrypt",
+ "blake2",
+ "digest 0.10.7",
+ "hmac",
+ "itertools",
+ "md-5",
+ "md2",
+ "md4",
+ "num",
+ "rand",
+ "regex",
+ "ripemd",
+ "rsa",
+ "rust-argon2",
+ "serde",
+ "serde_json",
+ "sha1",
+ "sha2",
+ "sha3",
+ "utils",
+ "whirlpool",
+]
 
 [[package]]
 name = "pem-rfc7468"
