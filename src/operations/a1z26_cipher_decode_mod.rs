@@ -4,7 +4,7 @@ use utils::{
     create_info_struct, create_me_daddy, regex_check, utils::char_repr, Operation, DOCS_URL,
 };
 impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
-    fn run(&self, request: &str) -> Result<String, String> {
+    fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 
         let delimiter = char_repr(&request.params.delimiter);

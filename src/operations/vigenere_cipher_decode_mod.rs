@@ -10,7 +10,7 @@ use utils::{
 impl VigenereCipher for VigenereCipherDecode {}
 
 impl Operation<'_, DeserializeMeDaddy, String> for VigenereCipherDecode {
-    fn run(&self, request: &str) -> Result<String, String> {
+    fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, lang, key) = (request.input, request.params.lang, request.params.key);
         <Self as VigenereCipher>::cipher(lang, &key, &input, sub)

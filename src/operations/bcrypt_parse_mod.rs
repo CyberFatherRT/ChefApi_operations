@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use utils::{create_info_struct, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, HashParts> for BcryptParse {
-    fn run(&self, request: &str) -> Result<HashParts, String> {
+    fn do_black_magic(&self, request: &str) -> Result<HashParts, String> {
         let request = self.validate(request)?;
         let hash = request.hash;
 

@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use utils::{create_info_struct, create_me_daddy, utils::char_repr, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherEncode {
-    fn run(&self, request: &str) -> Result<String, String> {
+    fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 
         let mut result = String::new();

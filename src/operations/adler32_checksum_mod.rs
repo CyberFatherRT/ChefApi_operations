@@ -9,7 +9,7 @@ pub struct DeserializeMeDaddy {
 pub struct Adler32CheckSum;
 
 impl Operation<'_, DeserializeMeDaddy, String> for Adler32CheckSum {
-    fn run(&self, request: &str) -> Result<String, String> {
+    fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let input = Vec::from(request.input.as_bytes());
 

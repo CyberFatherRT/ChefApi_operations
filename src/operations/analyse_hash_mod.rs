@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use utils::{create_info_struct, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, SerializeMeDaddy> for AnalyseHash {
-    fn run(&self, request: &str) -> Result<SerializeMeDaddy, String> {
+    fn do_black_magic(&self, request: &str) -> Result<SerializeMeDaddy, String> {
         let request = self.validate(request)?;
         let input = request
             .input

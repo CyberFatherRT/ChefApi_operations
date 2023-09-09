@@ -10,7 +10,7 @@ use utils::{
 };
 
 impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSAEncrypt {
-    fn run(&self, request: &str) -> Result<OutputFormat, String> {
+    fn do_black_magic(&self, request: &str) -> Result<OutputFormat, String> {
         let request = self.validate(request)?;
         let (input, public_key, encrypted_scheme, message_digest_algorithm, output_format) = (
             request.input,
@@ -144,7 +144,7 @@ create_me_daddy!();
 /// ``` json
 /// {
 ///   "Ok": {
-///     "hex|base64|uint8array": "string|uint8array"    
+///     "hex|base64|uint8array": "string|uint8array"
 ///   }
 /// }
 /// ```

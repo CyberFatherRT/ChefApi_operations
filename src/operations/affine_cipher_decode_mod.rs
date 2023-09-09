@@ -10,7 +10,7 @@ use utils::{
 };
 
 impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherDecode {
-    fn run(&self, request: &str) -> Result<String, String> {
+    fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 
         let (input, params) = (request.input, request.params);

@@ -6,7 +6,7 @@ use utils::{
 };
 
 impl Operation<'_, DeserializeMeDaddy, String> for FromBase64 {
-    fn run(&self, request: &str) -> Result<String, String> {
+    fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 
         let (input, alphabet, remove_non_alphabetic_chars, strict_mode) = (

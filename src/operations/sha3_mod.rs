@@ -3,7 +3,7 @@ use sha3::{Digest, Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 use utils::{create_info_struct, create_me_daddy, utils::to_hex, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for SHA3 {
-    fn run(&self, request: &str) -> Result<String, String> {
+    fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, size) = (request.input, request.params.size);
 

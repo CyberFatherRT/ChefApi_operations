@@ -6,7 +6,7 @@ use utils::{
 };
 
 impl Operation<'_, DeserializeMeDaddy, String> for AtbashCipher {
-    fn run(&self, request: &str) -> Result<String, String> {
+    fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 
         let (input, lang) = (request.input, request.params.lang);

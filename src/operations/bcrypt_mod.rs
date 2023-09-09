@@ -8,7 +8,7 @@ fn delete_me_after_you_make_pay_system() -> u32 {
 }
 
 impl Operation<'_, DeserializeMeDaddy, String> for Bcrypt {
-    fn run(&self, request: &str) -> Result<String, String> {
+    fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, rounds, version) =
             (request.input, request.params.rounds, request.params.version);
