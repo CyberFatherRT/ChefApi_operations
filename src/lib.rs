@@ -1,7 +1,7 @@
 mod operations;
 
 pub use operations::*;
-pub use utils::Operation;
+pub use utils::{Operation, Operations};
 use serde::{Deserialize, Serialize};
 
 pub fn run_operations<'a, I, O>(
