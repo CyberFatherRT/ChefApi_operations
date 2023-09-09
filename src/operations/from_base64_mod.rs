@@ -39,7 +39,9 @@ impl Operation<'_, DeserializeMeDaddy, String> for FromBase64 {
 #[derive(Deserialize)]
 struct Params {
     alphabet: Option<String>,
+    #[serde(default)]
     remove_non_alphabetic_chars: bool,
+    #[serde(default)]
     strict_mode: bool,
 }
 
