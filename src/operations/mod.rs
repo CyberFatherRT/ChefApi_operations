@@ -61,4 +61,3 @@ pub use vigenere_cipher_decode_mod::{VigenereCipherDecode, VigenereCipherDecodeI
 pub use vigenere_cipher_encode_mod::{VigenereCipherEncode, VigenereCipherEncodeInfo};
 
 pub use analyse_hash_mod::SerializeMeDaddy as AnalyseHashSerializeMeDaddy;
-pub use blake2b_mod::OutputFormat;

@@ -1,3 +1,4 @@
+use crate::OutputFormat;
 use blake2::{
     digest::{Update, VariableOutput},
     VarBlake2s,
@@ -75,15 +76,6 @@ enum SupportedOutputFormat {
     Base64,
     Uint8Array,
 }
-
-#[derive(Serialize)]
-#[serde(rename_all = "lowercase")]
-pub enum OutputFormat {
-    Hex(String),
-    Base64(String),
-    Uint8Array(Vec<u8>),
-}
-
 #[derive(Deserialize)]
 struct Params {
     key: Option<String>,

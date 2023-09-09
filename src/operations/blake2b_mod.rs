@@ -1,12 +1,14 @@
+use crate::OutputFormat;
 use blake2::{
     digest::{Update, VariableOutput},
     VarBlake2b,
 };
 use serde::{Deserialize, Serialize};
-use utils::libs::base64::to_base64;
-use utils::utils::{to_hex, SupportedFormats};
 use utils::{
-    create_info_struct, create_me_daddy, utils::convert_to_byte_array, Operation, DOCS_URL,
+    create_info_struct, create_me_daddy,
+    libs::base64::to_base64,
+    utils::{convert_to_byte_array, to_hex, SupportedFormats},
+    Operation, DOCS_URL,
 };
 
 impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Blake2b {
@@ -73,14 +75,6 @@ enum SupportedOutputFormat {
     Hex,
     Base64,
     Uint8Array,
-}
-
-#[derive(Serialize)]
-#[serde(rename_all = "lowercase")]
-pub enum OutputFormat {
-    Hex(String),
-    Base64(String),
-    Uint8Array(Vec<u8>),
 }
 
 #[derive(Deserialize)]
