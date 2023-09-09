@@ -8,6 +8,7 @@ use sha1::Sha1;
 use sha2::*;
 use whirlpool::*;
 
+use crate::OutputFormat;
 use utils::{
     create_info_struct, create_me_daddy,
     libs::base64::to_base64,
@@ -171,14 +172,6 @@ enum SupportedOutputFormat {
     Hex,
     Base64,
     Uint8Array,
-}
-
-#[derive(Serialize)]
-#[serde(rename_all = "lowercase")]
-pub enum OutputFormat {
-    Hex(String),
-    Base64(String),
-    Uint8Array(Vec<u8>),
 }
 
 #[derive(Deserialize)]

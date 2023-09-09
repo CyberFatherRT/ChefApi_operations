@@ -1,3 +1,4 @@
+use crate::OutputFormat;
 use rsa::{pkcs1::DecodeRsaPublicKey, Oaep, Pkcs1v15Encrypt, RsaPublicKey};
 use serde::{Deserialize, Serialize};
 use sha1::Sha1;
@@ -90,15 +91,6 @@ enum SupportedOutputFormat {
     Base64,
     Uint8Array,
 }
-
-#[derive(Serialize)]
-#[serde(rename_all = "lowercase")]
-pub enum OutputFormat {
-    Hex(String),
-    Base64(String),
-    Uint8Array(Vec<u8>),
-}
-
 #[derive(Deserialize)]
 struct Params {
     #[serde(rename = "pub_key")]

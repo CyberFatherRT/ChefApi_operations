@@ -4,6 +4,7 @@ use sha1::Sha1;
 use sha2::{Sha224, Sha256, Sha384, Sha512};
 use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 
+use crate::OutputFormat;
 use utils::{
     create_info_struct, create_me_daddy,
     libs::base64::{from_base64, to_base64},
@@ -103,14 +104,6 @@ enum SupportedOutputFormat {
     Hex,
     Base64,
     Uint8Array,
-}
-
-#[derive(Serialize)]
-#[serde(rename_all = "lowercase")]
-pub enum OutputFormat {
-    Hex(String),
-    Base64(String),
-    Uint8Array(Vec<u8>),
 }
 
 #[derive(Deserialize)]
