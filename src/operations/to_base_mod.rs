@@ -1,7 +1,7 @@
 use num::{BigInt, Num};
 use serde::{Deserialize, Serialize};
 
-use utils::{create_info_struct, create_me_daddy, traits::StringTrait, Operation, DOCS_URL};
+use utils::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for ToBase {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
@@ -13,8 +13,8 @@ impl Operation<'_, DeserializeMeDaddy, String> for ToBase {
         }
 
         #[allow(non_snake_case)]
-        let big_D_number =
-            BigInt::from_str_radix(&input, 10).map_err(|e| e.to_string().capitalize() + ".")?;
+        let big_D_number = BigInt::from_str_radix(&input, 10)
+            .map_err(|_| "Invalid symbols found in string".to_string())?;
         Ok(big_D_number.to_str_radix(radix))
     }
 }
