@@ -13,9 +13,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
             .input
             .trim_matches(|c: char| [delimiter].contains(&&*c.to_string()))
             .split(delimiter)
-            .filter(|&x| x != delimiter);
-
-        println!("{:?}", cipher_text.clone().collect::<Vec<_>>());
+            .collect::<Vec<_>>();
 
         let mut plain_text = String::new();
 
