@@ -13,7 +13,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
             .input
             .trim_matches(|c: char| [delimiter].contains(&&*c.to_string()))
             .split(delimiter)
-            .filter(|x| x.is_empty());
+            .filter(|&x| x == delimiter);
 
         let mut plain_text = String::new();
 
