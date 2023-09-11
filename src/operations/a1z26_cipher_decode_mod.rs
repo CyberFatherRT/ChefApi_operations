@@ -15,6 +15,8 @@ impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
             .split(delimiter)
             .filter(|&x| x != delimiter);
 
+        println!("{:?}", cipher_text);
+
         let mut plain_text = String::new();
 
         for c in cipher_text {
