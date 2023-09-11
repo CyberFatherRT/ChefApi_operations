@@ -31,22 +31,22 @@ impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
 
         let regex_checked = match &*request.params.delimiter {
             "Space" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]) ?)+\s*$" => &request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]) *)+\s*$" => &request.input)
             }
             "Comma" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]),?)+\s*$" => &request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]),*)+\s*$" => &request.input)
             }
             "Semi-colon" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]);?)+\s*$" => &request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]);*)+\s*$" => &request.input)
             }
             "Colon" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]):?)+\s*$" => &request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]):*)+\s*$" => &request.input)
             }
             "Line feed" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6])\n?)+\s*$" => &request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6])\n*)+\s*$" => &request.input)
             }
             "CRLF" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6])\r\n?)+\s*$" => &request.input)
+                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6])\r\n*)+\s*$" => &request.input)
             }
             _ => false,
         };

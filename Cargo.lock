@@ -744,7 +744,7 @@ checksum = "301abaae475aa91687eb82514b328ab47a211a533026cb25fc3e519b86adfc3c"
 [[package]]
 name = "utils"
 version = "0.1.0"
-source = "git+https://github.com/TheGodfatherru/ChefApi_operations_utils.git#152508dd9d1da54f7dc4b67002057cf9cff46902"
+source = "git+https://github.com/TheGodfatherru/ChefApi_operations_utils.git#d9714c2377858f137a9f5ae9e0e84c06be6d7f1a"
 dependencies = [
  "itertools",
  "num",
