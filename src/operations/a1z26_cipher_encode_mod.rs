@@ -1,7 +1,8 @@
+use crate::{
+    create_info_struct, create_me_daddy, operations::Delimiters, utils::char_repr, Operation,
+    DOCS_URL,
+};
 use serde::{Deserialize, Serialize};
-
-use crate::operations::Delimiters;
-use utils::{create_info_struct, create_me_daddy, utils::char_repr, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherEncode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

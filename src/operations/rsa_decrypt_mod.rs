@@ -4,12 +4,11 @@ use sha1::Sha1;
 use sha2::{Sha224, Sha256, Sha384, Sha512};
 use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 
-use crate::OutputFormat;
-use utils::{
+use crate::{
     create_info_struct, create_me_daddy,
     libs::base64::{from_base64, to_base64},
     utils::{to_hex, DataRepresentation},
-    Operation, DOCS_URL,
+    Operation, OutputFormat, DOCS_URL,
 };
 
 impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {

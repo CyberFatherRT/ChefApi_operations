@@ -1,7 +1,7 @@
+use crate::{create_info_struct, Operation, DOCS_URL};
 use bcrypt::BcryptError;
 use serde::{Deserialize, Serialize};
 use serde_valid::Validate;
-use utils::{create_info_struct, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, HashParts> for BcryptParse {
     fn do_black_magic(&self, request: &str) -> Result<HashParts, String> {

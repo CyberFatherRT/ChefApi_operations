@@ -1,5 +1,5 @@
+use crate::{create_info_struct, Operation, DOCS_URL};
 use serde::{Deserialize, Serialize};
-use utils::{create_info_struct, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, SerializeMeDaddy> for AnalyseHash {
     fn do_black_magic(&self, request: &str) -> Result<SerializeMeDaddy, String> {

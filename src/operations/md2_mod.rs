@@ -1,7 +1,7 @@
 use md2::{Digest, Md2};
 use serde::{Deserialize, Serialize};
 
-use utils::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
+use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for MD2 {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

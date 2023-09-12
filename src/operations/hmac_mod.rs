@@ -8,13 +8,12 @@ use sha1::Sha1;
 use sha2::*;
 use whirlpool::*;
 
-use crate::OutputFormat;
-use utils::{
+use crate::{
     create_info_struct, create_me_daddy,
     libs::base64::to_base64,
     traits::StringTrait,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
-    Operation, DOCS_URL,
+    Operation, OutputFormat, DOCS_URL,
 };
 
 impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Hmac {
@@ -29,7 +28,7 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Hmac {
         );
 
         let key = convert_to_byte_array(&key, &key_format)?;
-        let res = match hash_function {
+        let res: Vec<u8> = match hash_function {
             SupportedHashFunctions::MD2 => {
                 let mut hasher =
                     HmacMD2::new_from_slice(&key).map_err(|e| e.to_string().capitalize() + ".")?;

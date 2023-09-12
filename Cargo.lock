@@ -484,7 +484,6 @@ dependencies = [
  "sha1",
  "sha2",
  "sha3",
- "utils",
  "whirlpool",
 ]
 
@@ -890,18 +889,6 @@ name = "unicode-segmentation"
 version = "1.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1dd624098567895118886609431a7c3b8f516e41d30e0643f03d94592a147e36"
-
-[[package]]
-name = "utils"
-version = "0.1.0"
-source = "git+https://github.com/TheGodfatherru/ChefApi_operations_utils.git#d9714c2377858f137a9f5ae9e0e84c06be6d7f1a"
-dependencies = [
- "itertools 0.11.0",
- "num",
- "regex",
- "serde",
- "serde_json",
-]
 
 [[package]]
 name = "version_check"

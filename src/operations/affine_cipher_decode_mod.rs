@@ -1,5 +1,4 @@
-use serde::{Deserialize, Serialize};
-use utils::{
+use crate::{
     create_info_struct, create_me_daddy,
     traits::{CharTrait, IntegerTrait},
     utils::{
@@ -8,6 +7,7 @@ use utils::{
     },
     Operation, DOCS_URL,
 };
+use serde::{Deserialize, Serialize};
 
 impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherDecode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

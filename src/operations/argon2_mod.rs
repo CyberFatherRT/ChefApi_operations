@@ -1,11 +1,11 @@
-use argon2::{Config, ThreadMode, Variant, Version};
-use serde::{Deserialize, Serialize};
-use utils::{
+use crate::{
     create_info_struct, create_me_daddy,
     libs::base64::from_base64,
     utils::{to_hex, DataRepresentation},
     Operation, DOCS_URL,
 };
+use argon2::{Config, ThreadMode, Variant, Version};
+use serde::{Deserialize, Serialize};
 
 impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use utils::{
+use crate::{
     create_info_struct, create_me_daddy,
     libs::vigenere_trait::VigenereCipher,
     utils::{sub, SupportedLanguages},

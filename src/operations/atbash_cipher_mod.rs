@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use utils::{
+use crate::{
     create_info_struct, create_me_daddy, libs::ciphers::affine_cipher_encode,
     utils::SupportedLanguages, Operation, DOCS_URL,
 };

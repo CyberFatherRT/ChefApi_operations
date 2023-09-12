@@ -1,7 +1,7 @@
+use crate::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
 use bcrypt::Version;
 use serde::{Deserialize, Serialize};
 use serde_valid::Validate;
-use utils::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for Bcrypt {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

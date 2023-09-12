@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use sha1::{Digest, Sha1};
 
-use utils::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
+use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for SHA1 {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

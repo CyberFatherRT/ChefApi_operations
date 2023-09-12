@@ -1,5 +1,5 @@
+use crate::{create_info_struct, create_me_daddy, utils::char_repr, Operation, DOCS_URL};
 use serde::{Deserialize, Serialize};
-use utils::{create_info_struct, create_me_daddy, utils::char_repr, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
@@ -10,6 +10,8 @@ impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
         let cipher_text = input.split(delimiter);
 
         let mut plain_text = String::new();
+
+        println!("{:?}", cipher_text.clone().collect::<Vec<_>>());
 
         for c in cipher_text {
             let c = match c.parse::<u8>() {
