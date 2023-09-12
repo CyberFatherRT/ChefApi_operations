@@ -1,17 +1,10 @@
 use serde::{Deserialize, Serialize};
 use utils::{create_info_struct, utils::hex, Operation, DOCS_URL};
 
-#[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
-    input: String,
-}
-
-pub struct Adler32CheckSum;
-
 impl Operation<'_, DeserializeMeDaddy, String> for Adler32CheckSum {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
-        let input = Vec::from(request.input.as_bytes());
+        let input: Vec<u8> = request.input.into();
 
         const MOD_ADLER: isize = 65521;
         let (mut a, mut b): (isize, isize) = (1, 0);
@@ -27,6 +20,13 @@ impl Operation<'_, DeserializeMeDaddy, String> for Adler32CheckSum {
         Ok(hex(b << 16 | a))
     }
 }
+
+#[derive(Deserialize)]
+pub struct DeserializeMeDaddy {
+    input: String,
+}
+
+pub struct Adler32CheckSum;
 
 const NAME: &str = "Adler32CheckSum";
 const DESCRIPTION_EN: &str = "Adler-32 is a checksum algorithm which was invented by Mark Adler in 1995, and is a modification of the Fletcher checksum. Compared to a cyclic redundancy check of the same length, it trades reliability for speed (preferring the latter). Adler-32 is more reliable than Fletcher-16, and slightly less reliable than Fletcher-32.";
