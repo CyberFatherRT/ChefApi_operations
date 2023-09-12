@@ -5,7 +5,7 @@ use utils::{
     Operation, DOCS_URL,
 };
 
-impl Operation<'_, DeserializeMeDaddy, String> for FromBase64 {
+impl Operation<'_, DeserializeStruct, String> for FromBase64 {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 

@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use utils::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
 
-impl Operation<'_, DeserializeMeDaddy, String> for ToBase {
+impl Operation<'_, DeserializeStruct, String> for ToBase {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, radix) = (request.input, request.params.radix);

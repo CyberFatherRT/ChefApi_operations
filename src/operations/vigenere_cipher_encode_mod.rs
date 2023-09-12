@@ -9,7 +9,7 @@ use utils::{
 
 impl VigenereCipher for VigenereCipherEncode {}
 
-impl Operation<'_, DeserializeMeDaddy, String> for VigenereCipherEncode {
+impl Operation<'_, DeserializeStruct, String> for VigenereCipherEncode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, lang, key) = (request.input, request.params.lang, request.params.key);

@@ -11,7 +11,7 @@ use utils::{
     Operation, DOCS_URL,
 };
 
-impl Operation<'_, DeserializeMeDaddy, String> for BifidCipherEncode {
+impl Operation<'_, DeserializeStruct, String> for BifidCipherEncode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, lang, keyword) = (request.input, request.params.lang, request.params.keyword);

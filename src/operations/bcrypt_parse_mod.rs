@@ -2,7 +2,7 @@ use bcrypt::BcryptError;
 use serde::{Deserialize, Serialize};
 use utils::{create_info_struct, Operation, DOCS_URL};
 
-impl Operation<'_, DeserializeMeDaddy, HashParts> for BcryptParse {
+impl Operation<'_, DeserializeStruct, HashParts> for BcryptParse {
     fn do_black_magic(&self, request: &str) -> Result<HashParts, String> {
         let request = self.validate(request)?;
         let hash = request.hash;
@@ -45,7 +45,7 @@ impl Operation<'_, DeserializeMeDaddy, HashParts> for BcryptParse {
 }
 
 #[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
+pub struct DeserializeStruct {
     hash: String,
 }
 

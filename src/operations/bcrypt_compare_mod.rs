@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use utils::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
 
-impl Operation<'_, DeserializeMeDaddy, String> for BcryptCompare {
+impl Operation<'_, DeserializeStruct, String> for BcryptCompare {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, encoded_hash) = (request.input, request.params.encoded_hash);

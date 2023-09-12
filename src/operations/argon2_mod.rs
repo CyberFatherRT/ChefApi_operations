@@ -7,7 +7,7 @@ use utils::{
     Operation, DOCS_URL,
 };
 
-impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
+impl Operation<'_, DeserializeStruct, String> for Argon2 {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 

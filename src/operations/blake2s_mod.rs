@@ -11,7 +11,7 @@ use utils::{
     Operation, DOCS_URL,
 };
 
-impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Blake2s {
+impl Operation<'_, DeserializeStruct, OutputFormat> for Blake2s {
     fn do_black_magic(&self, request: &str) -> Result<OutputFormat, String> {
         let request = self.validate(request)?;
         let (input, size, key, key_format, output_format) = (

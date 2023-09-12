@@ -4,7 +4,7 @@ use utils::{
     create_info_struct, create_me_daddy, libs::ciphers::affine_cipher_encode,
     utils::SupportedLanguages, Operation, DOCS_URL,
 };
-impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherEncode {
+impl Operation<'_, DeserializeStruct, String> for AffineCipherEncode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 

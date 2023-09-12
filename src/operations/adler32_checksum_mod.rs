@@ -2,13 +2,13 @@ use serde::{Deserialize, Serialize};
 use utils::{create_info_struct, utils::hex, Operation, DOCS_URL};
 
 #[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
+pub struct DeserializeStruct {
     input: String,
 }
 
 pub struct Adler32CheckSum;
 
-impl Operation<'_, DeserializeMeDaddy, String> for Adler32CheckSum {
+impl Operation<'_, DeserializeStruct, String> for Adler32CheckSum {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let input = Vec::from(request.input.as_bytes());

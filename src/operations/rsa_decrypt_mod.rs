@@ -12,7 +12,7 @@ use utils::{
     Operation, DOCS_URL,
 };
 
-impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {
+impl Operation<'_, DeserializeStruct, OutputFormat> for RSADecrypt {
     fn do_black_magic(&self, request: &str) -> Result<OutputFormat, String> {
         let request = self.validate(request)?;
         let (input, pem_key, encrypted_scheme, message_digest_algorithm, output_format) = (

@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use utils::{create_info_struct, Operation, DOCS_URL};
 
-impl Operation<'_, DeserializeMeDaddy, SerializeMeDaddy> for AnalyseHash {
+impl Operation<'_, DeserializeStruct, SerializeMeDaddy> for AnalyseHash {
     fn do_black_magic(&self, request: &str) -> Result<SerializeMeDaddy, String> {
         let request = self.validate(request)?;
         let input = request
@@ -95,7 +95,7 @@ pub struct SerializeMeDaddy {
 }
 
 #[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
+pub struct DeserializeStruct {
     input: String,
 }
 

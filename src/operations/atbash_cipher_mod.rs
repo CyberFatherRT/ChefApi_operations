@@ -5,7 +5,7 @@ use utils::{
     utils::SupportedLanguages, Operation, DOCS_URL,
 };
 
-impl Operation<'_, DeserializeMeDaddy, String> for AtbashCipher {
+impl Operation<'_, DeserializeStruct, String> for AtbashCipher {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 

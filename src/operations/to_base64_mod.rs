@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use utils::{create_info_struct, create_me_daddy, libs::base64::to_base64, Operation, DOCS_URL};
 
-impl Operation<'_, DeserializeMeDaddy, String> for ToBase64 {
+impl Operation<'_, DeserializeStruct, String> for ToBase64 {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, alphabet) = (request.input, request.params.alphabet);

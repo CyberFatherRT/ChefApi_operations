@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use utils::{
     create_info_struct, create_me_daddy, regex_check, utils::char_repr, Operation, DOCS_URL,
 };
-impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
+impl Operation<'_, DeserializeStruct, String> for A1Z26CipherDecode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 
@@ -27,7 +27,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
         Ok(plain_text)
     }
 
-    fn validate(&self, request: &str) -> Result<DeserializeMeDaddy, String> {
+    fn validate(&self, request: &str) -> Result<DeserializeStruct, String> {
         let request = self.deserialize(request)?;
 
         let regex_checked = match &*request.params.delimiter {

@@ -9,7 +9,7 @@ use utils::{
     Operation, DOCS_URL,
 };
 
-impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherDecode {
+impl Operation<'_, DeserializeStruct, String> for AffineCipherDecode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 

@@ -7,7 +7,7 @@ fn delete_me_after_you_make_pay_system() -> u32 {
     12
 }
 
-impl Operation<'_, DeserializeMeDaddy, String> for Bcrypt {
+impl Operation<'_, DeserializeStruct, String> for Bcrypt {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, rounds, version) =
@@ -18,7 +18,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for Bcrypt {
         Ok(res.format_for_version(version).to_string())
     }
 
-    fn validate(&self, request: &'_ str) -> Result<DeserializeMeDaddy, String> {
+    fn validate(&self, request: &'_ str) -> Result<DeserializeStruct, String> {
         let request = self.deserialize(request)?;
         if request.params.rounds > delete_me_after_you_make_pay_system() {
             return Err("Rounds must be between 4 and 12".to_string());
