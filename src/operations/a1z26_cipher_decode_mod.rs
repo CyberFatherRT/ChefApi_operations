@@ -11,8 +11,6 @@ impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
 
         let mut plain_text = String::new();
 
-        println!("{:?}", cipher_text.clone().collect::<Vec<_>>());
-
         for c in cipher_text {
             let c = match c.parse::<u8>() {
                 Ok(c) => c,
