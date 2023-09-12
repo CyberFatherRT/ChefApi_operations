@@ -9,18 +9,12 @@ impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
 
         let delimiter = char_repr(&request.params.delimiter);
 
-        let cipher_text = request
-            .input
-            .trim_matches(|c: char| [delimiter].contains(&&*c.to_string()))
-            .split(delimiter);
+        let cipher_text = request.input.split(delimiter);
 
         let mut plain_text = String::new();
 
         for c in cipher_text {
-            if c.is_empty() {
-                continue;
-            }
-            let c = c.parse::<u8>().unwrap();
+            let Ok(c) = c.parse::<u8>() else { continue };
             if !(1..=26).contains(&c) {
                 return Err("All numbers must be between 1 and 26.".to_string());
             }
