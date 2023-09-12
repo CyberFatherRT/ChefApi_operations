@@ -1,5 +1,6 @@
 use num::{BigInt, Num};
 use serde::{Deserialize, Serialize};
+use serde_valid::Validate;
 
 use utils::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
 
@@ -19,8 +20,10 @@ impl Operation<'_, DeserializeMeDaddy, String> for ToBase {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Validate)]
 pub struct Params {
+    #[validate(maximum = 36)]
+    #[validate(minimum = 36)]
     radix: u32,
 }
 
