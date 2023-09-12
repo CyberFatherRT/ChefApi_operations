@@ -1,65 +1,44 @@
 use serde::{Deserialize, Serialize};
+use utils::{create_info_struct, create_me_daddy, utils::char_repr, Operation, DOCS_URL};
 
-use utils::{
-    create_info_struct, create_me_daddy, regex_check, utils::char_repr, Operation, DOCS_URL,
-};
 impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
+        let (input, delimiter) = (request.input, format!("{:?}", request.params.delimiter));
 
-        let delimiter = char_repr(&request.params.delimiter);
-
-        let cipher_text = request.input.split(delimiter);
+        let delimiter = char_repr(&delimiter);
+        let cipher_text = input.split(delimiter);
 
         let mut plain_text = String::new();
 
         for c in cipher_text {
-            let Ok(c) = c.parse::<u8>() else { continue };
-            if !(1..=26).contains(&c) {
+            let c = match c.parse::<u8>() {
+                Ok(c) => c,
+                Err(_) => continue,
+            };
+            if !(1..=26u8).contains(&c) {
                 return Err("All numbers must be between 1 and 26.".to_string());
             }
             plain_text.push((c + 96) as char);
         }
         Ok(plain_text)
     }
-
-    fn validate(&self, request: &str) -> Result<DeserializeMeDaddy, String> {
-        let request = self.deserialize(request)?;
-
-        let regex_checked = match &*request.params.delimiter {
-            "Space" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]) *)+\s*$" => &request.input)
-            }
-            "Comma" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]),*)+\s*$" => &request.input)
-            }
-            "Semi-colon" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]);*)+\s*$" => &request.input)
-            }
-            "Colon" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6]):*)+\s*$" => &request.input)
-            }
-            "Line feed" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6])\n*)+\s*$" => &request.input)
-            }
-            "CRLF" => {
-                regex_check!(r"^\s*(([1-9]|1[0-9]|2[0-6])\r\n*)+\s*$" => &request.input)
-            }
-            _ => false,
-        };
-        if !regex_checked {
-            return Err(format!(
-                "Invalid delimiter: `{delimiter}`",
-                delimiter = request.params.delimiter
-            ));
-        }
-
-        Ok(request)
-    }
 }
+
 #[derive(Deserialize)]
 struct Params {
-    delimiter: String,
+    delimiter: Delimiters,
+}
+
+#[allow(clippy::upper_case_acronyms)]
+#[derive(Deserialize, Debug, Clone, Copy)]
+pub enum Delimiters {
+    Space,
+    Comma,
+    SemiColon,
+    Colon,
+    LineFeed,
+    CRLF,
 }
 
 create_me_daddy!();
