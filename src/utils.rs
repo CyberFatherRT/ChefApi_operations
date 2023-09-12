@@ -14,6 +14,7 @@ pub enum SupportedLanguages {
     RU_WITH_YO,
 }
 
+#[allow(clippy::upper_case_acronyms)]
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum SupportedFormats {
