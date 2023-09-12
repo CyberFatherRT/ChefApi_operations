@@ -1,5 +1,6 @@
 use bcrypt::BcryptError;
 use serde::{Deserialize, Serialize};
+use serde_valid::Validate;
 use utils::{create_info_struct, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, HashParts> for BcryptParse {
@@ -49,8 +50,10 @@ pub struct DeserializeMeDaddy {
     hash: String,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Validate)]
 pub struct HashParts {
+    #[validate(maximum = 31)]
+    #[validate(minimum = 4)]
     cost: u32,
     salt: String,
     hash: String,
@@ -78,14 +81,14 @@ pub struct HashParts {
 /// ``` json
 /// {
 ///     "Ok": {
-///         "cost": u31,
+///         "cost": i31,
 ///         "salt": string,
 ///         "hash": string
 ///     }
 /// }
 /// ```
 /// #### where
-///     - u31 is unsigned digit between 4 and 31
+///     - i31 is signed digit between 4 and 31
 /// ### &nbsp;&nbsp;&nbsp;&nbsp; Error variant
 /// ``` json
 /// { "Err": `error message` }
