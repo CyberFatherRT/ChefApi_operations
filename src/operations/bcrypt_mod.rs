@@ -1,11 +1,7 @@
 use bcrypt::Version;
 use serde::{Deserialize, Serialize};
+use serde_valid::Validate;
 use utils::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
-
-// TODO: Are you remember about ME????
-fn delete_me_after_you_make_pay_system() -> u32 {
-    12
-}
 
 impl Operation<'_, DeserializeMeDaddy, String> for Bcrypt {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
@@ -17,31 +13,25 @@ impl Operation<'_, DeserializeMeDaddy, String> for Bcrypt {
             bcrypt::hash_with_result(input.as_bytes(), rounds).map_err(|err| err.to_string())?;
         Ok(res.format_for_version(version).to_string())
     }
-
-    fn validate(&self, request: &'_ str) -> Result<DeserializeMeDaddy, String> {
-        let request = self.deserialize(request)?;
-        if request.params.rounds > delete_me_after_you_make_pay_system() {
-            return Err("Rounds must be between 4 and 12".to_string());
-        }
-        Ok(request)
-    }
 }
 
 #[derive(Deserialize)]
 #[serde(remote = "Version")]
 pub enum MyVersion {
-    #[serde(alias = "2a")]
+    #[serde(rename = "2a")]
     TwoA,
-    #[serde(alias = "2x")]
+    #[serde(rename = "2x")]
     TwoX,
-    #[serde(alias = "2y")]
+    #[serde(rename = "2y")]
     TwoY,
-    #[serde(alias = "2b")]
+    #[serde(rename = "2b")]
     TwoB,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Validate)]
 struct Params {
+    #[validate(maximum = 31)]
+    #[validate(minimum = 4)]
     rounds: u32,
     #[serde(with = "MyVersion")]
     version: Version,
@@ -62,13 +52,13 @@ create_me_daddy!();
 /// {
 ///     "input": string,
 ///     "params": {
-///         "rounds": u31,
+///         "rounds": i31,
 ///         "version": Version
 ///     }
 /// }
 /// ```
 /// #### where
-///     - u31 is unsigned digit between 4 and 31
+///     - i31 is signed digit between 4 and 31
 ///     - Version is enum of "2a", "2x", "2y", "2b"
 /// <br/><br/>
 ///
