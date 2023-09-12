@@ -9,10 +9,6 @@ impl Operation<'_, DeserializeMeDaddy, String> for FromBase {
         let request = self.validate(request)?;
         let (input, radix) = (request.input, request.params.radix);
 
-        if !(2..=36).contains(&radix) {
-            return Err("The radix must be within 2...36.".to_string());
-        }
-
         #[allow(non_snake_case)]
         let big_D_number =
             BigInt::from_str_radix(&input, radix).map_err(|e| e.to_string().capitalize() + ".")?;
