@@ -75,6 +75,7 @@ create_me_daddy!();
 /// {
 ///     "input": string,
 ///     "params": {
+///         "lang": SupportedLanguages
 ///         "a": u8,
 ///         "b": u8,
 ///     }
@@ -82,6 +83,7 @@ create_me_daddy!();
 /// ```
 /// #### where
 ///     - u8 is unsigned 8-bit integer (digit between 0 and 255)
+///     - SupportedLanguages is enum of en, ru, ru_with_yo
 /// <br/><br/>
 ///
 /// ### Server response have two possible formats
