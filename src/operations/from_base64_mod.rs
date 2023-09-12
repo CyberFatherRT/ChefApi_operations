@@ -12,11 +12,14 @@ impl Operation<'_, DeserializeMeDaddy, String> for FromBase64 {
         let (input, alphabet, remove_non_alphabetic_chars, strict_mode) = (
             request.input,
             request.params.alphabet,
-            request.params.remove_non_alphabetic_chars,
-            request.params.strict_mode,
+            request
+                .params
+                .remove_non_alphabetic_chars
+                .unwrap_or_default(),
+            request.params.strict_mode.unwrap_or_default(),
         );
 
-        let alphabet = alphabet.unwrap_or(String::new());
+        let alphabet = alphabet.unwrap_or_default();
 
         match from_base64(
             input,
@@ -39,10 +42,8 @@ impl Operation<'_, DeserializeMeDaddy, String> for FromBase64 {
 #[derive(Deserialize)]
 struct Params {
     alphabet: Option<String>,
-    #[serde(default)]
-    remove_non_alphabetic_chars: bool,
-    #[serde(default)]
-    strict_mode: bool,
+    remove_non_alphabetic_chars: Option<bool>,
+    strict_mode: Option<bool>,
 }
 
 create_me_daddy!();
@@ -60,13 +61,14 @@ create_me_daddy!();
 ///     "input": string,
 ///     "params": {
 ///         "alphabet": Option<string>,
-///         "remove_non_alphabetic_chars": bool,
-///         "strict_mode": bool
+///         "remove_non_alphabetic_chars": Option<bool>,
+///         "strict_mode": Option<bool>
 ///     }
 /// }
 /// ```
 /// #### where
 ///     - Option<string> is type that can be string or null.
+///     - Option<bool> is type that can be bool or null.
 /// <br/><br/>
 ///
 /// ### Server response have two possible formats
