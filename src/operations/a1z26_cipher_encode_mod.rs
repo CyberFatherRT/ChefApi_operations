@@ -1,15 +1,17 @@
 use serde::{Deserialize, Serialize};
 
+use crate::operations::Delimiters;
 use utils::{create_info_struct, create_me_daddy, utils::char_repr, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherEncode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
+        let (input, delimiter) = (request.input, format!("{:?}", request.params.delimiter));
 
         let mut result = String::new();
-        let delimiter = char_repr(&request.params.delimiter);
+        let delimiter = char_repr(&delimiter);
 
-        for character in request.input.chars() {
+        for character in input.chars() {
             result.push_str(&match character {
                 'a'..='z' => format!("{}{}", character as u8 - 96, delimiter),
                 'A'..='Z' => format!("{}{}", character as u8 - 64, delimiter),
@@ -25,7 +27,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherEncode {
 
 #[derive(Deserialize)]
 struct Params {
-    delimiter: String,
+    delimiter: Delimiters,
 }
 
 create_me_daddy!();
@@ -44,7 +46,7 @@ create_me_daddy!();
 /// }
 /// ```
 /// #### where
-///     - delimiter is one of "Space", "Comma", "Semi-colon", "Colon", "Line feed", "CRLF"
+///     - delimiter is one of "Space", "Comma", "SemiColon", "Colon", "LineFeed", "CRLF"
 /// <br/><br/>
 ///
 /// ### Server response have two possible formats

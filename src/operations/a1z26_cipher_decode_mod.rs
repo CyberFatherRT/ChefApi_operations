@@ -57,7 +57,7 @@ create_me_daddy!();
 /// }
 /// ```
 /// #### where
-///     - delimiter is one of "Space", "Comma", "Semi-colon", "Colon", "Line feed", "CRLF"
+///     - delimiter is one of "Space", "Comma", "SemiColon", "Colon", "LineFeed", "CRLF"
 /// <br/><br/>
 ///
 /// ### Server response have two possible formats

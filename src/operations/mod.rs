@@ -60,5 +60,6 @@ pub use to_base_mod::{ToBase, ToBaseInfo};
 pub use vigenere_cipher_decode_mod::{VigenereCipherDecode, VigenereCipherDecodeInfo};
 pub use vigenere_cipher_encode_mod::{VigenereCipherEncode, VigenereCipherEncodeInfo};
 
+pub use a1z26_cipher_decode_mod::Delimiters;
 pub use analyse_hash_mod::SerializeMeDaddy as AnalyseHashSerializeMeDaddy;
 pub use bcrypt_parse_mod::HashParts as BcryptParseHashParts;
