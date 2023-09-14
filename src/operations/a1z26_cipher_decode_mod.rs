@@ -16,7 +16,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
                 Ok(c) => c,
                 Err(_) => continue,
             };
-            if !(1..=26u8).contains(&c) {
+            if !(1..=26).contains(&c) {
                 return Err("All numbers must be between 1 and 26.".to_string());
             }
             plain_text.push((c + 96) as char);

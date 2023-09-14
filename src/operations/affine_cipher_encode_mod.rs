@@ -39,6 +39,7 @@ create_me_daddy!();
 /// {
 ///     "input": string,
 ///     "params": {
+///         "lang": SupportedLanguages
 ///         "a": u8,
 ///         "b": u8,
 ///     }
@@ -67,8 +68,8 @@ create_me_daddy!();
 ///
 /// {
 ///     "input": "Hello, World!",
-///     "lang": "en",
 ///     "params": {
+///         "lang": "en",
 ///         "a": 5,
 ///         "b": 3
 ///     }
@@ -87,6 +88,7 @@ create_me_daddy!();
 /// {
 ///     "input": "Привет, Мир!",
 ///     "params": {
+///         "lang": "ru",
 ///         "a": 5,
 ///         "b" 3,
 ///     }
@@ -103,8 +105,8 @@ create_me_daddy!();
 ///
 /// {
 ///     "input": "Hello, World!",
-///     "lang": "en",
 ///     "params": {
+///         "lang": "en",
 ///         "a": -5,
 ///         "b": 12735073052703957225979
 ///     }
