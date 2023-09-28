@@ -1,6 +1,5 @@
 #![allow(dead_code)]
 
-
 mod libs;
 mod macros;
 mod operations;
@@ -93,3 +92,4 @@ pub enum OutputFormat {
 }
 
 pub const DOCS_URL: &str = "soon I transfer all documentation to somewhere :/";
+
