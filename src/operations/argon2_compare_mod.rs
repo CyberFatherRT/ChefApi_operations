@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 impl Operation<'_, DeserializeMeDaddy, String> for Argon2Compare {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
-
+         
         let (input, encoded_hash) = (request.input, request.params.encoded_hash);
 
         let res = argon2::verify_encoded(&encoded_hash, input.as_bytes())
