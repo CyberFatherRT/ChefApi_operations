@@ -7,6 +7,7 @@ mod analyse_hash_mod;
 mod argon2_compare_mod;
 mod argon2_mod;
 mod atbash_cipher_mod;
+mod bacon_cipher_encode_mod;
 mod bcrypt_compare_mod;
 mod bcrypt_mod;
 mod bcrypt_parse_mod;

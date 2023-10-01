@@ -1,44 +1,97 @@
-use serde::{Serialize, Deserialize};
+use std::collections::HashMap;
 
-static ALPHABET_STANDATD: BaconAlphabet = BaconAlphabet {
-    alphabet: "ABCDEFGHIKLMNOPQRSTUWXYZ",
-    codes: Some([0, 1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 20, 21, 22, 23])
-};
+use num::integer::Roots;
+use serde::Deserialize;
 
-static ALPHABET_COMPLETE: BaconAlphabet = BaconAlphabet {
-    alphabet: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    codes: None,
-};
+use crate::utils::{get_alphabet, SupportedLanguages, EN_ALP};
 
-static BACON_TRANSLATION_01: &str = "0/1";
-static BACON_TRANSLATION_AB: &str = "A/B";
-static BACON_TRANSLATION_CASE: &str = "Case";
-static BACON_TRANSLATION_AMNZ: &str = "A-M/N-Z first letter";
-
-static BACON_TRANSLATIONS: [&str; 4] = [
-    BACON_TRANSLATION_01,
-    BACON_TRANSLATION_AB,
-    BACON_TRANSLATION_CASE,
-    BACON_TRANSLATION_AMNZ,
-];
-
-static BACON_TRANSLATIONS_FOR_ENCODING: [&str; 2] = [
-    BACON_TRANSLATION_01,
-    BACON_TRANSLATION_AB
-];
-
-pub fn swap_zero_and_one(string: &str) -> String {
-    string.chars().map(|x| {
-        match x {
-            '0' => '1',
-            '1' => '0',
-            x => x,
-        }
-    }).collect()
+struct BaconCipher {
+    item_a: char,
+    item_b: char,
+    map: HashMap<char, String>,
 }
 
-#[derive(Serialize, Deserialize)]
-pub struct BaconAlphabet {
-    alphabet: &'static str,
-    codes: Option<[isize; 26]>
+impl BaconCipher {
+    pub fn new(
+        item_a: char,
+        item_b: char,
+        translation: SupportedBaconTranslation,
+        alphabet: SupportedBaconAlphabet,
+        lang: SupportedLanguages,
+    ) -> Self {
+        let (alp, _, _, _, length, _) = get_alphabet(&lang);
+        let length = length.sqrt();
+
+        let map: HashMap<char, String> = alp
+            .chars()
+            .map(|c| {
+                let c =char_by_alphabet(&c, &alphabet); 
+                (c, format!("{c}:05b")) 
+            })
+            .collect();
+
+        BaconCipher {
+            item_a,
+            item_b,
+            map,
+        }
+    }
+}
+
+impl BaconCipher {
+    pub fn encode(&self, elem: &char) -> String {
+        todo!()
+    }
+
+    pub fn a(&self) -> char {
+        self.item_a.clone()
+    }
+
+    pub fn b(&self) -> char {
+        self.item_b.clone()
+    }
+}
+
+impl Default for BaconCipher {
+    fn default() -> Self {
+        BaconCipher::new(
+            'A',
+            'B',
+            SupportedBaconTranslation::AB,
+            SupportedBaconAlphabet::Standard,
+            SupportedLanguages::EN,
+        )
+    }
+}
+
+fn char_by_alphabet(c: &char, alp: &SupportedBaconAlphabet) -> char {
+    match alp {
+        SupportedBaconAlphabet::Standard => {
+            if *c == 'j' {
+                'i'
+            } else if *c == 'u' {
+                'v'
+            } else {
+                *c
+            }
+        }
+        SupportedBaconAlphabet::Complete => *c,
+    };
+
+    todo!()
+}
+
+#[derive(Deserialize)]
+pub enum SupportedBaconTranslation {
+    #[serde(rename = "0/1")]
+    ZeroOne,
+    #[serde(rename = "A/B")]
+    AB,
+}
+
+#[derive(Deserialize)]
+pub enum SupportedBaconAlphabet {
+    #[serde(rename = "Standard (I=J and V=U)")]
+    Standard,
+    Complete,
 }
