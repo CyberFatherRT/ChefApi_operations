@@ -25,8 +25,8 @@ impl BaconCipher {
         let map: HashMap<char, String> = alp
             .chars()
             .map(|c| {
-                let c =char_by_alphabet(&c, &alphabet); 
-                (c, format!("{c}:05b")) 
+                let c = char_by_alphabet(&c, &alphabet);
+                (c, format!("{c}:05b"))
             })
             .collect();
 
