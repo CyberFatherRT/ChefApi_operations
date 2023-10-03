@@ -1,5 +1,6 @@
 mod a1z26_cipher_decode_mod;
 mod a1z26_cipher_encode_mod;
+mod add_line_numbers_mod;
 mod adler32_checksum_mod;
 mod affine_cipher_decode_mod;
 mod affine_cipher_encode_mod;
@@ -33,6 +34,7 @@ mod vigenere_cipher_encode_mod;
 
 pub use a1z26_cipher_decode_mod::{A1Z26CipherDecode, A1Z26CipherDecodeInfo};
 pub use a1z26_cipher_encode_mod::{A1Z26CipherEncode, A1Z26CipherEncodeInfo};
+pub use add_line_numbers_mod::{AddLineNumbers, AddLineNumbersInfo};
 pub use adler32_checksum_mod::{Adler32CheckSum, Adler32CheckSumInfo};
 pub use affine_cipher_decode_mod::{AffineCipherDecode, AffineCipherDecodeInfo};
 pub use affine_cipher_encode_mod::{AffineCipherEncode, AffineCipherEncodeInfo};
