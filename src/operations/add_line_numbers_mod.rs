@@ -4,11 +4,17 @@ use serde::{Deserialize, Serialize};
 impl Operation<'_, DeserializeMeDaddy, String> for AddLineNumbers {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
-        let output = request
-            .input
+        let input = request.input;
+        let output = input
             .split('\n')
             .enumerate()
-            .fold(String::new(), |acc, (i, x)| acc + &format!("{} {x}", i + 1));
+            .fold(String::new(), |acc, (i, x)| {
+                let index = " "
+                    .repeat(input.len() - (i + 1).ilog10() as usize - 1)
+                    .to_string()
+                    + &(i + 1).to_string();
+                acc + &format!("{index} {x}")
+            });
 
         Ok(output)
     }
