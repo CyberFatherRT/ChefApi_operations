@@ -34,7 +34,7 @@ impl BaconCipher {
         }
     }
 
-    pub fn encode(&self, elem: String) -> String {
+    pub fn encode(&self, elem: &str) -> String {
         elem.chars()
             .map(|x| self.map.get(&x).unwrap_or(&x.to_string()).clone() + " ")
             .collect::<String>()
