@@ -37,7 +37,13 @@ impl Operation<'_, DeserializeMeDaddy, String> for BaconCipherEncode {
         let output = if keep_extra_character {
             output.join("")
         } else {
-            output.iter().filter(|x| x.len() != 1).cloned().collect()
+            output
+                .iter()
+                .filter(|x| x.len() != 1)
+                .cloned()
+                .collect::<Vec<String>>()
+                .join(" ")
+                .to_uppercase()
         };
 
         Ok(output)
