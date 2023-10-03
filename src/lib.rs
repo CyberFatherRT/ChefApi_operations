@@ -59,6 +59,7 @@ pub enum Operations {
     Argon2,
     AtbashCipher,
     BaconCipherEncode,
+    BaconCipherDecode,
     BcryptCompare,
     Bcrypt,
     BcryptParse,
