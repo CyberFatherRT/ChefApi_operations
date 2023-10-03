@@ -39,6 +39,7 @@ pub use analyse_hash_mod::{AnalyseHash, AnalyseHashInfo};
 pub use argon2_compare_mod::{Argon2Compare, Argon2CompareInfo};
 pub use argon2_mod::{Argon2, Argon2Info};
 pub use atbash_cipher_mod::{AtbashCipher, AtbashCipherInfo};
+pub use bacon_cipher_encode_mod::{BaconCipherEncode, BaconCipherEncodeInfo};
 pub use bcrypt_compare_mod::{BcryptCompare, BcryptCompareInfo};
 pub use bcrypt_mod::{Bcrypt, BcryptInfo};
 pub use bcrypt_parse_mod::{BcryptParse, BcryptParseInfo};

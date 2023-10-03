@@ -130,7 +130,7 @@ pub enum SupportedBaconTranslation {
 
 #[derive(Deserialize)]
 pub enum SupportedBaconAlphabet {
-    #[serde(rename = "Standard (I=J and V=U)")]
+    #[serde(alias = "Standard (I=J and V=U)")]
     Standard,
     Complete,
 }

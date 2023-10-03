@@ -4,9 +4,6 @@ mod operations;
 mod traits;
 mod utils;
 
-pub use libs::bacon::*;
-pub use utils::SupportedLanguages;
-
 pub use operations::*;
 use serde::{Deserialize, Serialize};
 use traits::StringTrait;
@@ -61,8 +58,9 @@ pub enum Operations {
     Argon2Compare,
     Argon2,
     AtbashCipher,
-    Bcrypt,
+    BaconCipherEncode,
     BcryptCompare,
+    Bcrypt,
     BcryptParse,
     BifidCipherEncode,
     Blake2b,
