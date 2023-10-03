@@ -45,23 +45,23 @@ impl BaconCipher {
         BaconCipher { en_map, de_map }
     }
 
-    pub fn encode(&self, elem: &str) -> String {
+    pub fn encode(&self, elem: &str) -> Vec<String> {
         elem.to_lowercase()
             .chars()
             .map(|x| match self.en_map.get(&x) {
-                None => "".to_string(),
-                Some(data) => data.to_owned() + " ",
+                None => x.to_string(),
+                Some(data) => data.to_owned(),
             })
-            .collect::<String>()
-            .trim()
-            .to_string()
+            .collect()
     }
 
-    pub fn decode(&self, elem: &str) -> String {
+    pub fn decode(&self, elem: &str) -> Vec<String> {
         elem.split_whitespace()
-            .map(|x| self.de_map.get(x).unwrap_or(&String::new()).clone())
-            .collect::<String>()
-            .to_uppercase()
+            .map(|x| match self.de_map.get(x) {
+                None => x.to_owned(),
+                Some(data) => data.to_owned(),
+            })
+            .collect()
     }
 }
 
