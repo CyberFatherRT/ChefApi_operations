@@ -1,10 +1,10 @@
-#![allow(dead_code)]
-
 mod libs;
 mod macros;
 mod operations;
 mod traits;
 mod utils;
+
+pub use libs::bacon::*;
 
 pub use operations::*;
 use serde::{Deserialize, Serialize};

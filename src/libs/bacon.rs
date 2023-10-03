@@ -4,7 +4,7 @@ use serde::Deserialize;
 
 use crate::utils::{get_alphabet, SupportedLanguages};
 
-struct BaconCipher {
+pub struct BaconCipher {
     item_a: char,
     item_b: char,
     map: BTreeMap<char, String>,
