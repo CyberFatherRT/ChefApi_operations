@@ -43,8 +43,8 @@ impl Operation<'_, DeserializeMeDaddy, String> for BaconCipherEncode {
                 .cloned()
                 .collect::<Vec<String>>()
                 .join(" ")
-                .to_uppercase()
-        };
+        }
+        .to_uppercase();
 
         Ok(output)
     }
