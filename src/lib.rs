@@ -5,6 +5,7 @@ mod traits;
 mod utils;
 
 pub use libs::bacon::*;
+pub use utils::SupportedLanguages;
 
 pub use operations::*;
 use serde::{Deserialize, Serialize};
