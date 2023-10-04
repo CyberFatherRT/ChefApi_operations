@@ -19,6 +19,7 @@ use crate::{
 impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Hmac {
     fn do_black_magic(&self, request: &str) -> Result<OutputFormat, String> {
         let request = self.validate(request)?;
+
         let (input, key, key_format, hash_function, output_format) = (
             request.input,
             request.params.key,
