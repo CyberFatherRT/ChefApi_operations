@@ -3,7 +3,6 @@ use num::{Integer, ToPrimitive};
 use serde::Deserialize;
 use std::fmt::{Debug, LowerHex};
 
-// region constants
 
 #[derive(Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -57,9 +56,7 @@ pub const RU_ALP_WITH_YO: (&str, &str, &str, &str, u8, &str) = (
 );
 pub const NUM: (&str, &str) = ("0123456789", r"^\+?(0|[1-9]\d*)$");
 
-// endregion
 
-// region work with strings
 
 pub fn expand_alphabet_range(alphabet: &str) -> Vec<char> {
     let mut result: Vec<char> = Vec::new();
@@ -279,9 +276,7 @@ pub fn ord(chr: char) -> u32 {
     chr as u32
 }
 
-// endregion
 
-// region math
 
 pub fn update_step<T: Integer + Copy>(a: &mut T, old_a: &mut T, quotient: T) {
     let temp = *a;
@@ -331,4 +326,3 @@ pub fn hex<T: Debug + LowerHex>(c: T) -> String {
     format!("{:08x}", c)
 }
 
-// endregion
