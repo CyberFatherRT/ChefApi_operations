@@ -3,7 +3,6 @@ use num::{Integer, ToPrimitive};
 use serde::Deserialize;
 use std::fmt::{Debug, LowerHex};
 
-
 #[derive(Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum SupportedLanguages {
@@ -55,8 +54,6 @@ pub const RU_ALP_WITH_YO: (&str, &str, &str, &str, u8, &str) = (
     r"^[а-яА-ЯёЁ]+$",
 );
 pub const NUM: (&str, &str) = ("0123456789", r"^\+?(0|[1-9]\d*)$");
-
-
 
 pub fn expand_alphabet_range(alphabet: &str) -> Vec<char> {
     let mut result: Vec<char> = Vec::new();
@@ -276,8 +273,6 @@ pub fn ord(chr: char) -> u32 {
     chr as u32
 }
 
-
-
 pub fn update_step<T: Integer + Copy>(a: &mut T, old_a: &mut T, quotient: T) {
     let temp = *a;
     *a = *old_a - quotient * temp;
@@ -325,4 +320,3 @@ pub fn sub(a: i16, b: i16) -> i16 {
 pub fn hex<T: Debug + LowerHex>(c: T) -> String {
     format!("{:08x}", c)
 }
-

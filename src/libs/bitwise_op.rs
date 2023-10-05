@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-pub fn bit_op<F>(input: Vec<u8>, key: Vec<u8>, func: F) -> Vec<u8>
+pub fn bit_op<F>(input: &[u8], key: &[u8], func: F) -> Vec<u8>
 where
     F: Fn(u8, u8) -> u8,
 {
@@ -28,7 +28,7 @@ pub fn or(operand: u8, key: u8) -> u8 {
 }
 
 pub fn add(operand: u8, key: u8) -> u8 {
-    ((operand as i16 + key as i16) % 256) as u8
+    ((operand as i16 + key as i16) % 255) as u8
 }
 
 pub fn sub(operand: u8, key: u8) -> u8 {

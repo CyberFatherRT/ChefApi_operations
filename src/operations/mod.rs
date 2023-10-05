@@ -5,6 +5,7 @@ mod adler32_checksum_mod;
 mod affine_cipher_decode_mod;
 mod affine_cipher_encode_mod;
 mod analyse_hash_mod;
+mod and_mod;
 mod argon2_compare_mod;
 mod argon2_mod;
 mod atbash_cipher_mod;
