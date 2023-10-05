@@ -6,7 +6,7 @@ use crate::{
 };
 use serde::{Deserialize, Serialize};
 
-impl Operation<'_, DeserializeMeDaddy, String> for AND {
+impl Operation<'_, DeserializeMeDaddy, String> for ADD {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, Params { key, key_format }) = (request.input, request.params);
@@ -112,7 +112,7 @@ create_me_daddy!();
 ///   "Err": "Missing field `key_format`"
 /// }
 /// ```
-pub struct AND;
+pub struct ADD;
 
 const NAME: &str = "ADD";
 const DESCRIPTION_EN: &str = "ADD the input with the given key, MOD 255";
