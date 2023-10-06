@@ -54,6 +54,7 @@ pub use bcrypt_parse_mod::{BcryptParse, BcryptParseInfo};
 pub use bifid_cipher_encode_mod::{BifidCipherEncode, BifidCipherEncodeInfo};
 pub use blake2b_mod::{Blake2b, Blake2bInfo};
 pub use blake2s_mod::{Blake2s, Blake2sInfo};
+pub use filter_mod::{Filter};
 pub use from_base64_mod::{FromBase64, FromBase64Info};
 pub use from_base_mod::{FromBase, FromBaseInfo};
 pub use hmac_mod::{Hmac, HmacInfo};
