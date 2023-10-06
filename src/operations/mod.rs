@@ -17,6 +17,7 @@ mod bcrypt_parse_mod;
 mod bifid_cipher_encode_mod;
 mod blake2b_mod;
 mod blake2s_mod;
+mod filter_mod;
 mod from_base64_mod;
 mod from_base_mod;
 mod hmac_mod;

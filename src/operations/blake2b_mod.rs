@@ -1,9 +1,8 @@
-use crate::OutputFormat;
 use crate::{
     create_info_struct, create_me_daddy,
     libs::base64::to_base64,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
-    Operation, DOCS_URL,
+    Operation, OutputFormat, DOCS_URL,
 };
 use blake2::{
     digest::{Update, VariableOutput},

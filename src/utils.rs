@@ -1,7 +1,10 @@
 use crate::{libs::base64::from_base64, map, regex_check, traits::StringTrait};
 use num::{Integer, ToPrimitive};
 use serde::Deserialize;
-use std::fmt::{Debug, LowerHex};
+use std::{
+    fmt::{Debug, LowerHex},
+    str::FromStr,
+};
 
 #[derive(Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -27,6 +30,25 @@ pub enum SupportedFormats {
 pub enum DataRepresentation {
     String(String),
     ByteArray(Vec<u8>),
+}
+
+#[derive(Deserialize, Debug)]
+pub enum SupportedDelimiter {
+    Space,
+    #[serde(rename = "Line feed")]
+    LineFeed,
+    #[allow(clippy::upper_case_acronyms)]
+    CRLF,
+    Comma,
+    #[serde(rename = "Semi-colon")]
+    SemiColon,
+    Colon,
+}
+
+impl std::fmt::Display for SupportedDelimiter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 
 pub const EN_ALP: (&str, &str, &str, &str, u8, &str) = (

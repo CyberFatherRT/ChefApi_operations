@@ -6,12 +6,12 @@ impl Operation<'_, DeserializeMeDaddy, String> for ReverseString {
         let request = self.validate(request)?;
         let input = request.input;
         Ok(input.chars().rev().collect())
-    }   
+    }
 }
 
 #[derive(Deserialize)]
 pub struct DeserializeMeDaddy {
-    input: String
+    input: String,
 }
 
 pub struct ReverseString;
