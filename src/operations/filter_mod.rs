@@ -1,9 +1,5 @@
-use crate::{
-    create_info_struct, create_me_daddy,
-    utils::{char_repr, SupportedDelimiter},
-    Operation, DOCS_URL,
-};
-use serde::{Deserialize, Serialize};
+use crate::{create_me_daddy, utils::SupportedDelimiter, Operation};
+use serde::Deserialize;
 
 impl Operation<'_, DeserializeMeDaddy, String> for Filter {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
