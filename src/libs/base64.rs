@@ -43,8 +43,6 @@ pub fn to_base64(data: &[u8], alphabet: Option<String>) -> Result<String, String
         })
         .for_each(|x| output.push(get_char_by_index(&alphabet, x)));
 
-    padding += 1;
-
     output.push_str(&match alphabet_length {
         65 => get_char_by_index(&alphabet, 64).to_string().repeat(padding),
         _ => "".to_string(),
