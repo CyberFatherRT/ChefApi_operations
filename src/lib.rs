@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 mod libs;
 mod macros;
 mod operations;

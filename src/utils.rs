@@ -1,10 +1,7 @@
 use crate::{libs::base64::from_base64, map, regex_check, traits::StringTrait};
 use num::{Integer, ToPrimitive};
 use serde::Deserialize;
-use std::{
-    fmt::{Debug, LowerHex},
-    str::FromStr,
-};
+use std::fmt::{Debug, LowerHex};
 
 #[derive(Deserialize)]
 #[serde(rename_all = "lowercase")]
