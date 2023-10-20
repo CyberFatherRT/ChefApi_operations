@@ -7,7 +7,7 @@ use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 use crate::{
     create_info_struct, create_me_daddy,
     libs::base64::{from_base64, to_base64},
-    utils::{to_hex, DataRepresentation},
+    utils::{to_hex, DataRepresentation, DataRepresentationInput},
     Operation, OutputFormat, DOCS_URL,
 };
 
@@ -31,7 +31,7 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {
         let DataRepresentation::ByteArray(input) = from_base64(
             input,
             "",
-            DataRepresentation::ByteArray(Vec::new()),
+            DataRepresentationInput::ByteArray,
             false,
             false,
         )?

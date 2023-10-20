@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    create_info_struct, create_me_daddy, libs::base64::from_base64, utils::DataRepresentation,
+    create_info_struct, create_me_daddy, libs::base64::from_base64, utils::{DataRepresentation, DataRepresentationInput},
     Operation, DOCS_URL,
 };
 
@@ -24,7 +24,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for FromBase64 {
         match from_base64(
             input,
             &alphabet,
-            DataRepresentation::String(String::new()),
+            DataRepresentationInput::String,
             remove_non_alphabetic_chars,
             strict_mode,
         ) {

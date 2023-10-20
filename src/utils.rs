@@ -29,12 +29,18 @@ pub enum DataRepresentation {
     ByteArray(Vec<u8>),
 }
 
+#[derive(Eq, PartialEq, Debug)]
+pub enum DataRepresentationInput {
+    String,
+    ByteArray
+}
+
 #[derive(Deserialize, Debug)]
+#[allow(clippy::upper_case_acronyms)]
 pub enum SupportedDelimiter {
     Space,
     #[serde(rename = "Line feed")]
     LineFeed,
-    #[allow(clippy::upper_case_acronyms)]
     CRLF,
     Comma,
     #[serde(rename = "Semi-colon")]
@@ -148,7 +154,7 @@ pub fn convert_to_byte_array(
         SupportedFormats::BASE64 => match from_base64(
             string.to_string(),
             "",
-            DataRepresentation::ByteArray(Vec::new()),
+            DataRepresentationInput::ByteArray,
             true,
             false,
         )
@@ -255,6 +261,7 @@ pub fn get_alphabet(
     }
 }
 
+#[inline]
 pub fn get_char_by_index<T: Integer + ToPrimitive>(text: &str, index: T) -> char {
     text.chars().nth(index.to_usize().unwrap()).unwrap()
 }

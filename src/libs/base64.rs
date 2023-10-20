@@ -2,7 +2,7 @@ use crate::{
     traits::StringTrait,
     utils::{
         expand_alphabet_range, get_char_by_index, str_to_array_buffer_by_alphabet,
-        DataRepresentation,
+        DataRepresentation, DataRepresentationInput,
     },
 };
 use itertools::Itertools;
@@ -14,7 +14,7 @@ pub fn to_base64(data: &[u8], alphabet: Option<String>) -> Result<String, String
 
     let alphabet = alphabet.unwrap_or("A-Za-z0-9+/=".to_string());
 
-    let alphabet = expand_alphabet_range(&alphabet).iter().collect::<String>();
+    let alphabet = String::from_iter(expand_alphabet_range(&alphabet));
 
     let alphabet_length = alphabet.chars().count();
 
@@ -53,14 +53,14 @@ pub fn to_base64(data: &[u8], alphabet: Option<String>) -> Result<String, String
 pub fn from_base64(
     mut data: String,
     mut alphabet: &str,
-    return_type: DataRepresentation,
+    return_type: DataRepresentationInput,
     remove_non_alphabetic_chars: bool,
     strict_mode: bool,
 ) -> Result<DataRepresentation, String> {
     if data.is_empty() {
         return match return_type {
-            DataRepresentation::String(_) => Ok(DataRepresentation::String(String::new())),
-            DataRepresentation::ByteArray(_) => Ok(DataRepresentation::ByteArray(Vec::new())),
+            DataRepresentationInput::String => Ok(DataRepresentation::String(String::new())),
+            DataRepresentationInput::ByteArray => Ok(DataRepresentation::ByteArray(Vec::new())),
         };
     }
 
@@ -120,7 +120,7 @@ pub fn from_base64(
     }
 
     return match return_type {
-        DataRepresentation::String(_) => {
+        DataRepresentationInput::String => {
             let mut output = String::new();
             str_to_array_buffer_by_alphabet(&data, &alphabet)
                 .iter()
@@ -138,7 +138,7 @@ pub fn from_base64(
 
             Ok(DataRepresentation::String(output))
         }
-        DataRepresentation::ByteArray(_) => {
+        DataRepresentationInput::ByteArray => {
             let mut output = Vec::new();
 
             str_to_array_buffer_by_alphabet(&data, &alphabet)

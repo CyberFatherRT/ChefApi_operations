@@ -1,7 +1,7 @@
 use crate::{
     create_info_struct, create_me_daddy,
     libs::base64::from_base64,
-    utils::{to_hex, DataRepresentation},
+    utils::{to_hex, DataRepresentation, DataRepresentationInput},
     Operation, DOCS_URL,
 };
 use argon2::{Config, ThreadMode, Variant, Version};
@@ -38,13 +38,13 @@ impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
 
         let output = match params.output_format {
             OutputFormat::Encoded => hash,
-            format => {
+            format @ (OutputFormat::Hex | OutputFormat::Raw) => {
                 let raw_hash = hash.split('$').nth(5).unwrap();
 
                 let data = match from_base64(
                     raw_hash.to_string(),
                     "",
-                    DataRepresentation::String(String::new()),
+                    DataRepresentationInput::String,
                     false,
                     false,
                 ) {
