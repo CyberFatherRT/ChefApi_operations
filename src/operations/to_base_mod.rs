@@ -19,7 +19,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for ToBase {
 #[derive(Deserialize, Validate)]
 pub struct Params {
     #[validate(maximum = 36)]
-    #[validate(minimum = 36)]
+    #[validate(minimum = 2)]
     radix: u32,
 }
 
