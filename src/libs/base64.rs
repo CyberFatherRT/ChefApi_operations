@@ -19,7 +19,7 @@ pub fn to_base64(data: &[u8], alphabet: Option<String>) -> Result<String, String
     let alphabet_length = alphabet.chars().count();
 
     if alphabet_length != 64 && alphabet_length != 65 {
-        return Err("Invalid base64 alphabet length.".to_string());
+        return Err(format!("Invalid base64 alphabet length. ({alphabet_length}):\n{alphabet}"));
     }
 
     let mut output = String::new();
